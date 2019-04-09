@@ -1,0 +1,28 @@
+apply from: 'dependency.gradle'
+
+allprojects{
+    repositories {
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "http://nexus.pentaho.org/content/groups/omni/"}
+    }
+}
+
+subprojects { subproj ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    group = 'com.xskr.kettle'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    dependencies {
+        testCompile(
+            libraries.'junit',
+            libraries.'mockito-all',
+        )
+    }
+}
