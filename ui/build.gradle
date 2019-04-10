@@ -1,0 +1,7 @@
+dependencies {
+    compile(
+            libraries.'kettle-core',
+            libraries.'kettle-engine',
+            libraries.'kettle-dbdialog',
+    )
+}

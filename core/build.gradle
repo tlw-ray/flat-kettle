@@ -44,7 +44,6 @@ dependencies {
             libraries.'secondstring',
             libraries.'javassist',
             libraries.'jcifs',
-//            libraries.'org.apache.karaf.main',
             libraries.'wstx-asl',
     )
     testCompile (
