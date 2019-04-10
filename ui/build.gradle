@@ -1,7 +1,20 @@
 dependencies {
-    compile(
-            libraries.'kettle-core',
-            libraries.'kettle-engine',
-            libraries.'kettle-dbdialog',
+    compile (
+        libraries.'kettle-core',
+        libraries.'kettle-engine',
+        libraries.'kettle-dbdialog',
+        libraries.'kettle-vfs-browser',
+        libraries.'commons-xul-core',
+        libraries.'commons-xul-swt',
+        libraries.'commons-xul-swing',
+        libraries.'capability-manager',
+        libraries.'swt',
+//        libraries.'',
+//        libraries.'',
+//        libraries.'',
+    )
+    testCompile (
+        libraries.'powermock-api-mockito',
+        libraries.'powermock-module-junit4',
     )
 }

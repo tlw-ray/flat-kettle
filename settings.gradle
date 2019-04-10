@@ -1,5 +1,5 @@
 rootProject.name = 'winning-kettle'
 
 include 'metastore'
-//include 'core'
-//include 'ui'
+include 'core'
+include 'ui'
