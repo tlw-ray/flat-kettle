@@ -147,7 +147,8 @@ public class DataOverrideHandler extends DataHandler {
       new XulTextbox[] {
         hostNameBox, databaseNameBox, portNumberBox, userNameBox, passwordBox, customDriverClassBox,
         customUrlBox, dataTablespaceBox, indexTablespaceBox, poolSizeBox, maxPoolSizeBox, languageBox,
-        systemNumberBox, clientBox, serverInstanceBox, warehouseBox };
+        systemNumberBox, clientBox, serverInstanceBox};
+    //TLW190411 delete: warehouseBox
 
     for ( int i = 0; i < boxes.length; i++ ) {
       XulTextbox xulTextbox = boxes[i];

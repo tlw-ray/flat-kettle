@@ -1,0 +1,16 @@
+dependencies {
+    compile (
+        libraries.'commons-xul-core',
+        libraries.'swt',
+        libraries.'jface',
+
+        libraries.'dom4j',
+        libraries.'guava',
+        libraries.'commons-collections',
+    )
+    testCompile (
+        libraries.'powermock-api-mockito',
+        libraries.'powermock-module-junit4',
+        libraries.'jaxen',
+    )
+}

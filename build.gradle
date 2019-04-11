@@ -2,6 +2,8 @@ apply from: 'dependency.gradle'
 
 allprojects{
     repositories {
+        mavenLocal()
+        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
         maven { url "http://nexus.pentaho.org/content/groups/omni/"}
     }
@@ -12,7 +14,7 @@ subprojects { subproj ->
     apply plugin: 'idea'
     apply plugin: 'maven'
 
-    group = 'com.xskr.kettle'
+    group = 'com.winning.dtc.kettle'
 
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
