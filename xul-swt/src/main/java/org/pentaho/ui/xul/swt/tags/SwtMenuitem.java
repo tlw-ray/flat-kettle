@@ -73,7 +73,8 @@ public class SwtMenuitem extends SwtElement implements XulMenuitem {
   }
 
   private void createItem( Element self, XulComponent parent, int pos ) {
-    int style = SWT.PUSH;
+//    int style = SWT.PUSH;
+    int style = SWT.NONE;
     if ( self != null && self.getAttributeValue( "type" ) != null
         && self.getAttributeValue( "type" ).equals( "checkbox" ) ) {
       style = SWT.CHECK;

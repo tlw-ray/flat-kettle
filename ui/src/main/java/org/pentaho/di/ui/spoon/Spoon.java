@@ -6767,7 +6767,7 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
         disableMenuItem( doc, "trans-last-impact", disableTransMenu );
 
         // Tools
-        disableMenuItem( doc, "repository-explore", !isRepositoryRunning );
+//        disableMenuItem( doc, "repository-explore", !isRepositoryRunning );
         disableMenuItem( doc, "tools-dabase-explore", !isRepositoryRunning && disableDatabaseExplore );
         disableMenuItem( doc, "repository-clear-shared-object-cache", !isRepositoryRunning );
         disableMenuItem( doc, "toolbar-expore-repository", !isRepositoryRunning );

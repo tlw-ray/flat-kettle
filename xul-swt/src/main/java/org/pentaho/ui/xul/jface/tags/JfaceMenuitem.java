@@ -36,6 +36,7 @@ import org.eclipse.swt.widgets.Display;
 import org.pentaho.ui.xul.XulComponent;
 import org.pentaho.ui.xul.XulDomContainer;
 import org.pentaho.ui.xul.components.XulMenuitem;
+import org.pentaho.ui.xul.dom.Attribute;
 import org.pentaho.ui.xul.dom.Element;
 import org.pentaho.ui.xul.swt.SwtElement;
 import org.pentaho.ui.xul.util.XulUtil;
@@ -89,7 +90,9 @@ public class JfaceMenuitem extends SwtElement implements XulMenuitem {
   }
 
   private Action initAction( Element self, Action alternativeAction ) {
-    int style = Action.AS_DROP_DOWN_MENU;
+//    int style = Action.AS_DROP_DOWN_MENU;
+    //TLW190412:
+    int style = Action.AS_UNSPECIFIED;
     if ( self != null && "checkbox".equals( self.getAttributeValue( "type" ) ) ) {
       style = Action.AS_CHECK_BOX;
     }
@@ -122,7 +125,10 @@ public class JfaceMenuitem extends SwtElement implements XulMenuitem {
     }
     action.setId( id );
 
-    action.setChecked( selected );
+    //TLW190412: add if condition
+    if(style == Action.AS_CHECK_BOX) {
+        action.setChecked(selected);
+    }
     return action;
   }
 
