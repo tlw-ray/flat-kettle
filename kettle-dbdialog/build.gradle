@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+        project(':commons-xul-swt'),
+        project(':kettle-core'),
+        project(':kettle-engine'),
+        libraries.'commons-xul-core',
+        libraries.'commons-xul-swing',
+        libraries.'swt',
+    )
+    testCompile (
+        libraries.'powermock-api-mockito',
+        libraries.'powermock-module-junit4',
+        libraries.'powermock-core',
+    )
+}

@@ -1,9 +1,15 @@
 rootProject.name = 'winning-kettle'
 
 include 'metastore'
-include 'core'
-include 'ui'
-include 'vfs-browser'
-include 'xul-swt'
-include 'dbdialog'
 include 'launcher'
+
+include 'vfs-browser'
+include 'commons-xul-swt'
+
+include 'kettle-core'
+include 'kettle-engine'
+include 'kettle-ui-swt'
+include 'kettle-dbdialog'
+
+include 'osgi-bridge-core'
+//include 'osgi-bridge-activator'

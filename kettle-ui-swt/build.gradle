@@ -1,0 +1,19 @@
+dependencies {
+    compile (
+        project(':kettle-core'),
+        project(':kettle-engine'),
+        project(':kettle-dbdialog'),
+        project(':vfs-browser'),
+        project(':commons-xul-swt'),
+        libraries.'commons-xul-core',
+        libraries.'commons-xul-swing',
+        libraries.'capability-manager',
+        libraries.'jfreechart',
+        libraries.'js',
+        libraries.'jaxen',
+    )
+    testCompile (
+        libraries.'powermock-api-mockito',
+        libraries.'powermock-module-junit4',
+    )
+}

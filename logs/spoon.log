@@ -1,2 +1,20 @@
-2019/04/12 22:31:03 - Spoon - Spoon  已经结束.
+2019/04/12 22:53:16 - General - ERROR (version 8.3.0.0-196, build 8.3.0.0-196 from 2019-02-25 11.24.40 by buildguy) : Error starting Spoon shell
+2019/04/12 22:53:16 - General - ERROR (version 8.3.0.0-196, build 8.3.0.0-196 from 2019-02-25 11.24.40 by buildguy) : java.lang.NullPointerException
+2019/04/12 22:53:16 - General - 	at org.pentaho.di.ui.xul.KettleDialog.hide(KettleDialog.java:95)
+2019/04/12 22:53:16 - General - 	at org.pentaho.ui.xul.swt.tags.SwtDialog$1.handleEvent(SwtDialog.java:195)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.EventTable.sendEvent(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Display.sendEvent(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Widget.sendEvent(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Widget.sendEvent(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Widget.sendEvent(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Widget.release(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Widget.dispose(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Decorations.dispose(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Shell.dispose(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.widgets.Display.release(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.eclipse.swt.graphics.Device.dispose(Unknown Source)
+2019/04/12 22:53:16 - General - 	at org.pentaho.di.ui.spoon.Spoon.dispose(Spoon.java:1438)
+2019/04/12 22:53:16 - General - 	at org.pentaho.di.ui.spoon.Spoon.waitForDispose(Spoon.java:7857)
+2019/04/12 22:53:16 - General - 	at org.pentaho.di.ui.spoon.Spoon.start(Spoon.java:9190)
+2019/04/12 22:53:16 - General - 	at org.pentaho.di.ui.spoon.Spoon.main(Spoon.java:709)
 stopping
