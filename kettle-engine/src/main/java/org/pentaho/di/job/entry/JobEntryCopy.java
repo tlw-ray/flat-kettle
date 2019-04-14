@@ -137,7 +137,7 @@ public class JobEntryCopy implements Cloneable, XMLInterface, GUIPositionInterfa
     try {
       String stype = XMLHandler.getTagValue( entrynode, "type" );
       PluginRegistry registry = PluginRegistry.getInstance();
-      PluginInterface jobPlugin = registry.findPluginWithId( JobEntryPluginType.class, stype );
+      PluginInterface jobPlugin = registry.findPluginWithId( JobEntryPluginType.class, stype, true );
       if ( jobPlugin == null ) {
         String name = XMLHandler.getTagValue( entrynode, "name" );
         entry = new MissingEntry( name, stype );
@@ -210,6 +210,11 @@ public class JobEntryCopy implements Cloneable, XMLInterface, GUIPositionInterfa
     JobEntryCopy ge = new JobEntryCopy();
     ge.replaceMeta( this );
     ge.setObjectId( null );
+
+    for ( final Map.Entry<String, Map<String, String>> attribute : attributesMap.entrySet() ) {
+      ge.attributesMap.put( attribute.getKey(), attribute.getValue() );
+    }
+
     return ge;
   }
 

@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -356,6 +356,11 @@ public class Trans implements VariableSpace, NamedParams, HasLogChannelInterface
    * Constant indicating a transformation status of Stopped.
    */
   public static final String STRING_STOPPED = "Stopped";
+
+  /**
+   * Constant indicating a transformation status of Stopped (with errors).
+   */
+  public static final String STRING_STOPPED_WITH_ERRORS = "Stopped (with errors)";
 
   /**
    * Constant indicating a transformation status of Halting.
@@ -1654,19 +1659,20 @@ public class Trans implements VariableSpace, NamedParams, HasLogChannelInterface
           new StepPerformanceSnapShot( seqNr, getBatchId(), new Date(), getName(), stepMeta.getName(), step.getCopy(),
             step.getLinesRead(), step.getLinesWritten(), step.getLinesInput(), step.getLinesOutput(), step
             .getLinesUpdated(), step.getLinesRejected(), step.getErrors() );
-        List<StepPerformanceSnapShot> snapShotList = stepPerformanceSnapShots.get( step.toString() );
-        StepPerformanceSnapShot previous;
-        if ( snapShotList == null ) {
-          snapShotList = new ArrayList<>();
-          stepPerformanceSnapShots.put( step.toString(), snapShotList );
-          previous = null;
-        } else {
-          previous = snapShotList.get( snapShotList.size() - 1 ); // the last one...
-        }
-        // Make the difference...
-        //
-        snapShot.diff( previous, step.rowsetInputSize(), step.rowsetOutputSize() );
+
         synchronized ( stepPerformanceSnapShots ) {
+          List<StepPerformanceSnapShot> snapShotList = stepPerformanceSnapShots.get( step.toString() );
+          StepPerformanceSnapShot previous;
+          if ( snapShotList == null ) {
+            snapShotList = new ArrayList<>();
+            stepPerformanceSnapShots.put( step.toString(), snapShotList );
+            previous = null;
+          } else {
+            previous = snapShotList.get( snapShotList.size() - 1 ); // the last one...
+          }
+          // Make the difference...
+          //
+          snapShot.diff( previous, step.rowsetInputSize(), step.rowsetOutputSize() );
           snapShotList.add( snapShot );
 
           if ( stepPerformanceSnapshotSizeLimit > 0 && snapShotList.size() > stepPerformanceSnapshotSizeLimit ) {
@@ -5742,4 +5748,5 @@ public class Trans implements VariableSpace, NamedParams, HasLogChannelInterface
 
     return Const.HEARTBEAT_PERIODIC_INTERVAL_IN_SECS;
   }
+
 }

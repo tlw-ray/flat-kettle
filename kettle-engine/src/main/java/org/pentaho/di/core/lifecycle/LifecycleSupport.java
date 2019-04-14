@@ -30,8 +30,6 @@ import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.PluginTypeInterface;
 import org.pentaho.di.core.plugins.PluginTypeListener;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -40,8 +38,6 @@ import java.util.Set;
 
 public class LifecycleSupport {
   @VisibleForTesting protected static PluginRegistry registry = PluginRegistry.getInstance();
-
-  static Logger logger = LoggerFactory.getLogger(LifecycleSupport.class);
   private Set<LifecycleListener> lifeListeners;
   private boolean started;
   private LifeEventHandler handler;
@@ -91,11 +87,9 @@ public class LifecycleSupport {
    */
   static <T> Set<T> loadPlugins( Class<? extends PluginTypeInterface> pluginType, Class<T> mainPluginClass ) {
     Set<T> pluginInstances = new HashSet<T>();
-    System.out.println("registry.getPlugins(" + pluginType + ")");
     List<PluginInterface> plugins = registry.getPlugins( pluginType );
     for ( PluginInterface plugin : plugins ) {
       try {
-        System.out.println("loadPlugins(" + pluginType + ", " + mainPluginClass + ")");
         pluginInstances.add( registry.loadClass( plugin, mainPluginClass ) );
       } catch ( Throwable e ) {
         LogChannel.GENERAL.logError( "Unexpected error loading class for plugin " + plugin.getName(), e );

@@ -81,6 +81,7 @@ dependencies {
             libraries.'javax.servlet-api',
             libraries.'javax.websocket-api',
             libraries.'wstx-asl',
+            libraries.'rxjava',
     )
     testCompile (
             libraries.'java-hamcrest',

@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -405,6 +405,7 @@ public class Job extends Thread implements VariableSpace, NamedParams, HasLogCha
 
         ExtensionPointHandler.callExtensionPoint( log, KettleExtensionPoint.JobFinish.id, this );
         jobMeta.disposeEmbeddedMetastoreProvider();
+        log.logDebug( BaseMessages.getString( PKG, "Job.Log.DisposeEmbeddedMetastore" ) );
 
         fireJobFinishListeners();
 
@@ -518,7 +519,9 @@ public class Job extends Thread implements VariableSpace, NamedParams, HasLogCha
       log.logMinimal( BaseMessages.getString( PKG, "Job.Comment.JobFinished" ) );
 
       setActive( false );
-      setFinished( true );
+      if ( !isStopped() ) {
+        setFinished( true );
+      }
       return res;
     } finally {
       log.snap( Metrics.METRIC_JOB_STOP );
@@ -556,9 +559,12 @@ public class Job extends Thread implements VariableSpace, NamedParams, HasLogCha
       throw new KettleJobException( BaseMessages.getString( PKG, "Job.Log.CounldNotFindStartingPoint" ) );
     }
 
-    Result res = execute( nr, result, startpoint, null, BaseMessages.getString( PKG, "Job.Reason.StartOfJobentry" ) );
-    setActive( false );
-
+    JobEntrySpecial jes = (JobEntrySpecial) startpoint.getEntry();
+    Result res;
+    do {
+      res = execute( nr, result, startpoint, null, BaseMessages.getString( PKG, "Job.Reason.StartOfJobentry" ) );
+      setActive( false );
+    } while ( jes.isRepeat() && !isStopped() );
     return res;
   }
 

@@ -1,16 +1,18 @@
 rootProject.name = 'flat-kettle'
 
-include 'pentaho-metastore'
-include 'pentaho-application-launcher'
+include 'commons-xul-core'
+include 'commons-xul-swt'
+include 'commons-xul-swing'
 
 include 'pentaho-vfs-browser'
 
-include 'commons-xul-swt'
-
-include 'pdi-osgi-bridge-core'
-include 'pdi-osgi-bridge-activator'
+include 'pentaho-metastore'
+include 'pentaho-application-launcher'
 
 include 'kettle-core'
 include 'kettle-engine'
 include 'kettle-ui-swt'
 include 'kettle-dbdialog'
+
+//include 'pdi-osgi-bridge-core'
+//include 'pdi-osgi-bridge-activator'

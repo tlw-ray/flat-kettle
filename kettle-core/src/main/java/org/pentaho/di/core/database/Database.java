@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -54,6 +54,7 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.vfs2.FileObject;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.util.Utils;
@@ -128,6 +129,8 @@ public class Database implements VariableSpace, LoggingObjectInterface {
   private static final Map<String, Set<String>> registeredDrivers = new HashMap<String, Set<String>>();
 
   private DatabaseMeta databaseMeta;
+
+  private final String DATA_SERVICES_PLUGIN_ID = "KettleThin";
 
   private int rowlimit;
   private int commitsize;
@@ -2169,8 +2172,7 @@ public class Database implements VariableSpace, LoggingObjectInterface {
     String cr_index = "";
     DatabaseInterface databaseInterface = databaseMeta.getDatabaseInterface();
 
-    // Exasol does not support explicit handling of indexes
-    if ( databaseInterface instanceof Exasol4DatabaseMeta ) {
+    if ( !databaseInterface.supportsIndexes() ) {
       return "";
     }
 
@@ -2321,8 +2323,11 @@ public class Database implements VariableSpace, LoggingObjectInterface {
       ResultSet rm =
         connection.getMetaData().getColumns( null, schemaName, tableName, null );
 
-      while ( rm.next() ) {
+      if ( fields == null ) {
+        fields = new RowMeta();
+      }
 
+      while ( rm.next() ) {
         ValueMetaInterface valueMeta = null;
         for ( ValueMetaInterface valueMetaClass : valueMetaPluginClasses ) {
           try {
@@ -2338,10 +2343,6 @@ public class Database implements VariableSpace, LoggingObjectInterface {
               log.logDebug( "Skipping ValueMetaInterface:" + valueMetaClass.getClass().getName(), e );
             }
           }
-        }
-
-        if ( fields == null ) {
-          fields = new RowMeta();
         }
         fields.addValueMeta( valueMeta );
       }
@@ -2403,7 +2404,11 @@ public class Database implements VariableSpace, LoggingObjectInterface {
         //
         fields = getQueryFieldsFromPreparedStatement( sql );
       } else {
-        fields = getQueryFieldsFromDatabaseMetaData();
+        if ( isDataServiceConnection() ) {
+          fields = getQueryFieldsFromDatabaseMetaData( sql );
+        } else {
+          fields = getQueryFieldsFromDatabaseMetaData( );
+        }
       }
     } catch ( Exception e ) {
       /*
@@ -2420,6 +2425,10 @@ public class Database implements VariableSpace, LoggingObjectInterface {
     }
 
     return fields;
+  }
+
+  private boolean isDataServiceConnection() {
+    return DATA_SERVICES_PLUGIN_ID.equals( databaseMeta.getPluginId() );
   }
 
   public RowMetaInterface getQueryFieldsFromPreparedStatement( String sql ) throws Exception {
@@ -2445,8 +2454,13 @@ public class Database implements VariableSpace, LoggingObjectInterface {
   }
 
   public RowMetaInterface getQueryFieldsFromDatabaseMetaData() throws Exception {
+    return this.getQueryFieldsFromDatabaseMetaData( null );
+  }
 
-    ResultSet columns = connection.getMetaData().getColumns( "", "", databaseMeta.getName(), "" );
+  private RowMetaInterface getQueryFieldsFromDatabaseMetaData( String sql ) throws Exception {
+
+    ResultSet columns = connection.getMetaData().getColumns( "", "",
+      StringUtils.isNotBlank( sql ) ? sql : databaseMeta.getName(), "" );
     RowMetaInterface rowMeta = new RowMeta();
     while ( columns.next() ) {
       ValueMetaInterface valueMeta = null;
@@ -3132,9 +3146,16 @@ public class Database implements VariableSpace, LoggingObjectInterface {
     if ( dbmd == null ) {
       try {
         log.snap( Metrics.METRIC_DATABASE_GET_DBMETA_START, databaseMeta.getName() );
+
+        if ( connection == null ) {
+          throw new KettleDatabaseException( BaseMessages.getString( PKG,
+            "Database.Exception.EmptyConnectionError", databaseMeta.getDatabaseName() ) );
+        }
+
         dbmd = connection.getMetaData(); // Only get the metadata once!
       } catch ( Exception e ) {
-        throw new KettleDatabaseException( "Unable to get database metadata from this database connection", e );
+        throw new KettleDatabaseException( BaseMessages.getString( PKG,
+          "Database.Exception.UnableToGetMetadata" ), e );
       } finally {
         log.snap( Metrics.METRIC_DATABASE_GET_DBMETA_STOP, databaseMeta.getName() );
       }

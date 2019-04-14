@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -1609,7 +1609,7 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
    * @return the schemaname-tablename combination
    */
   public String getQuotedSchemaTableCombination( String schemaName, String tableName ) {
-    if ( !supportsSchemas() || Utils.isEmpty( schemaName ) ) {
+    if ( Utils.isEmpty( schemaName ) ) {
       if ( Utils.isEmpty( getPreferredSchemaName() ) ) {
         return quoteField( environmentSubstitute( tableName ) ); // no need to look further
       } else {
@@ -2438,7 +2438,15 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
    * @return the maximum pool size
    */
   public int getMaximumPoolSize() {
-    return databaseInterface.getMaximumPoolSize();
+    return Const.toInt(
+      environmentSubstitute( getMaximumPoolSizeString() ), ConnectionPoolUtil.defaultMaximumNrOfConnections );
+  }
+
+  /**
+   * @return the maximum pool size variable name
+   */
+  public String getMaximumPoolSizeString() {
+    return databaseInterface.getMaximumPoolSizeString();
   }
 
   /**
@@ -2450,10 +2458,26 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
   }
 
   /**
+   * @param maximumPoolSize
+   *          the maximum pool size variable name
+   */
+  public void setMaximumPoolSizeString( String maximumPoolSize ) {
+    databaseInterface.setMaximumPoolSizeString( maximumPoolSize );
+  }
+
+  /**
    * @return the initial pool size
    */
   public int getInitialPoolSize() {
-    return databaseInterface.getInitialPoolSize();
+    return Const.toInt(
+      environmentSubstitute( getInitialPoolSizeString() ), ConnectionPoolUtil.defaultInitialNrOfConnections );
+  }
+
+  /**
+   * @return the initial pool size variable name
+   */
+  public String getInitialPoolSizeString() {
+    return databaseInterface.getInitialPoolSizeString();
   }
 
   /**
@@ -2462,6 +2486,14 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
    */
   public void setInitialPoolSize( int initalPoolSize ) {
     databaseInterface.setInitialPoolSize( initalPoolSize );
+  }
+
+  /**
+    * @param initalPoolSize
+   *          the initial pool size variable name
+   */
+  public void setInitialPoolSizeString( String initalPoolSize ) {
+    databaseInterface.setInitialPoolSizeString( initalPoolSize );
   }
 
   /**

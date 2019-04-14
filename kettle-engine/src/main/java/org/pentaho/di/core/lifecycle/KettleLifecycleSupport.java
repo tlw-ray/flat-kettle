@@ -34,8 +34,6 @@ import org.pentaho.di.core.plugins.PluginInterface;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.PluginTypeListener;
 import org.pentaho.di.i18n.BaseMessages;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -49,13 +47,10 @@ public class KettleLifecycleSupport {
   private static Class<?> PKG = Const.class; // for i18n purposes, needed by Translator2!!
   @VisibleForTesting protected static PluginRegistry registry = PluginRegistry.getInstance();
 
-  Logger logger = LoggerFactory.getLogger(getClass());
-
   private ConcurrentMap<KettleLifecycleListener, Boolean> kettleLifecycleListeners;
   private AtomicBoolean initialized = new AtomicBoolean( false );
 
   public KettleLifecycleSupport() {
-    System.out.println("KettleLifecycleSupport()");
     Set<KettleLifecycleListener> listeners =
       LifecycleSupport.loadPlugins( KettleLifecyclePluginType.class, KettleLifecycleListener.class );
     kettleLifecycleListeners = new ConcurrentHashMap<KettleLifecycleListener, Boolean>();
@@ -70,7 +65,6 @@ public class KettleLifecycleSupport {
       public void pluginAdded( Object serviceObject ) {
         KettleLifecycleListener listener = null;
         try {
-          System.out.println("registry.loadClass(serviceObject = " + serviceObject + ")");
           listener = (KettleLifecycleListener) registry.loadClass( (PluginInterface) serviceObject );
         } catch ( KettlePluginException e ) {
           e.printStackTrace();
@@ -107,19 +101,12 @@ public class KettleLifecycleSupport {
    *           if any listener throws a severe Lifecycle Exception or any {@link Throwable}.
    */
   public void onEnvironmentInit() throws KettleException {
-    System.out.println("KettleLifecycleSupport.onEnvironmentInit().begin");
     // Execute only once
     if ( initialized.compareAndSet( false, true ) ) {
-        System.out.println("KettleLifecycleSupport.onEnvironmentInit()kettleLifecycleListeners.size() = " + kettleLifecycleListeners.size());
-        for(KettleLifecycleListener listener:kettleLifecycleListeners.keySet()){
-            System.out.println(listener);
-        }
       for ( KettleLifecycleListener listener : kettleLifecycleListeners.keySet() ) {
-        System.out.println("KettleLifecycleSupport.onEnvironmentInit(): " + listener);
         onEnvironmentInit( listener );
       }
     }
-    System.out.println("KettleLifecycleSupport.onEnvironmentInit().end");
   }
 
   private void onEnvironmentInit( KettleLifecycleListener listener ) throws KettleException {

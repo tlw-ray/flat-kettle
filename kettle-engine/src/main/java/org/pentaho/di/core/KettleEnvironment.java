@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -119,14 +119,13 @@ public class KettleEnvironment {
 
   public static void init( List<PluginTypeInterface> pluginClasses, boolean simpleJndi ) throws KettleException {
 
-    System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).begin");
     SettableFuture<Boolean> ready;
     if ( initialized.compareAndSet( null, ready = SettableFuture.create() ) ) {
 
       // Swaps out System Properties for a thread safe version.  This is needed so Karaf can spawn multiple instances.
       // See https://jira.pentaho.com/browse/PDI-17496
       System.setProperties( ConcurrentMapProperties.convertProperties( System.getProperties() ) );
-      System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).KettleClientEnvironment.init()");
+
       try {
         // This creates .kettle and kettle.properties...
         //
@@ -136,28 +135,21 @@ public class KettleEnvironment {
 
         // Configure Simple JNDI when we run in stand-alone mode (spoon, pan, kitchen, carte, ... NOT on the platform
         //
-        System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).initJNDI()");
         if ( simpleJndi ) {
           JndiUtil.initJNDI();
         }
 
         // Register the native types and the plugins for the various plugin types...
         //
-        System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).pluginClasses().addPluginType()");
         pluginClasses.forEach( PluginRegistry::addPluginType );
-        System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).PluginRegistry.init()");
-        //TLW190412: 1. 这一句很重要注册了Karaf插件系统的启动
         PluginRegistry.init();
 
         // Also read the list of variables.
         //
-        System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).KettleVariablesList.init()");
         KettleVariablesList.init();
 
         // Initialize the Lifecycle Listeners
         //
-
-        System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).initLifecycleListeners();");
         initLifecycleListeners();
         ready.set( true );
       } catch ( Throwable t ) {
@@ -176,7 +168,6 @@ public class KettleEnvironment {
         throw new KettleException( t );
       }
     }
-    System.out.println("KettleEnvironment.init(pluginClasses, simpleJndi).finish;");
   }
 
   /**
@@ -252,6 +243,7 @@ public class KettleEnvironment {
     }
   }
 
+  // Note - this is only called from test cases
   public static void reset() {
     KettleClientEnvironment.reset();
     initialized.set( null );

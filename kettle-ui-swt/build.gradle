@@ -1,19 +1,19 @@
 dependencies {
     compile (
-        project(':kettle-core'),
-        project(':kettle-engine'),
-        project(':kettle-dbdialog'),
-        project(':pentaho-vfs-browser'),
-        project(':commons-xul-swt'),
-        libraries.'commons-xul-core',
-        libraries.'commons-xul-swing',
-        libraries.'capability-manager',
-        libraries.'jfreechart',
-        libraries.'js',
-        libraries.'jaxen',
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-dbdialog'),
+            project(':pentaho-vfs-browser'),
+            project(':commons-xul-swt'),
+            project(':commons-xul-core'),
+            project(':commons-xul-swing'),
+            libraries.'pentaho-capability-manager',
+            libraries.'jfreechart',
+            libraries.'js',
+            libraries.'jaxen',
     )
     testCompile (
-        libraries.'powermock-api-mockito',
-        libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-junit4',
     )
 }
