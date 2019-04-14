@@ -3,7 +3,7 @@ dependencies {
         project(':kettle-core'),
         project(':kettle-engine'),
         project(':kettle-dbdialog'),
-        project(':vfs-browser'),
+        project(':pentaho-vfs-browser'),
         project(':commons-xul-swt'),
         libraries.'commons-xul-core',
         libraries.'commons-xul-swing',

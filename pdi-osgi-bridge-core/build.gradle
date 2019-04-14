@@ -12,15 +12,15 @@ dependencies {
         libraries.'org.apache.aries.blueprint.core',
         libraries.'pax-exam-extender-service',
         libraries.'pax-exam-cdi',
-//        libraries.'tinybundles',
+        libraries.'tinybundles',
         libraries.'guava',
     )
     testCompile (
-//        libraries.'org.apache.aries.util',
-//        libraries.'pax-exam-container-karaf',
-//        libraries.'pax-exam-junit4',
-//        libraries.'pax-exam-link-mvn',
-//        libraries.'pax-url-aether',
+        libraries.'org.apache.aries.util',
+        libraries.'pax-exam-container-karaf',
+        libraries.'pax-exam-junit4',
+        libraries.'pax-exam-link-mvn',
+        libraries.'pax-url-aether',
         libraries.'logback-core',
         libraries.'logback-classic',
     )

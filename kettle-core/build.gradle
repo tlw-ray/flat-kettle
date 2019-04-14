@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            libraries.'metastore',
+            project(':pentaho-metastore'),
             libraries.'slf4j-api',
             libraries.'slf4j-log4j12',
             libraries.'guava',
@@ -35,7 +35,7 @@ dependencies {
             libraries.'httpclient',
             libraries.'httpcore',
             libraries.'dom4j',
-            libraries.'jetty',
+            libraries.'jetty-util',
             libraries.'jug-lgpl',
             libraries.'jsch',
             libraries.'jzlib',
