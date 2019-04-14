@@ -14,5 +14,5 @@ include 'kettle-engine'
 include 'kettle-ui-swt'
 include 'kettle-dbdialog'
 
-//include 'pdi-osgi-bridge-core'
-//include 'pdi-osgi-bridge-activator'
+include 'pdi-osgi-bridge-core'
+include 'pdi-osgi-bridge-activator'
