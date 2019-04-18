@@ -29,25 +29,21 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 
+import junit.framework.TestCase;
 import org.junit.ClassRule;
-import org.junit.Test;
 import org.pentaho.di.junit.rules.RestorePDIEnvironment;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 /**
  * Test class for the basic functionality of ValueNumber.
  *
  * @author Sven Boden
  */
-public class ValueBigNumberTest {
+public class ValueBigNumberTest extends TestCase {
   @ClassRule public static RestorePDIEnvironment env = new RestorePDIEnvironment();
 
   /**
    * Constructor test 1.
    */
-  @Test
   public void testConstructor1() {
     ValueBigNumber vs = new ValueBigNumber();
 
@@ -74,7 +70,6 @@ public class ValueBigNumberTest {
   /**
    * Test the getters of ValueBigNumber
    */
-  @Test
   public void testGetters() {
     ValueBigNumber vs1 = new ValueBigNumber();
     ValueBigNumber vs2 = new ValueBigNumber( BigDecimal.ZERO );
@@ -112,7 +107,6 @@ public class ValueBigNumberTest {
   /**
    * Test the setters of ValueBigNumber
    */
-  @Test
   public void testSetters() {
     TimeZone.setDefault( TimeZone.getTimeZone( "CET" ) );
 

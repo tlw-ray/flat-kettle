@@ -64,12 +64,9 @@ class SftpFileSystemWindows extends SftpFileSystem {
   private List<String> userGroups;
   private Boolean windows;
 
-  private boolean execDisabled = false;
-
   SftpFileSystemWindows( GenericFileName rootName, Session session, FileSystemOptions fileSystemOptions ) {
     super( rootName, session, fileSystemOptions );
     this.session = session;
-    detectExecDisabled();
   }
 
   @Override
@@ -269,20 +266,5 @@ class SftpFileSystemWindows extends SftpFileSystem {
 
     channel.disconnect();
     return channel.getExitStatus();
-  }
-
-  /**
-   * <p>Some SFTP-only servers disable the exec channel: attempt to detect this by calling getUid.</p>
-   */
-  private void detectExecDisabled() {
-    try {
-      getUId();
-    } catch ( JSchException | IOException e ) {
-      execDisabled = true;
-    }
-  }
-
-  public boolean isExecDisabled() {
-    return execDisabled;
   }
 }

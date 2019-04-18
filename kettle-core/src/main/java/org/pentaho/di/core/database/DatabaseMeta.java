@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -1008,7 +1008,7 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
           String code = XMLHandler.getTagValue( attrnode, "code" );
           String attribute = XMLHandler.getTagValue( attrnode, "attribute" );
           if ( code != null && attribute != null ) {
-            databaseInterface.addAttribute( code, attribute );
+            getAttributes().put( code, attribute );
           }
           getDatabasePortNumberString();
         }
@@ -2438,15 +2438,7 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
    * @return the maximum pool size
    */
   public int getMaximumPoolSize() {
-    return Const.toInt(
-      environmentSubstitute( getMaximumPoolSizeString() ), ConnectionPoolUtil.defaultMaximumNrOfConnections );
-  }
-
-  /**
-   * @return the maximum pool size variable name
-   */
-  public String getMaximumPoolSizeString() {
-    return databaseInterface.getMaximumPoolSizeString();
+    return databaseInterface.getMaximumPoolSize();
   }
 
   /**
@@ -2458,26 +2450,10 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
   }
 
   /**
-   * @param maximumPoolSize
-   *          the maximum pool size variable name
-   */
-  public void setMaximumPoolSizeString( String maximumPoolSize ) {
-    databaseInterface.setMaximumPoolSizeString( maximumPoolSize );
-  }
-
-  /**
    * @return the initial pool size
    */
   public int getInitialPoolSize() {
-    return Const.toInt(
-      environmentSubstitute( getInitialPoolSizeString() ), ConnectionPoolUtil.defaultInitialNrOfConnections );
-  }
-
-  /**
-   * @return the initial pool size variable name
-   */
-  public String getInitialPoolSizeString() {
-    return databaseInterface.getInitialPoolSizeString();
+    return databaseInterface.getInitialPoolSize();
   }
 
   /**
@@ -2486,14 +2462,6 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
    */
   public void setInitialPoolSize( int initalPoolSize ) {
     databaseInterface.setInitialPoolSize( initalPoolSize );
-  }
-
-  /**
-    * @param initalPoolSize
-   *          the initial pool size variable name
-   */
-  public void setInitialPoolSizeString( String initalPoolSize ) {
-    databaseInterface.setInitialPoolSizeString( initalPoolSize );
   }
 
   /**
@@ -2829,35 +2797,6 @@ public class DatabaseMeta extends SharedObjectBase implements Cloneable, XMLInte
       report.append( Const.getStackTracker( e ) + Const.CR );
     }
     return report.toString();
-  }
-
-  public DatabaseTestResults testConnectionSuccess() {
-
-    StringBuilder report = new StringBuilder();
-    DatabaseTestResults databaseTestResults = new DatabaseTestResults();
-
-    // If the plug-in needs to provide connection information, we ask the DatabaseInterface...
-    //
-    try {
-      DatabaseFactoryInterface factory = getDatabaseFactory();
-      databaseTestResults = factory.getConnectionTestResults( this );
-    } catch ( ClassNotFoundException e ) {
-      report
-        .append( BaseMessages.getString( PKG, "BaseDatabaseMeta.TestConnectionReportNotImplemented.Message" ) )
-        .append( Const.CR );
-      report.append( BaseMessages.getString( PKG, "DatabaseMeta.report.ConnectionError", getName() )
-        + e.toString() + Const.CR );
-      report.append( Const.getStackTracker( e ) + Const.CR );
-      databaseTestResults.setMessage( report.toString() );
-      databaseTestResults.setSuccess( false );
-    } catch ( Exception e ) {
-      report.append( BaseMessages.getString( PKG, "DatabaseMeta.report.ConnectionError", getName() )
-        + e.toString() + Const.CR );
-      report.append( Const.getStackTracker( e ) + Const.CR );
-      databaseTestResults.setMessage( report.toString() );
-      databaseTestResults.setSuccess( false );
-    }
-    return databaseTestResults;
   }
 
   public DatabaseFactoryInterface getDatabaseFactory() throws Exception {

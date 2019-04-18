@@ -227,7 +227,6 @@ public class DatabaseLookupUTest {
     metaByQuerying.addValueMeta( id );
 
     doReturn( metaByQuerying ).when( db ).getTableFields( anyString() );
-    doReturn( metaByQuerying ).when( db ).getTableFieldsMeta( anyString(), anyString() );
 
     return db;
   }

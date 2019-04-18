@@ -3210,32 +3210,32 @@ public class BaseStep implements VariableSpace, StepInterface, LoggingObjectInte
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.Copy" ) ) );
-    data[ nr ] = (double) copynr;
+    data[ nr ] = new Double( copynr );
     nr++;
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.LinesReaded" ) ) );
-    data[ nr ] = (double) lines_read;
+    data[ nr ] = new Double( lines_read );
     nr++;
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.LinesWritten" ) ) );
-    data[ nr ] = (double) lines_written;
+    data[ nr ] = new Double( lines_written );
     nr++;
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.LinesUpdated" ) ) );
-    data[ nr ] = (double) lines_updated;
+    data[ nr ] = new Double( lines_updated );
     nr++;
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.LinesSkipped" ) ) );
-    data[ nr ] = (double) lines_skipped;
+    data[ nr ] = new Double( lines_skipped );
     nr++;
 
     r.addValueMeta( new ValueMetaNumber(
       BaseMessages.getString( PKG, "BaseStep.ColumnName.Errors" ) ) );
-    data[ nr ] = (double) errors;
+    data[ nr ] = new Double( errors );
     nr++;
 
     r.addValueMeta( new ValueMetaDate( "start_date" ) );
@@ -4396,7 +4396,7 @@ public class BaseStep implements VariableSpace, StepInterface, LoggingObjectInte
       return handleGetRowFrom( rowSet );
     }
 
-    @Override public void putRowTo( RowMetaInterface rowMeta, Object[] row, RowSet rowSet ) throws KettleStepException {
+    public void putRowTo( RowMetaInterface rowMeta, Object[] row, RowSet rowSet ) throws KettleStepException {
       handlePutRowTo( rowMeta, row, rowSet );
     }
 

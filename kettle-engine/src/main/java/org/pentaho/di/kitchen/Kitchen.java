@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -33,7 +33,6 @@ import java.util.concurrent.Future;
 
 import org.pentaho.di.base.CommandExecutorCodes;
 import org.pentaho.di.core.Const;
-import org.pentaho.di.core.Result;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.KettleClientEnvironment;
 import org.pentaho.di.core.KettleEnvironment;
@@ -242,7 +241,7 @@ public class Kitchen {
 
     // Start the action...
     //
-    Result result = new Result();
+    int returnCode = CommandExecutorCodes.Kitchen.SUCCESS.getCode();
 
     try {
 
@@ -257,38 +256,14 @@ public class Kitchen {
         }
       }
 
-      JobParams jobParams = new JobParams(
-              optionNorep.toString(),
-              optionRepname.toString(),
-              optionUsername.toString(),
-              optionTrustUser.toString(),
-              optionPassword.toString(),
-              optionDirname.toString(),
-              optionJobname.toString(),
-              optionListjobs.toString(),
-              optionListdir.toString(),
-              optionExport.toString(),
-              optionFilename.toString(),
-              "",
-              initialDir.toString(),
-              optionListrep.toString(),
-              optionListParam.toString(),
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              optionParams,
-              customOptions );
-
-      result = getCommandExecutor().execute( jobParams );
+      returnCode = getCommandExecutor().execute( optionRepname.toString(), optionNorep.toString(), optionUsername.toString(),
+            optionTrustUser.toString(), optionPassword.toString(), optionDirname.toString(), optionFilename.toString(), optionJobname.toString(), optionListjobs.toString(),
+            optionListdir.toString(), optionExport.toString(), initialDir.toString(), optionListrep.toString(), optionListParam.toString(),
+            optionParams, customOptions, args.toArray( new String[ args.size() ] ) );
 
     } catch ( Throwable t ) {
       t.printStackTrace();
-      result.setExitStatus( CommandExecutorCodes.Pan.UNEXPECTED_ERROR.getCode() );
+      returnCode = CommandExecutorCodes.Pan.UNEXPECTED_ERROR.getCode();
 
     } finally {
       if ( fileAppender != null ) {
@@ -297,7 +272,7 @@ public class Kitchen {
       }
     }
 
-    exitJVM( result.getExitStatus() );
+    exitJVM( returnCode );
 
   }
 

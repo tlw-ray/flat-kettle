@@ -160,11 +160,6 @@ public class CartePluginType extends BasePluginType implements PluginTypeInterfa
   }
 
   @Override
-  protected String extractSuggestion( Annotation annotation ) {
-    return null;
-  }
-
-  @Override
   protected String extractClassLoaderGroup( Annotation annotation ) {
     return ( (CarteServlet) annotation ).classLoaderGroup();
   }

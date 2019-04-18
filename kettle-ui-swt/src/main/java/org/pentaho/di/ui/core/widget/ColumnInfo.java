@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -28,8 +28,6 @@ import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.core.row.value.ValueMetaInteger;
 import org.pentaho.di.core.row.value.ValueMetaString;
 
-import java.util.function.Supplier;
-
 /**
  * Used to define the behaviour and the content of a Table column in a TableView object.
  *
@@ -50,7 +48,6 @@ public class ColumnInfo {
   private String name;
 
   private String[] combovals;
-  private Supplier<String[]> combovalsSupplier = () -> combovals;
   private boolean numeric;
   private String tooltip;
   private int allignement;
@@ -238,10 +235,6 @@ public class ColumnInfo {
     combovals = cv;
   }
 
-  public void setCombovalsSupplier( Supplier<String[]> combovalsSupplier ) {
-    this.combovalsSupplier = combovalsSupplier;
-  }
-
   public void setButtonText( String bt ) {
     button_text = bt;
   }
@@ -255,7 +248,7 @@ public class ColumnInfo {
   }
 
   public String[] getComboValues() {
-    String[] retval = combovalsSupplier.get();
+    String[] retval = combovals; // Copy structure!
     return retval;
   }
 

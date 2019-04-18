@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -53,8 +53,6 @@ public class LogChannel implements LogChannelInterface {
   private static MetricsRegistry metricsRegistry = MetricsRegistry.getInstance();
 
   private String filter;
-
-  private LogChannelFileWriterBuffer fileWriter;
 
   public LogChannel( Object subject ) {
     logLevel = DefaultLogLevel.getLogLevel();
@@ -124,13 +122,10 @@ public class LogChannel implements LogChannelInterface {
       KettleLoggingEvent loggingEvent = new KettleLoggingEvent( logMessage, System.currentTimeMillis(), logLevel );
       KettleLogStore.getAppender().addLogggingEvent( loggingEvent );
 
-      if ( this.fileWriter == null ) {
-        this.fileWriter = LoggingRegistry.getInstance().getLogChannelFileWriterBuffer( logChannelId );
-      }
-
       // add to buffer
-      if ( this.fileWriter != null ) {
-        this.fileWriter.addEvent( loggingEvent );
+      LogChannelFileWriterBuffer fileWriter = LoggingRegistry.getInstance().getLogChannelFileWriterBuffer( logChannelId );
+      if ( fileWriter != null ) {
+        fileWriter.addEvent( loggingEvent );
       }
     }
   }

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -120,7 +120,7 @@ public abstract class BaseStepData implements StepDataInterface {
    * @param status
    *          the new status.
    */
-  @Override public void setStatus( StepExecutionStatus status ) {
+  public void setStatus( StepExecutionStatus status ) {
     this.status = status;
   }
 
@@ -129,7 +129,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return the status of the step data
    */
-  @Override public StepExecutionStatus getStatus() {
+  public StepExecutionStatus getStatus() {
     return status;
   }
 
@@ -138,7 +138,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is empty
    */
-  @Override public boolean isEmpty() {
+  public boolean isEmpty() {
     return status == StepExecutionStatus.STATUS_EMPTY;
   }
 
@@ -147,7 +147,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is initialising
    */
-  @Override public boolean isInitialising() {
+  public boolean isInitialising() {
     return status == StepExecutionStatus.STATUS_INIT;
   }
 
@@ -156,7 +156,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is running
    */
-  @Override public boolean isRunning() {
+  public boolean isRunning() {
     return status == StepExecutionStatus.STATUS_RUNNING;
   }
 
@@ -165,7 +165,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is idle
    */
-  @Override public boolean isIdle() {
+  public boolean isIdle() {
     return status == StepExecutionStatus.STATUS_IDLE;
   }
 
@@ -174,7 +174,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is finished
    */
-  @Override public boolean isFinished() {
+  public boolean isFinished() {
     return status == StepExecutionStatus.STATUS_FINISHED;
   }
 
@@ -192,7 +192,7 @@ public abstract class BaseStepData implements StepDataInterface {
    *
    * @return true, if is disposed
    */
-  @Override public boolean isDisposed() {
+  public boolean isDisposed() {
     return status == StepExecutionStatus.STATUS_DISPOSED;
   }
 }

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,8 +22,6 @@
 
 package org.pentaho.di.core.injection;
 
-import java.util.List;
-
 public class MetaBeanLevel2 extends MetaBeanLevel2Base {
 
   @Injection( name = "SEPARATOR" )
@@ -37,34 +35,11 @@ public class MetaBeanLevel2 extends MetaBeanLevel2Base {
   @InjectionDeep( prefix = "THIRD" )
   private MetaBeanLevel4 filesThird;
 
-  @Injection( name = "FILENAME_ARRAY", group  = "FILENAME_LINES2" )
+  @Injection( name = "FILENAME_ARRAY" )
   String[] filenames;
-
-  @Injection( name = "ASCENDING_LIST", group = "FILENAME_LINES2" )
-  List<Boolean> ascending;
-
-  public List<Boolean> getAscending() {
-    return ascending;
-  }
-
-  public void setAscending( List<Boolean> ascending ) {
-    this.ascending = ascending;
-  }
-
-  public void setFilenames( String[] filenames ) {
-    this.filenames = filenames;
-  }
-
-  public void setFilesThird( MetaBeanLevel4 filesThird ) {
-    this.filesThird = filesThird;
-  }
 
   public String[] getFilenames() {
     return filenames;
-  }
-
-  public void setSeparator( String separator ) {
-    this.separator = separator;
   }
 
   public String getSeparator() {

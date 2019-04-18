@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -310,7 +310,7 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
     this.log = spoon.getLog();
     this.spoon = spoon;
     this.jobMeta = jobMeta;
-    spoon.clearSearchFilter();
+    spoon.selectionFilter.setText( "" );
 
     this.props = PropsUI.getInstance();
     this.areaOwners = new ArrayList<>();
@@ -1213,7 +1213,6 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
   public void mouseHover( MouseEvent e ) {
 
     boolean tip = true;
-    boolean isDeprecated = false;
 
     // toolTip.hide();
     Point real = screen2real( e.x, e.y );
@@ -1223,7 +1222,6 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
       switch ( areaOwner.getAreaType() ) {
         case JOB_ENTRY_ICON:
           JobEntryCopy jobEntryCopy = (JobEntryCopy) areaOwner.getOwner();
-          isDeprecated = jobEntryCopy.isDeprecated();
           if ( !jobEntryCopy.isMissing() && !mouseOverEntries.contains( jobEntryCopy ) ) {
             addEntryMouseOverDelayTimer( jobEntryCopy );
             redraw();
@@ -1235,9 +1233,12 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
       }
     }
 
-    // Show a tool tip upon mouse-over of an object on the canvas
-    if ( ( tip && !helpTip.isVisible() ) || isDeprecated ) {
-      setToolTip( real.x, real.y, e.x, e.y );
+    if ( tip ) {
+      // Show a tool tip upon mouse-over of an object on the canvas
+      //
+      if ( !helpTip.isVisible() ) {
+        setToolTip( real.x, real.y, e.x, e.y );
+      }
     }
   }
 
@@ -1571,7 +1572,7 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
 
   public boolean setFocus() {
     xulDomContainer.addEventHandler( this );
-    return super.setFocus();
+    return canvas.setFocus();
   }
 
   /**
@@ -2430,26 +2431,6 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
           tip.append( "The job started here since this is the furthest checkpoint "
             + "that was reached last time the transformation was executed." );
           tipImage = GUIResource.getInstance().getImageCheckpoint();
-          break;
-        case JOB_ENTRY_ICON:
-          JobEntryCopy jec = (JobEntryCopy) areaOwner.getOwner();
-          if ( jec.isDeprecated() ) { // only need tooltip if job entry is deprecated
-            tip.append( BaseMessages.getString( PKG, "JobGraph.DeprecatedEntry.Tooltip.Title" ) ).append( Const.CR );
-            String tipNext = BaseMessages.getString( PKG, "JobGraph.DeprecatedEntry.Tooltip.Message1", jec.getName() );
-            int length = tipNext.length() + 5;
-            for ( int i = 0; i < length; i++ ) {
-              tip.append( "-" );
-            }
-            tip.append( Const.CR ).append( tipNext ).append( Const.CR );
-            tip.append( BaseMessages.getString( PKG, "JobGraph.DeprecatedEntry.Tooltip.Message2" ) );
-            if ( !Utils.isEmpty( jec.getSuggestion() )
-              && !( jec.getSuggestion().startsWith( "!" ) && jec.getSuggestion().endsWith( "!" ) ) ) {
-              tip.append( " " );
-              tip.append( BaseMessages.getString( PKG, "JobGraph.DeprecatedEntry.Tooltip.Message3",
-                jec.getSuggestion() ) );
-            }
-            tipImage = GUIResource.getInstance().getImageDeprecated();
-          }
           break;
         default:
           break;
@@ -3465,7 +3446,7 @@ public class JobGraph extends AbstractGraph implements XulEventHandler, Redrawab
 
     // If the job is not running, start the transformation...
     //
-    if ( job == null || ( job.isFinished() || job.isStopped() ) && !job.isActive() ) {
+    if ( job == null || job.isFinished() && !job.isActive() ) {
       // Auto save feature...
       //
       handleJobMetaChanges( jobMeta );

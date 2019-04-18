@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -1170,7 +1170,8 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
           boolean error_found = false;
           error_message = "";
 
-          RowMetaInterface r = db.getTableFieldsMeta( schemaName, tableName );
+          String schemaTable = databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName );
+          RowMetaInterface r = db.getTableFields( schemaTable );
           if ( r != null ) {
             for ( int i = 0; i < fieldLookup.length; i++ ) {
               String lufield = fieldLookup[i];
@@ -1358,7 +1359,8 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
         db.connect();
 
         if ( !Utils.isEmpty( tableName ) ) {
-          RowMetaInterface tableFields = db.getTableFieldsMeta( schemaName, tableName );
+          String schemaTable = databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName );
+          RowMetaInterface tableFields = db.getTableFields( schemaTable );
           if ( tableFields != null ) {
             if ( prev != null && prev.size() > 0 ) {
               // Start at the top, see if the key fields exist:
@@ -1390,11 +1392,9 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
                     }
                     error_found = true;
                     error_message +=
-                        "\t\t" + dimfield
-                        + BaseMessages.getString( PKG,
-                          "DimensionLookupMeta.CheckResult.KeyNotPresentInDimensiontable" )
-                        + databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName )
-                        + ")" + Const.CR;
+                        "\t\t" + dimfield + BaseMessages.getString( PKG,
+                            "DimensionLookupMeta.CheckResult.KeyNotPresentInDimensiontable" ) + schemaTable + ")"
+                            + Const.CR;
                   } else {
                     // Is the streamvalue of the same type as the dimension value?
                     if ( strvalue.getType() != dimvalue.getType() ) {
@@ -1406,10 +1406,8 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
                       warning_found = true;
                       error_message +=
                           "\t\t" + strfield + " (" + strvalue.getOrigin() + BaseMessages.getString( PKG,
-                            "DimensionLookupMeta.CheckResult.KeyNotTheSameTypeAs" )
-                            + dimfield + " ("
-                            + databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName )
-                            + ")" + Const.CR;
+                              "DimensionLookupMeta.CheckResult.KeyNotTheSameTypeAs" ) + dimfield + " (" + schemaTable
+                              + ")" + Const.CR;
                       error_message +=
                           BaseMessages.getString( PKG, "DimensionLookupMeta.CheckResult.WarningInfoInDBConversion" );
                     }
@@ -1539,7 +1537,7 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
       Database db = createDatabaseObject();
       try {
         db.connect();
-        fields = db.getTableFieldsMeta( schemaName, tableName );
+        fields = db.getTableFields( databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName ) );
       } catch ( KettleDatabaseException dbe ) {
         logError( BaseMessages.getString( PKG, "DimensionLookupMeta.Log.DatabaseErrorOccurred" ) + dbe.getMessage() );
       } finally {
@@ -1913,10 +1911,11 @@ public class DimensionLookupMeta extends BaseStepMeta implements StepMetaInterfa
   protected RowMetaInterface getDatabaseTableFields( Database db, String schemaName, String tableName )
     throws KettleDatabaseException {
     // First try without connecting to the database... (can be S L O W)
-    RowMetaInterface extraFields = db.getTableFieldsMeta( schemaName, tableName );
+    String schemaTable = databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName );
+    RowMetaInterface extraFields = db.getTableFields( schemaTable );
     if ( extraFields == null ) { // now we need to connect
       db.connect();
-      extraFields = db.getTableFieldsMeta( schemaName, tableName );
+      extraFields = db.getTableFields( schemaTable );
     }
     return extraFields;
   }

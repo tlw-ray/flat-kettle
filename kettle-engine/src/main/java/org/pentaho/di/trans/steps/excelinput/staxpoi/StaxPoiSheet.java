@@ -272,7 +272,7 @@ public class StaxPoiSheet implements KSheet {
         // else let cell be null
         setCells( cells, undefinedColIndex, columnIndex, null );
       }
-        undefinedColIndex = columnIndex + 1;
+      undefinedColIndex = columnIndex + 1;
     }
     return cells.toArray( new StaxPoiCell[cells.size()] );
   }

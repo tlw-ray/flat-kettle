@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -28,7 +28,6 @@ import java.io.InputStream;
 
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.provider.local.LocalFile;
-import org.apache.poi.EncryptedDocumentException;
 import org.apache.poi.openxml4j.opc.OPCPackage;
 import org.apache.poi.poifs.filesystem.NPOIFSFileSystem;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -53,10 +52,6 @@ public class PoiWorkbook implements KWorkbook {
   private OPCPackage opcpkg;
 
   public PoiWorkbook( String filename, String encoding ) throws KettleException {
-    this( filename, encoding, null );
-  }
-
-  public PoiWorkbook( String filename, String encoding, String password ) throws KettleException {
     this.filename = filename;
     this.encoding = encoding;
     this.log = KettleLogStore.getLogChannelInterfaceFactory().create( this );
@@ -75,16 +70,13 @@ public class PoiWorkbook implements KWorkbook {
             opcpkg = OPCPackage.open( excelFile );
             workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create( opcpkg );
           } catch ( Exception ex ) {
-            workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create( excelFile, password );
+            workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create( excelFile );
           }
         }
       } else {
         internalIS = KettleVFS.getInputStream( filename );
-        workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create( internalIS, password );
+        workbook = org.apache.poi.ss.usermodel.WorkbookFactory.create( internalIS );
       }
-    } catch ( EncryptedDocumentException e ) {
-      log.logError( "Unable to open spreadsheet.  If the spreadsheet is password protected please double check the password is correct." );
-      throw new KettleException( e.getLocalizedMessage() );
     } catch ( Exception e ) {
       throw new KettleException( e );
     }

@@ -320,10 +320,10 @@ public class TransMeta extends AbstractMeta
         .getString( PKG, "TransMeta.TransformationType.SingleThreaded" ) );
 
     /** The code corresponding to the transformation type. */
-    private final String code;
+    private String code;
 
     /** The description of the transformation type. */
-    private final String description;
+    private String description;
 
     /**
      * Instantiates a new transformation type.
@@ -333,7 +333,7 @@ public class TransMeta extends AbstractMeta
      * @param description
      *          the description
      */
-    TransformationType( String code, String description ) {
+    private TransformationType( String code, String description ) {
       this.code = code;
       this.description = description;
     }
@@ -4667,7 +4667,7 @@ public class TransMeta extends AbstractMeta
             remarks.add( cr );
 
             if ( transLogTable.getTableName() != null ) {
-              if ( logdb.checkTableExists( transLogTable.getSchemaName(), transLogTable.getTableName() ) ) {
+              if ( logdb.checkTableExists( transLogTable.getTableName() ) ) {
                 cr =
                     new CheckResult( CheckResultInterface.TYPE_RESULT_OK, BaseMessages
                         .getString( PKG, "TransMeta.CheckResult.TypeResultOK.LoggingTableExists.Description",
@@ -5554,7 +5554,7 @@ public class TransMeta extends AbstractMeta
     setChanged();
   }
 
-  @Override protected List<SharedObjectInterface> getAllSharedObjects() {
+  protected List<SharedObjectInterface> getAllSharedObjects() {
     List<SharedObjectInterface> shared = super.getAllSharedObjects();
     shared.addAll( steps );
     shared.addAll( partitionSchemas );
@@ -5656,8 +5656,9 @@ public class TransMeta extends AbstractMeta
       variables.setVariable( Const.INTERNAL_VARIABLE_JOB_REPOSITORY_DIRECTORY, "Parent Job Repository Directory" );
     }
 
-    setInternalEntryCurrentDirectory();
-
+    variables.setVariable( Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY,
+      variables.getVariable( repository != null ? Const.INTERNAL_VARIABLE_TRANSFORMATION_REPOSITORY_DIRECTORY
+        : Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY ) );
   }
 
   /**
@@ -5705,17 +5706,10 @@ public class TransMeta extends AbstractMeta
       variables.setVariable( Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_NAME, "" );
     }
 
-    setInternalEntryCurrentDirectory();
-
+    variables.setVariable( Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY,
+        variables.getVariable( repository != null ? Const.INTERNAL_VARIABLE_TRANSFORMATION_REPOSITORY_DIRECTORY
+          : Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY ) );
   }
-
-  protected void setInternalEntryCurrentDirectory() {
-    variables.setVariable( Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY, variables.getVariable(
-      repository != null ?  Const.INTERNAL_VARIABLE_TRANSFORMATION_REPOSITORY_DIRECTORY
-        : filename != null ? Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY
-        : Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY ) );
-  }
-
 
   /**
    * Finds the mapping input step with the specified name. If no mapping input step is found, null is returned

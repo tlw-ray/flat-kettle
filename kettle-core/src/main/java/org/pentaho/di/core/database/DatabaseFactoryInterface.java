@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -27,7 +27,5 @@ import org.pentaho.di.core.exception.KettleDatabaseException;
 public interface DatabaseFactoryInterface {
 
   public String getConnectionTestReport( DatabaseMeta databaseMeta ) throws KettleDatabaseException;
-
-  public DatabaseTestResults getConnectionTestResults( DatabaseMeta databaseMeta ) throws KettleDatabaseException;
 
 }

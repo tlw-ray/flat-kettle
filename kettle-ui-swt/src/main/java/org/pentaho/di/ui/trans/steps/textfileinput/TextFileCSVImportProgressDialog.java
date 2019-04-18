@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -55,7 +55,6 @@ import org.pentaho.di.trans.steps.textfileinput.TextFileInputField;
 import org.pentaho.di.trans.steps.textfileinput.TextFileInputMeta;
 import org.pentaho.di.trans.steps.textfileinput.TextFileLine;
 import org.pentaho.di.ui.core.dialog.ErrorDialog;
-import org.pentaho.di.ui.trans.step.common.CsvInputAwareImportProgressDialog;
 
 /**
  * Takes care of displaying a dialog that will handle the wait while we're finding out what tables, views etc we can
@@ -65,7 +64,7 @@ import org.pentaho.di.ui.trans.step.common.CsvInputAwareImportProgressDialog;
  * @since 07-apr-2005
  * @deprecated replaced by implementation in the ...steps.fileinput.text package
  */
-public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgressDialog {
+public class TextFileCSVImportProgressDialog {
   private static Class<?> PKG = TextFileInputMeta.class; // for i18n purposes, needed by Translator2!!
 
   private Shell shell;
@@ -114,21 +113,10 @@ public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgr
   }
 
   public String open() {
-    return open( true );
-  }
-
-  /**
-   * @param failOnParseError if set to true, parsing failure on any line will cause parsing to be terminated; when
-   *                         set to false, parsing failure on a given line will not prevent remaining lines from
-   *                         being parsed - this allows us to analyze fields, even if some field is mis-configured
-   *                         and causes a parsing error for the values of that field.
-   */
-  @Override
-  public String open( final boolean failOnParseError ) {
     IRunnableWithProgress op = new IRunnableWithProgress() {
       public void run( IProgressMonitor monitor ) throws InvocationTargetException, InterruptedException {
         try {
-          message = doScan( monitor, failOnParseError );
+          message = doScan( monitor );
         } catch ( Exception e ) {
           e.printStackTrace();
           throw new InvocationTargetException( e,
@@ -155,10 +143,6 @@ public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgr
   }
 
   private String doScan( IProgressMonitor monitor ) throws KettleException {
-    return doScan( monitor, true );
-  }
-
-  private String doScan( IProgressMonitor monitor, final boolean failOnParseError ) throws KettleException {
     if ( samples > 0 ) {
       monitor.beginTask(
         BaseMessages.getString( PKG, "TextFileCSVImportProgressDialog.Task.ScanningFile" ), samples + 1 );
@@ -274,9 +258,10 @@ public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgr
 
     line = TextFileInput.getLine( log, reader, encodingType, fileFormatType, lineBuffer );
     fileLineNumber++;
+    int skipped = 1;
 
     if ( meta.hasHeader() ) {
-      int skipped = 0;
+
       while ( line != null && skipped < meta.getNrHeaderLines() ) {
         line = TextFileInput.getLine( log, reader, encodingType, fileFormatType, lineBuffer );
         skipped++;
@@ -319,7 +304,7 @@ public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgr
           log, new TextFileLine( line, fileLineNumber, null ), strinfo, null, 0, outputRowMeta,
           convertRowMeta, meta.getFilePaths( transMeta )[0], rownumber, delimiter, enclosure, escapeCharacter,
           null, false, false, false, false, false, false, false, false, null, null, false, null, null, null,
-          null, 0, failOnParseError );
+          null, 0 );
 
       if ( r == null ) {
         errorFound = true;
@@ -335,7 +320,7 @@ public class TextFileCSVImportProgressDialog implements CsvInputAwareImportProgr
           evaluator = evaluators.get( i );
         }
 
-        String string = getStringFromRow( rowMeta, r, i, failOnParseError );
+        String string = rowMeta.getString( r, i );
 
         if ( i == 0 ) {
           System.out.println();

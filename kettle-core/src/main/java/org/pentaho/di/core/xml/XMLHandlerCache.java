@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -46,7 +46,7 @@ import java.util.WeakHashMap;
  */
 public class XMLHandlerCache {
 
-  private static final XMLHandlerCache instance = new XMLHandlerCache();
+  private static XMLHandlerCache instance;
 
   Map<XMLHandlerCacheEntry, Integer> cache;
 
@@ -57,7 +57,10 @@ public class XMLHandlerCache {
     cacheHits = 0;
   }
 
-  public static XMLHandlerCache getInstance() {
+  public static synchronized XMLHandlerCache getInstance() {
+    if ( instance == null ) {
+      return instance = new XMLHandlerCache();
+    }
     return instance;
   }
 

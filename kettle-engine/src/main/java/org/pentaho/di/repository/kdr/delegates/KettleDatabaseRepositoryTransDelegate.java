@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.google.common.base.Preconditions;
 import org.pentaho.di.cluster.ClusterSchema;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.core.Const;
@@ -149,7 +148,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
    *          the transformation metadata to store
    * @param monitor
    *          the way we report progress to the user, can be null if no UI is present
-   * @param overwriteAssociated
+   * @param overwrite
    *          Overwrite existing object(s)?
    * @throws KettleException
    *           if an error occurs.
@@ -419,6 +418,8 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Save the parameters of this transformation to the repository.
    *
+   * @param rep
+   *          The repository to save to.
    *
    * @throws KettleException
    *           Upon any error.
@@ -438,6 +439,8 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Read a transformation with a certain name from a repository
    *
+   * @param rep
+   *          The repository to read from.
    * @param transname
    *          The name of the transformation.
    * @param repdir
@@ -684,6 +687,9 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
 
   /**
    * Load the transformation name & other details from a repository.
+   *
+   * @param rep
+   *          The repository to load the details from.
    */
   private void loadRepTrans( TransMeta transMeta ) throws KettleException {
     try {
@@ -826,6 +832,9 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Load the parameters of this transformation from the repository. The current ones already loaded will be erased.
    *
+   * @param rep
+   *          The repository to load from.
+   *
    * @throws KettleException
    *           Upon any error.
    */
@@ -939,7 +948,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Read all the databases from the repository, insert into the TransMeta object, overwriting optionally
    *
-   * @param transMeta
+   * @param TransMeta
    *          The transformation to load into.
    * @param overWriteShared
    *          if an object with the same name exists, overwrite
@@ -976,7 +985,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Read the clusters in the repository and add them to this transformation if they are not yet present.
    *
-   * @param transMeta
+   * @param TransMeta
    *          The transformation to load into.
    * @param overWriteShared
    *          if an object with the same name exists, overwrite
@@ -1008,7 +1017,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Read the partitions in the repository and add them to this transformation if they are not yet present.
    *
-   * @param transMeta
+   * @param TransMeta
    *          The transformation to load into.
    * @param overWriteShared
    *          if an object with the same name exists, overwrite
@@ -1039,7 +1048,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
   /**
    * Read the slave servers in the repository and add them to this transformation if they are not yet present.
    *
-   * @param transMeta
+   * @param TransMeta
    *          The transformation to load into.
    * @param overWriteShared
    *          if an object with the same name exists, overwrite
@@ -1169,7 +1178,7 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
         hopTransMeta.setToStep( StepMeta.findStep( steps, stepMeta.getName() ) );
       }
 
-      if ( hopTransMeta.getFromStep() == null ) {
+      if ( hopTransMeta.getFromStep() == null || hopTransMeta.getFromStep() == null ) {
         // This not a valid hop. Skipping it is better than refusing to load the transformation. PDI-5519
         //
         return null;
@@ -1336,10 +1345,9 @@ public class KettleDatabaseRepositoryTransDelegate extends KettleDatabaseReposit
     step = (StepMeta) logTable.getSubject( TransLogTable.ID.LINES_REJECTED );
     if ( step != null ) {
       ObjectId rejectedId = step.getObjectId();
-      Preconditions.checkNotNull( rejectedId );
       repository.connectionDelegate.insertTransAttribute(
         transMeta.getObjectId(), 0, KettleDatabaseRepository.TRANS_ATTRIBUTE_ID_STEP_REJECTED,
-        Long.valueOf( rejectedId.toString() ), null );
+        rejectedId == null ? null : Long.valueOf( rejectedId.toString() ), null );
     }
 
     repository.connectionDelegate.insertTransAttribute(

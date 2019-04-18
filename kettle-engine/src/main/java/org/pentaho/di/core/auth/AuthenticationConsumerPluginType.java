@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -115,11 +115,6 @@ public class AuthenticationConsumerPluginType extends BasePluginType implements 
   }
 
   @Override
-  protected String extractSuggestion( Annotation annotation ) {
-    return null;
-  }
-
-  @Override
   protected String extractImageFile( Annotation annotation ) {
     return "";
   }
@@ -133,4 +128,5 @@ public class AuthenticationConsumerPluginType extends BasePluginType implements 
   protected void registerXmlPlugins() throws KettlePluginException {
 
   }
+
 }

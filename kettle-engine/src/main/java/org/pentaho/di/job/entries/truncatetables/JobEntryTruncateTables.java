@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -208,25 +208,32 @@ public class JobEntryTruncateTables extends JobEntryBase implements Cloneable, J
 
   private boolean truncateTables( String tablename, String schemaname, Database db ) {
     boolean retval = false;
+    String realSchemaname = schemaname;
+    String realTablename = tablename;
     try {
+
+      if ( !Utils.isEmpty( realSchemaname ) ) {
+        realTablename = db.getDatabaseMeta().getQuotedSchemaTableCombination( realSchemaname, realTablename );
+      }
+
       // check if table exists!
-      if ( db.checkTableExists( schemaname, tablename ) ) {
-        if ( !Utils.isEmpty( schemaname ) ) {
-          db.truncateTable( schemaname, tablename );
+      if ( db.checkTableExists( realTablename ) ) {
+        if ( !Utils.isEmpty( realSchemaname ) ) {
+          db.truncateTable( realSchemaname, tablename );
         } else {
           db.truncateTable( tablename );
         }
 
         if ( log.isDetailed() ) {
-          logDetailed( BaseMessages.getString( PKG, "JobEntryTruncateTables.Log.TableTruncated", tablename ) );
+          logDetailed( BaseMessages.getString( PKG, "JobEntryTruncateTables.Log.TableTruncated", realTablename ) );
         }
 
         retval = true;
       } else {
-        logError( BaseMessages.getString( PKG, "JobEntryTruncateTables.Error.CanNotFindTable", tablename ) );
+        logError( BaseMessages.getString( PKG, "JobEntryTruncateTables.Error.CanNotFindTable", realTablename ) );
       }
     } catch ( Exception e ) {
-      logError( BaseMessages.getString( PKG, "JobEntryTruncateTables.Error.CanNotTruncateTables", tablename, e
+      logError( BaseMessages.getString( PKG, "JobEntryTruncateTables.Error.CanNotTruncateTables", realTablename, e
         .toString() ) );
     }
     return retval;

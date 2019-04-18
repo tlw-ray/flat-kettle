@@ -136,11 +136,6 @@ public class CompressionPluginType extends BasePluginType implements PluginTypeI
   }
 
   @Override
-  protected String extractSuggestion( Annotation annotation ) {
-    return null;
-  }
-
-  @Override
   protected String extractClassLoaderGroup( Annotation annotation ) {
     return ( (CompressionPlugin) annotation ).classLoaderGroup();
   }

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -87,9 +87,14 @@ public class CsvInputRowNumberTest extends CsvInputUnitTestBase {
     TransTestingUtil.assertResult( expected, actual );
   }
 
-  @Override
-  CsvInputMeta createMeta( File file, TextFileInputField[] fields ) {
-    CsvInputMeta meta = super.createMeta( file, fields );
+  private CsvInputMeta createMeta( File file, TextFileInputField[] fields ) {
+    CsvInputMeta meta = new CsvInputMeta();
+    meta.setFilename( file.getAbsolutePath() );
+    meta.setDelimiter( "," );
+    meta.setEncoding( "utf-8" );
+    meta.setBufferSize( "1024" );
+    meta.setInputFields( fields );
+    meta.setHeaderPresent( false );
     meta.setRowNumField( "rownum" );
     return meta;
   }

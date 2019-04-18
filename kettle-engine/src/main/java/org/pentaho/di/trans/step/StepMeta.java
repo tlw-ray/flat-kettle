@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -28,7 +28,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.lang.ArrayUtils;
 import org.pentaho.di.base.BaseMeta;
 import org.pentaho.di.cluster.ClusterSchema;
 import org.pentaho.di.core.AttributesInterface;
@@ -103,10 +102,6 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
 
   private boolean distributes;
 
-  private boolean isDeprecated;
-
-  private String suggestion = "";
-
   private RowDistributionInterface rowDistribution;
 
   private String copiesString;
@@ -174,9 +169,7 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
    */
   public StepMeta( String stepname, StepMetaInterface stepMetaInterface ) {
     if ( stepMetaInterface != null ) {
-      PluginRegistry registry = PluginRegistry.getInstance();
-      this.stepid = registry.getPluginId( StepPluginType.class, stepMetaInterface );
-      setDeprecationAndSuggestedStep();
+      this.stepid = PluginRegistry.getInstance().getPluginId( StepPluginType.class, stepMetaInterface );
     }
     this.name = stepname;
     setStepMetaInterface( stepMetaInterface );
@@ -288,8 +281,8 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
    *          The XML step node.
    * @param databases
    *          A list of databases
-   * @param metaStore
-   *          The IMetaStore.
+   * @param counters
+   *          A map with all defined counters.
    *
    */
   public StepMeta( Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException,
@@ -300,7 +293,6 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
     try {
       name = XMLHandler.getTagValue( stepnode, "name" );
       stepid = XMLHandler.getTagValue( stepnode, "type" );
-      setDeprecationAndSuggestedStep();
 
       // Create a new StepMetaInterface object...
       PluginInterface sp = registry.findPluginWithId( StepPluginType.class, stepid );
@@ -1149,30 +1141,7 @@ public class StepMeta extends SharedObjectBase implements Cloneable, Comparable<
     return attributes.get( key );
   }
 
-  private void setDeprecationAndSuggestedStep() {
-    PluginRegistry registry = PluginRegistry.getInstance();
-    final List<PluginInterface> deprecatedSteps = registry.getPluginsByCategory( StepPluginType.class,
-      BaseMessages.getString( PKG, "BaseStep.Category.Deprecated" ) );
-    for ( PluginInterface p : deprecatedSteps ) {
-      String[] ids = p.getIds();
-      if ( !ArrayUtils.isEmpty( ids ) && ids[0].equals( this.stepid ) ) {
-        this.isDeprecated = true;
-        this.suggestion = registry.findPluginWithId( StepPluginType.class, this.stepid ) != null
-          ? registry.findPluginWithId( StepPluginType.class, this.stepid ).getSuggestion() : "";
-        break;
-      }
-    }
-  }
-
   public boolean isMissing() {
     return this.stepMetaInterface instanceof MissingTrans;
-  }
-
-  public boolean isDeprecated() {
-    return isDeprecated;
-  }
-
-  public String getSuggestion() {
-    return suggestion;
   }
 }

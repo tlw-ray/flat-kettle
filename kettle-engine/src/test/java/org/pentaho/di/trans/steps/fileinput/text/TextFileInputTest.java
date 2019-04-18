@@ -287,7 +287,6 @@ public class TextFileInputTest {
     Mockito.doReturn( rwi ).when( rowset ).getRowMeta();
     Mockito.when( rwi.getString( obj2, 0 ) ).thenReturn( "filename1", "filename2" );
     List<Object[]> output = TransTestingUtil.execute( input, meta, data, 0, false );
-
     List<String> passThroughKeys = new ArrayList<>( data.passThruFields.keySet() );
     Assert.assertNotNull( passThroughKeys );
     // set order is not guaranteed - order alphabetically

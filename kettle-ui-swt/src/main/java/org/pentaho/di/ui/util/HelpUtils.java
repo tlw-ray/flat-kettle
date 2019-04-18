@@ -21,6 +21,7 @@
 package org.pentaho.di.ui.util;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.browser.LocationListener;
 import org.eclipse.swt.events.SelectionAdapter;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.layout.FormAttachment;
@@ -125,8 +126,9 @@ public class HelpUtils {
     return helpDlg;
   }
 
-  public static ShowHelpDialog openHelpDialog( Shell shell, String dialogTitle, String url ) {
-    ShowHelpDialog helpDlg = new ShowHelpDialog( shell, dialogTitle, url );
+  public static ShowHelpDialog openHelpDialog( Shell shell, String dialogTitle, String url,
+                                               LocationListener locationListener ) {
+    ShowHelpDialog helpDlg = new ShowHelpDialog( shell, dialogTitle, url, locationListener );
     helpDlg.open();
     return helpDlg;
   }

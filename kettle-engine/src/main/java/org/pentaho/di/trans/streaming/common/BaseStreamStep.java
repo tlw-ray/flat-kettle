@@ -49,11 +49,10 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
-@SuppressWarnings ( "WeakerAccess" )
 public class BaseStreamStep extends BaseStep {
 
   private static final Class<?> PKG = BaseStreamStep.class;
-  protected BaseStreamStepMeta variablizedStepMeta;
+  private BaseStreamStepMeta stepMeta;
 
   protected SubtransExecutor subtransExecutor;
   protected StreamWindow<List<Object>, Result> window;
@@ -66,20 +65,20 @@ public class BaseStreamStep extends BaseStep {
 
   public boolean init( StepMetaInterface stepMetaInterface, StepDataInterface stepDataInterface ) {
     Preconditions.checkNotNull( stepMetaInterface );
-    variablizedStepMeta = (BaseStreamStepMeta) stepMetaInterface;
-    variablizedStepMeta.setParentStepMeta( getStepMeta() );
-    variablizedStepMeta.setFileName( variablizedStepMeta.getTransformationPath() );
+    stepMeta = (BaseStreamStepMeta) stepMetaInterface;
+    stepMeta.setParentStepMeta( getStepMeta() );
+    stepMeta.setFileName( stepMeta.getTransformationPath() );
+
 
     boolean superInit = super.init( stepMetaInterface, stepDataInterface );
 
     try {
       TransMeta transMeta = TransExecutorMeta
-        .loadMappingMeta( variablizedStepMeta, getTransMeta().getRepository(), getTransMeta().getMetaStore(),
+        .loadMappingMeta( stepMeta, getTransMeta().getRepository(), getTransMeta().getMetaStore(),
           getParentVariableSpace() );
-      variablizedStepMeta = (BaseStreamStepMeta) variablizedStepMeta.withVariables( this );
       subtransExecutor = new SubtransExecutor( getStepname(),
         getTrans(), transMeta, true,
-        new TransExecutorParameters(), variablizedStepMeta.getSubStep() );
+        new TransExecutorParameters(), environmentSubstitute( stepMeta.getSubStep() ) );
 
     } catch ( KettleException e ) {
       log.logError( e.getLocalizedMessage(), e );
@@ -87,8 +86,8 @@ public class BaseStreamStep extends BaseStep {
     }
 
     List<CheckResultInterface> remarks = new ArrayList<>();
-    variablizedStepMeta.check(
-      remarks, getTransMeta(), variablizedStepMeta.getParentStepMeta(),
+    stepMeta.check(
+      remarks, getTransMeta(), stepMeta.getParentStepMeta(),
       null, null, null, null, //these parameters are not used inside the method
       variables, getRepository(), getMetaStore() );
     boolean errorsPresent =
@@ -114,27 +113,24 @@ public class BaseStreamStep extends BaseStep {
     Preconditions.checkNotNull( source );
     Preconditions.checkNotNull( window );
 
-    try {
-      source.open();
+    source.open();
 
-      bufferStream().forEach( result -> {
-        if ( result.isSafeStop() ) {
-          getTrans().safeStop();
-        }
+    bufferStream().forEach( result -> {
+      if ( result.isSafeStop() ) {
+        getTrans().safeStop();
+      }
 
-        putRows( result.getRows() );
-      } );
-      super.setOutputDone();
+      putRows( result.getRows() );
+    } );
+    super.setOutputDone();
 
-    } finally {
-      // Needed for when an Abort Step is used.
-      source.close();
-    }
+    // Needed for when an Abort Step is used.
+    source.close();
     return false;
   }
 
   private Iterable<Result> bufferStream() {
-    return window.buffer( source.flowable() );
+    return window.buffer( source.observable() );
   }
 
   @Override
@@ -178,7 +174,7 @@ public class BaseStreamStep extends BaseStep {
 
   protected int getBatchSize() {
     try {
-      return Integer.parseInt( variablizedStepMeta.getBatchSize() );
+      return Integer.parseInt( stepMeta.getBatchSize() );
     } catch ( NumberFormatException nfe ) {
       return 50;
     }
@@ -186,17 +182,9 @@ public class BaseStreamStep extends BaseStep {
 
   protected long getDuration() {
     try {
-      return Long.parseLong( variablizedStepMeta.getBatchDuration() );
+      return Long.parseLong( stepMeta.getBatchDuration() );
     } catch ( NumberFormatException nfe ) {
       return 5000L;
-    }
-  }
-
-  protected int getParallelism() {
-    try {
-      return Integer.parseInt( variablizedStepMeta.getParallelism() );
-    } catch ( NumberFormatException nfe ) {
-      return 1;
     }
   }
 

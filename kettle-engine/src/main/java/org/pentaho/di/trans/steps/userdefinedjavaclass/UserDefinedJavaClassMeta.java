@@ -24,8 +24,10 @@ package org.pentaho.di.trans.steps.userdefinedjavaclass;
 
 import com.google.common.annotations.VisibleForTesting;
 import org.codehaus.janino.ClassBodyEvaluator;
-import org.codehaus.commons.compiler.CompileException;
+import org.codehaus.janino.CompileException;
+import org.codehaus.janino.Parser.ParseException;
 import org.codehaus.janino.Scanner;
+import org.codehaus.janino.Scanner.ScanException;
 import org.pentaho.di.core.CheckResult;
 import org.pentaho.di.core.CheckResultInterface;
 import org.pentaho.di.core.Const;
@@ -68,7 +70,6 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @InjectionSupported( localizationPrefix = "UserDefinedJavaClass.Injection.", groups = {
   "PARAMETERS", "TARGET_STEPS", "INFO_STEPS", "JAVA_CLASSES", "FIELD_INFO" } )
@@ -157,7 +158,7 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
   }
 
   @VisibleForTesting
-  Class<?> cookClass( UserDefinedJavaClassDef def, ClassLoader clsloader ) throws CompileException, IOException, RuntimeException, KettleStepException {
+  Class<?> cookClass( UserDefinedJavaClassDef def ) throws CompileException, ParseException, ScanException, IOException, RuntimeException, KettleStepException {
 
     String checksum = def.getChecksum();
     Class<?> rtn = UserDefinedJavaClassMeta.classCache.getIfPresent( checksum );
@@ -170,12 +171,7 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
     }
 
     ClassBodyEvaluator cbe = new ClassBodyEvaluator();
-    if ( clsloader == null ) {
-      cbe.setParentClassLoader( Thread.currentThread().getContextClassLoader() );
-    } else {
-      cbe.setParentClassLoader( clsloader );
-    }
-
+    cbe.setParentClassLoader( Thread.currentThread().getContextClassLoader() );
     cbe.setClassName( def.getClassName() );
 
     StringReader sr;
@@ -199,16 +195,13 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
   @SuppressWarnings( "unchecked" )
   public void cookClasses() {
     cookErrors.clear();
-    ClassLoader clsloader = null;
     for ( UserDefinedJavaClassDef def : getDefinitions() ) {
       if ( def.isActive() ) {
         try {
-          Class<?> cookedClass = cookClass( def, clsloader );
-          clsloader = cookedClass.getClassLoader();
+          Class<?> cookedClass = cookClass( def );
           if ( def.isTransformClass() ) {
             cookedTransformClass = (Class<TransformClassBase>) cookedClass;
           }
-
         } catch ( Throwable e ) {
           CompileException exception = new CompileException( e.getMessage(), null );
           exception.setStackTrace( new StackTraceElement[] {} );
@@ -254,36 +247,9 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
     return Collections.unmodifiableList( definitions );
   }
 
-  /**
-   * This method oders the classes by sorting all the normal classes by alphabetic order and then sorting
-   * all the transaction classes by alphabetical order. This makes the resolution of classes deterministic by type and
-   * then by class name.
-   * @param definitions - Unorder list of user defined classes
-   * @return - Ordered list of user defined classes
-   */
-  @VisibleForTesting
-  protected List<UserDefinedJavaClassDef> orderDefinitions( List<UserDefinedJavaClassDef> definitions ) {
-    List<UserDefinedJavaClassDef> orderedDefinitions = new ArrayList<>( definitions.size() );
-    List<UserDefinedJavaClassDef> transactions =
-      definitions.stream()
-        .filter( def -> def.isTransformClass() && def.isActive() )
-        .sorted( ( p1, p2 ) -> p1.getClassName().compareTo( p2.getClassName() ) )
-        .collect( Collectors.toList() );
-
-    List<UserDefinedJavaClassDef> normalClasses =
-      definitions.stream()
-        .filter( def -> !def.isTransformClass() )
-        .sorted( ( p1, p2 ) -> p1.getClassName().compareTo( p2.getClassName() ) )
-        .collect( Collectors.toList() );
-
-    orderedDefinitions.addAll( normalClasses );
-    orderedDefinitions.addAll( transactions );
-    return orderedDefinitions;
-  }
-
   public void replaceDefinitions( List<UserDefinedJavaClassDef> definitions ) {
     this.definitions.clear();
-    this.definitions = orderDefinitions( definitions );
+    this.definitions.addAll( definitions );
     changed = true;
   }
 
@@ -358,7 +324,6 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
           XMLHandler.getTagValue( fnode, ElementNames.class_name.name() ),
           XMLHandler.getTagValue( fnode, ElementNames.class_source.name() ) ) );
       }
-      definitions = orderDefinitions( definitions );
 
       Node fieldsNode = XMLHandler.getSubNode( stepnode, ElementNames.fields.name() );
       int nrfields = XMLHandler.countNodes( fieldsNode, ElementNames.field.name() );
@@ -577,8 +542,6 @@ public class UserDefinedJavaClassMeta extends BaseStepMeta implements StepMetaIn
           rep.getStepAttributeString( id_step, i, ElementNames.class_source.name() ) ) );
 
       }
-
-      definitions = orderDefinitions( definitions );
 
       int nrfields = rep.countNrStepAttributes( id_step, ElementNames.field_name.name() );
       for ( int i = 0; i < nrfields; i++ ) {

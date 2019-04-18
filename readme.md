@@ -20,6 +20,11 @@
 
 ## 日志
 
+- 20190418
+
+    - 导入pdi-plugins-repositories时出现问题无法引入版本pentaho-platform-extensions的8.3.0.0-196或84和pentaho-i18n-bundle:8.3.0.0-208，虽然这两项在仓库中可以找到。
+    - 考虑降级到8.1.0.6版本根据已经发布的webSpoon也是在8.1上发布的。
+
 - 20190414
     - 导入kettle-core
     - 导入kettle-engine

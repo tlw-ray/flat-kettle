@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -59,15 +59,13 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
     void add( String filename, FileStream fileStreams );
   }
 
-  public class FileStreamsCollectionEntry {
-    private String fileName;
-    private long index = 0;
-    private FileStream fileStream;
+  public class FileStreamsKey implements Comparable<FileStreamsKey> {
+    String fileName;
+    long index = 0;
 
-    public FileStreamsCollectionEntry( String fileName, long index, FileStream fileStream ) {
+    public FileStreamsKey( String fileName, long index ) {
       this.fileName = fileName;
       this.index = index;
-      this.fileStream = fileStream;
     }
 
     public String getFileName() {
@@ -86,12 +84,14 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
       this.index = index;
     }
 
-    public FileStream getFileStream() {
-      return fileStream;
+    @Override
+    public int compareTo( FileStreamsKey o ) {
+      return fileName.compareTo( o.getFileName() );
     }
 
-    public void setFileStream( FileStream fileStream ) {
-      this.fileStream = fileStream;
+    @Override
+    public boolean equals( Object obj ) {
+      return fileName.equals( obj );
     }
   }
 
@@ -264,25 +264,16 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
     }
   }
 
-  public class FileStreamsMap implements IFileStreamsCollection  {
-    private int numOpenFiles = 0;
-    private TreeMap<String, FileStreamsCollectionEntry> fileNameMap = new TreeMap<>();
-    private TreeMap<Long, FileStreamsCollectionEntry> indexMap = new TreeMap<>();
+  public class FileStreamsMap extends TreeMap<FileStreamsKey, FileStream> implements IFileStreamsCollection  {
+    int numOpenFiles = 0;
 
     @Override
-    public int size() {
-      return fileNameMap.size();
-    }
-
-    @Override
-    public void add( String fileName, FileStream fileWriterOutputStream ) {
+    public void add( String filename, FileStream fileWriterOutputStream ) {
       long index = 0;
       if ( size() > 0 ) {
-        index = indexMap.lastKey() + 1;
+        index = lastKey().index + 1;
       }
-      FileStreamsCollectionEntry newEntry = new FileStreamsCollectionEntry( fileName, index, fileWriterOutputStream );
-      fileNameMap.put( fileName, newEntry );
-      indexMap.put( index, newEntry );
+      put( new FileStreamsKey( filename, index ), fileWriterOutputStream );
       if ( fileWriterOutputStream.isOpen() ) {
         numOpenFiles++;
       }
@@ -291,18 +282,19 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
 
     @Override
     public FileStream getStream( String filename ) {
-      if ( fileNameMap.containsKey( filename ) ) {
-        return fileNameMap.get( filename ).getFileStream();
-      } else {
-        return null;
-      }
+      return get( new FileStreamsKey( filename, -1 ) );
+    }
+
+    private FileStream remove( String filename ) {
+      return remove( new FileStreamsKey( filename, -1 ) );
     }
 
     @Override
     public String getLastFileName() {
       String filename = null;
-      if ( indexMap.size() > 0 ) {
-        filename = indexMap.lastEntry().getValue().getFileName();
+      Map.Entry<TextFileOutputData.FileStreamsKey, FileStream> lastEntry = lastEntry();
+      if ( lastEntry != null ) {
+        filename = lastEntry.getKey( ).getFileName( );
       }
       return filename;
     }
@@ -310,8 +302,9 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
     @Override
     public FileStream getLastStream() {
       FileStream lastStream = null;
-      if ( indexMap.size() > 0 ) {
-        lastStream = indexMap.lastEntry().getValue().getFileStream();
+      Map.Entry<TextFileOutputData.FileStreamsKey, FileStream> lastEntry = lastEntry();
+      if ( lastEntry != null ) {
+        lastStream = lastEntry.getValue( );
       }
       return lastStream;
     }
@@ -325,13 +318,11 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
     public void closeOldestOpenFile( boolean removeFileFromCollection ) throws IOException {
       FileStream oldestOpenStream = null;
       String oldestOpenFileName = null;
-      Long oldestOpenFileIndex = null;
-      for ( Map.Entry<Long, FileStreamsCollectionEntry> mapEntry : indexMap.entrySet() ) {
-        FileStreamsCollectionEntry existingStream = mapEntry.getValue();
-        if ( existingStream.getFileStream().isOpen() ) {
-          oldestOpenStream = existingStream.getFileStream();
-          oldestOpenFileName = existingStream.getFileName();
-          oldestOpenFileIndex = existingStream.getIndex();
+      for ( Map.Entry<TextFileOutputData.FileStreamsKey, FileStream> mapEntry : entrySet() ) {
+        FileStream existingStream = mapEntry.getValue();
+        if ( existingStream.isOpen() ) {
+          oldestOpenStream = existingStream;
+          oldestOpenFileName = mapEntry.getKey().getFileName();
           break;
         }
       }
@@ -340,20 +331,19 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
         oldestOpenStream.close();
         numOpenFiles--;
         if ( removeFileFromCollection ) {
-          fileNameMap.remove( oldestOpenFileName );
-          indexMap.remove( oldestOpenFileIndex );
+          remove( oldestOpenFileName );
         }
       }
     }
 
     @Override
     public void flushOpenFiles( boolean closeAfterFlush ) {
-      for ( FileStreamsCollectionEntry collectionEntry : indexMap.values() ) {
-        if ( collectionEntry.getFileStream().isDirty() ) {
+      for ( FileStream outputStream : values() ) {
+        if ( outputStream.isDirty() ) {
           try {
-            collectionEntry.getFileStream().flush();
+            outputStream.flush();
             if ( closeAfterFlush ) {
-              collectionEntry.getFileStream().close();
+              outputStream.close();
             }
           } catch ( IOException e ) {
             e.printStackTrace();
@@ -374,10 +364,10 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
 
     @Override
     public void closeStream( OutputStream outputStream ) throws IOException {
-      for ( Map.Entry<Long, FileStreamsCollectionEntry> mapEntry : indexMap.entrySet() ) {
-        FileStream fileStream = mapEntry.getValue().getFileStream();
+      for ( Map.Entry<TextFileOutputData.FileStreamsKey, FileStream> mapEntry : entrySet() ) {
+        FileStream fileStream = mapEntry.getValue();
         if ( ( fileStream.getBufferedOutputStream() == outputStream ) || ( fileStream.getCompressedOutputStream() == outputStream ) || ( fileStream.getFileOutputStream() == outputStream ) ) {
-          closeFile( mapEntry.getValue().getFileName() );
+          closeFile( mapEntry.getKey().getFileName() );
         }
       }
     }
@@ -409,7 +399,6 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
   public OutputStream fos;
 
   public RowMetaInterface outputRowMeta;
-  public RowMetaInterface inputRowMeta;
 
   public byte[] binarySeparator;
   public byte[] binaryEnclosure;
@@ -430,8 +419,6 @@ public class TextFileOutputData extends BaseStepData implements StepDataInterfac
   public long lastFileFlushTime = 0;
 
   public String fileName;
-
-  public int splitEvery;
 
   public TextFileOutputData() {
     super();

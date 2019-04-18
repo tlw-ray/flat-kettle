@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -109,7 +109,7 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
 
   /** Commit size for inserts/updates */
   @Injection( name = "COMMIT_SIZE" )
-  private String commitSize;
+  private int commitSize;
 
   @Injection( name = "TABLE_NAME_IN_FIELD" )
   private boolean tablenameInField;
@@ -225,7 +225,7 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
   /**
    * @return Returns the commitSize.
    */
-  public String getCommitSize() {
+  public int getCommitSize() {
     return commitSize;
   }
 
@@ -234,14 +234,6 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
    *          The commitSize to set.
    */
   public void setCommitSize( int commitSize ) {
-    this.commitSize = Integer.toString( commitSize );
-  }
-
-  /**
-   * @param commitSize
-   *          The commitSize to set.
-   */
-  public void setCommitSize( String commitSize ) {
     this.commitSize = commitSize;
   }
 
@@ -420,11 +412,13 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
 
   private void readData( Node stepnode, List<? extends SharedObjectInterface> databases ) throws KettleXMLException {
     try {
+      String csize;
       int nrkeys, nrvalues;
       this.databases = databases;
       String con = XMLHandler.getTagValue( stepnode, "connection" );
       databaseMeta = DatabaseMeta.findDatabase( databases, con );
-      commitSize = XMLHandler.getTagValue( stepnode, "commit" );
+      csize = XMLHandler.getTagValue( stepnode, "commit" );
+      commitSize = Const.toInt( csize, 0 );
       schemaName = XMLHandler.getTagValue( stepnode, "lookup", "schema" );
       tableName = XMLHandler.getTagValue( stepnode, "lookup", "table" );
 
@@ -488,7 +482,7 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
     keyStream = null;
     updateLookup = null;
     databaseMeta = null;
-    commitSize = "100";
+    commitSize = 100;
     schemaName = "";
     tableName = BaseMessages.getString( PKG, "SynchronizeAfterMergeMeta.DefaultTableName" );
     operationOrderField = null;
@@ -567,7 +561,7 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
       this.databases = databases;
       databaseMeta = rep.loadDatabaseMetaFromStepAttribute( id_step, "id_connection", databases );
 
-      commitSize = rep.getStepAttributeString( id_step, "commit" );
+      commitSize = (int) rep.getStepAttributeInteger( id_step, "commit" );
       schemaName = rep.getStepAttributeString( id_step, "schema" );
       tableName = rep.getStepAttributeString( id_step, "table" );
 
@@ -668,7 +662,8 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
           error_message = "";
 
           // Check fields in table
-          RowMetaInterface r = db.getTableFieldsMeta( schemaName, tableName );
+          String schemaTable = databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName );
+          RowMetaInterface r = db.getTableFields( schemaTable );
           if ( r != null ) {
             cr =
               new CheckResult( CheckResult.TYPE_RESULT_OK, BaseMessages.getString(
@@ -821,7 +816,7 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
           boolean errorDiffField = false;
 
           RowMetaInterface r =
-            db.getTableFieldsMeta( schemaName, tableName );
+            db.getTableFields( databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName ) );
           if ( r != null ) {
             for ( int i = 0; i < updateStream.length; i++ ) {
               String lufieldstream = updateStream[i];
@@ -1052,9 +1047,11 @@ public class SynchronizeAfterMergeMeta extends BaseStepMeta implements StepMetaI
         db.connect();
 
         if ( !Utils.isEmpty( realTableName ) ) {
+          String schemaTable = databaseMeta.getQuotedSchemaTableCombination( realSchemaName, realTableName );
+
           // Check if this table exists...
-          if ( db.checkTableExists( realSchemaName, realTableName ) ) {
-            return db.getTableFieldsMeta( realSchemaName, realTableName );
+          if ( db.checkTableExists( schemaTable ) ) {
+            return db.getTableFields( schemaTable );
           } else {
             throw new KettleException( BaseMessages.getString(
               PKG, "SynchronizeAfterMergeMeta.Exception.TableNotFound" ) );

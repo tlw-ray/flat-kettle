@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -61,9 +61,6 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
   /** The calculations to be performed */
   private CalculatorMetaFunction[] calculation;
 
-  /** Raise an error if file does not exist */
-  private boolean failIfNoFile;
-
   public CalculatorMetaFunction[] getCalculation() {
     return calculation;
   }
@@ -72,22 +69,12 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
     this.calculation = calcTypes;
   }
 
-  public boolean isFailIfNoFile() {
-    return failIfNoFile;
-  }
-
-  public void setFailIfNoFile( boolean failIfNoFile ) {
-    this.failIfNoFile = failIfNoFile;
-  }
-
   public void allocate( int nrCalcs ) {
     calculation = new CalculatorMetaFunction[nrCalcs];
   }
 
   @Override
   public void loadXML( Node stepnode, List<DatabaseMeta> databases, IMetaStore metaStore ) throws KettleXMLException {
-    failIfNoFile = "Y".equalsIgnoreCase( XMLHandler.getTagValue( stepnode, "failIfNoFile" ) );
-
     int nrCalcs = XMLHandler.countNodes( stepnode, CalculatorMetaFunction.XML_TAG );
     allocate( nrCalcs );
     for ( int i = 0; i < nrCalcs; i++ ) {
@@ -99,8 +86,6 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
   @Override
   public String getXML() {
     StringBuilder retval = new StringBuilder( 300 );
-
-    retval.append( "    " ).append( XMLHandler.addTagValue( "failIfNoFile", failIfNoFile ) );
 
     if ( calculation != null ) {
       for ( CalculatorMetaFunction aCalculation : calculation ) {
@@ -129,7 +114,6 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
   @Override
   public Object clone() {
     CalculatorMeta retval = (CalculatorMeta) super.clone();
-    retval.setFailIfNoFile( isFailIfNoFile() );
     if ( calculation != null ) {
       retval.allocate( calculation.length );
       for ( int i = 0; i < calculation.length; i++ ) {
@@ -143,14 +127,11 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
 
   @Override
   public void setDefault() {
-    failIfNoFile = true;
     calculation = new CalculatorMetaFunction[0];
   }
 
   @Override
   public void readRep( Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases ) throws KettleException {
-    failIfNoFile = rep.getStepAttributeBoolean( id_step, "failIfNoFile" );
-
     int nrCalcs = rep.countNrStepAttributes( id_step, "field_name" );
     allocate( nrCalcs );
     for ( int i = 0; i < nrCalcs; i++ ) {
@@ -160,7 +141,6 @@ public class CalculatorMeta extends BaseStepMeta implements StepMetaInterface {
 
   @Override
   public void saveRep( Repository rep, IMetaStore metaStore, ObjectId id_transformation, ObjectId id_step ) throws KettleException {
-    rep.saveStepAttribute( id_transformation, id_step, "failIfNoFile", failIfNoFile );
     for ( int i = 0; i < calculation.length; i++ ) {
       calculation[i].saveRep( rep, metaStore, id_transformation, id_step, i );
     }

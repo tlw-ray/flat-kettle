@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -33,7 +33,6 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
-import java.util.PropertyResourceBundle;
 import java.util.ResourceBundle;
 
 import org.eclipse.swt.SWT;
@@ -47,7 +46,6 @@ import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.GC;
 import org.eclipse.swt.graphics.RGB;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Composite;
 import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Group;
@@ -241,7 +239,7 @@ public class PropsUI extends Props {
       String prop =
           BasePropertyHandler.getProperty( "Default_UI_Properties_Resource", "org.pentaho.di.ui.core.default" );
       try {
-        ResourceBundle bundle = PropertyResourceBundle.getBundle( prop );
+        ResourceBundle bundle = ResourceBundle.getBundle( prop );
         if ( bundle != null ) {
           Enumeration<String> enumer = bundle.getKeys();
           String theKey;
@@ -983,11 +981,6 @@ public class PropsUI extends Props {
 
   public void setLook( Control widget ) {
     setLook( widget, WIDGET_STYLE_DEFAULT );
-    if ( widget instanceof Composite ) {
-      for ( Control child : ( (Composite) widget ).getChildren() ) {
-        setLook( child );
-      }
-    }
   }
 
   public void setLook( final Control control, int style ) {

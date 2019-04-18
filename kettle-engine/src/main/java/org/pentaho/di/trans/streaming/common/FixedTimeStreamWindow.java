@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,8 +22,7 @@
 
 package org.pentaho.di.trans.streaming.common;
 
-import io.reactivex.Flowable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.Observable;
 import io.reactivex.schedulers.Schedulers;
 import org.pentaho.di.core.Result;
 import org.pentaho.di.core.RowMetaAndData;
@@ -31,15 +30,9 @@ import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.trans.SubtransExecutor;
 import org.pentaho.di.trans.streaming.api.StreamWindow;
-import org.pentaho.di.core.Const;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 import java.util.stream.Collectors;
 
 import static java.util.concurrent.TimeUnit.MILLISECONDS;
@@ -54,68 +47,34 @@ public class FixedTimeStreamWindow<I extends List> implements StreamWindow<I, Re
   private final long millis;
   private final int batchSize;
   private SubtransExecutor subtransExecutor;
-  private int parallelism;
-  private final Consumer<Map.Entry<List<I>, Result>> postProcessor;
-  private int sharedStreamingBatchPoolSize = 0;
-  private static ThreadPoolExecutor sharedStreamingBatchPool;
 
   public FixedTimeStreamWindow( SubtransExecutor subtransExecutor, RowMetaInterface rowMeta, long millis,
-                                int batchSize, int parallelism ) {
-    this( subtransExecutor, rowMeta, millis, batchSize, parallelism, ( p ) -> { } );
-  }
-
-  public FixedTimeStreamWindow( SubtransExecutor subtransExecutor, RowMetaInterface rowMeta, long millis,
-                                int batchSize, int parallelism, Consumer<Map.Entry<List<I>, Result>> postProcessor ) {
+                                int batchSize ) {
     this.subtransExecutor = subtransExecutor;
     this.rowMeta = rowMeta;
     this.millis = millis;
     this.batchSize = batchSize;
-    this.parallelism = parallelism;
-    this.postProcessor = postProcessor;
-
-    try {
-      sharedStreamingBatchPoolSize = Integer.parseInt( System.getProperties().getProperty( Const.SHARED_STREAMING_BATCH_POOL_SIZE, "0" ) );
-      if ( sharedStreamingBatchPoolSize > 0 ) {
-        if ( sharedStreamingBatchPool == null ) {
-          sharedStreamingBatchPool = (ThreadPoolExecutor) Executors.newFixedThreadPool( sharedStreamingBatchPoolSize );
-        } else {
-          if ( sharedStreamingBatchPool.getCorePoolSize() != sharedStreamingBatchPoolSize ) {
-            sharedStreamingBatchPool.setCorePoolSize( sharedStreamingBatchPoolSize );
-            sharedStreamingBatchPool.setMaximumPoolSize( sharedStreamingBatchPoolSize );
-          }
-        }
-      }
-    } catch ( NumberFormatException e ) {
-      sharedStreamingBatchPoolSize = 0;
-    }
   }
 
-  @Override public Iterable<Result> buffer( Flowable<I> flowable ) {
-    Flowable<List<I>> buffer = millis > 0
-      ? batchSize > 0 ? flowable.buffer( millis, MILLISECONDS, Schedulers.io(), batchSize, ArrayList::new, true )
-      : flowable.buffer( millis, MILLISECONDS )
-      : flowable.buffer( batchSize );
+  @Override public Iterable<Result> buffer( Observable<I> observable ) {
+    Observable<List<I>> buffer = millis > 0
+      ? batchSize > 0 ? observable.buffer( millis, MILLISECONDS, batchSize ) : observable.buffer( millis, MILLISECONDS )
+      : observable.buffer( batchSize );
     return buffer
-      .parallel( parallelism )
-      .runOn( sharedStreamingBatchPoolSize > 0 ? Schedulers.from( sharedStreamingBatchPool ) : Schedulers.io() )
+      .observeOn( Schedulers.io() )
       .filter( list -> !list.isEmpty() )
       .map( this::sendBufferToSubtrans )
-      .filter( Optional::isPresent )
-      .map( Optional::get )
-      .sequential()
-      .takeWhile( pair -> pair.getValue().getNrErrors() == 0 )
-      .doOnNext( postProcessor )
-      .map( Map.Entry::getValue )
+      .takeWhile( result -> result.getNrErrors() == 0 )
       .blockingIterable();
   }
 
-  private Optional<Map.Entry<List<I>, Result>> sendBufferToSubtrans( List<I> input ) throws KettleException {
+  private Result sendBufferToSubtrans( List<I> input ) throws KettleException {
     final List<RowMetaAndData> rows = input.stream()
       .map( row -> row.toArray( new Object[ 0 ] ) )
       .map( objects -> new RowMetaAndData( rowMeta, objects ) )
       .collect( Collectors.toList() );
     Optional<Result> optionalRes = subtransExecutor.execute( rows );
-    return optionalRes.map( result -> new AbstractMap.SimpleImmutableEntry<>( input, result ) );
+    return optionalRes.orElse( new Result( ) );
   }
 
 }

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -34,6 +34,7 @@ import org.pentaho.di.junit.rules.RestorePDIEngineEnvironment;
 import org.pentaho.di.trans.step.StepDataInterface;
 import org.pentaho.di.trans.steps.StepMockUtil;
 import org.pentaho.di.trans.steps.mock.StepMockHelper;
+import org.pentaho.di.trans.steps.textfileinput.TextFileInputField;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.io.File;
@@ -53,6 +54,9 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
   private CsvInput csvInput;
   private String[] expected;
   private String content;
+  private String delimiter = ",";
+  private String enclosure = "\"";
+  private String encoding = "utf-8";
   private StepMockHelper<CsvInputMeta, StepDataInterface> stepMockHelper;
   @ClassRule public static RestorePDIEngineEnvironment env = new RestorePDIEngineEnvironment();
 
@@ -75,7 +79,7 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     String field1 = "FIRST_NM";
     String field2 = "MIDDLE_NM";
     String field3 = "LAST_NM";
-    content = field1 + DELIMITER + field2 + DELIMITER + field3;
+    content = field1 + delimiter + field2 + delimiter + field3;
     expected = new String[] { field1, field2, field3 };
     doTest( content, expected );
   }
@@ -85,7 +89,7 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     String field1 = "Ima";
     String field2 = "";
     String field3 = "Rose";
-    content = field1 + DELIMITER + field2 + DELIMITER + field3;
+    content = field1 + delimiter + field2 + delimiter + field3;
     expected = new String[] { field1, field2, field3 };
     doTest( content, expected );
   }
@@ -96,8 +100,8 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     String field2 = "the";
     String field3 = "Piper's Son";
     content =
-        ENCLOSURE + field1 + ENCLOSURE + DELIMITER + ENCLOSURE + field2 + ENCLOSURE + DELIMITER + ENCLOSURE + field3
-            + ENCLOSURE;
+        enclosure + field1 + enclosure + delimiter + enclosure + field2 + enclosure + delimiter + enclosure + field3
+            + enclosure;
     expected = new String[] { field1, field2, field3 };
     doTest( content, expected );
   }
@@ -107,7 +111,7 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     String field1 = "Martin";
     String field2 = "Luther";
     String field3 = "King, Jr.";
-    content = field1 + DELIMITER + field2 + DELIMITER + ENCLOSURE + field3 + ENCLOSURE;
+    content = field1 + delimiter + field2 + delimiter + enclosure + field3 + enclosure;
     expected = new String[] { field1, field2, field3 };
     doTest( content, expected );
   }
@@ -117,7 +121,7 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     String field1 = "John \"Duke\"";
     String field2 = "";
     String field3 = "Wayne";
-    content = field1 + DELIMITER + field2 + DELIMITER + field3;
+    content = field1 + delimiter + field2 + delimiter + field3;
     expected = new String[] { field1, field2, field3 };
     doTest( content, expected );
   }
@@ -125,7 +129,7 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
   public void doTest( String content, String[] expected ) throws Exception {
     RowSet output = new QueueRowSet();
 
-    File tmp = createTestFile( ENCODING, content );
+    File tmp = createTestFile( encoding, content );
     try {
       CsvInputMeta meta = createMeta( tmp, createInputFileFields( "f1", "f2", "f3" ) );
       CsvInputData data = new CsvInputData();
@@ -150,5 +154,17 @@ public class PDI_15270_Test extends CsvInputUnitTestBase {
     assertEquals( expected[2], row[2] );
 
     assertNull( output.getRowImmediate() );
+  }
+
+  private CsvInputMeta createMeta( File file, TextFileInputField[] fields ) {
+    CsvInputMeta meta = new CsvInputMeta();
+    meta.setFilename( file.getAbsolutePath() );
+    meta.setDelimiter( delimiter );
+    meta.setEncoding( encoding );
+    meta.setEnclosure( enclosure );
+    meta.setBufferSize( "1024" );
+    meta.setInputFields( fields );
+    meta.setHeaderPresent( false );
+    return meta;
   }
 }

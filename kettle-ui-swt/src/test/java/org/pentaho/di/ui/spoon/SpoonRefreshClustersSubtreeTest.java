@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,20 +22,21 @@
 
 package org.pentaho.di.ui.spoon;
 
-import org.junit.Assert;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.TreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.di.cluster.ClusterSchema;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.ui.core.gui.GUIResource;
-import org.pentaho.di.ui.core.widget.tree.TreeNode;
-import org.pentaho.di.ui.spoon.tree.provider.ClustersFolderProvider;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
 
 /**
@@ -43,47 +44,54 @@ import static org.mockito.Mockito.*;
  */
 public class SpoonRefreshClustersSubtreeTest {
 
-  private ClustersFolderProvider clustersFolderProvider;
-  private TreeNode treeNode;
+  private Spoon spoon;
 
   @Before
   public void setUp() throws Exception {
-    GUIResource guiResource = mock( GUIResource.class );
-    clustersFolderProvider = new ClustersFolderProvider( guiResource );
-    treeNode = new TreeNode();
+    spoon = mock( Spoon.class );
+
+    TreeItem mockItem = mock( TreeItem.class );
+    when( spoon.createTreeItem( any( TreeItem.class ), anyString(), any( Image.class ) ) ).thenReturn( mockItem );
+
+    doCallRealMethod().when( spoon )
+      .refreshClustersSubtree( any( TreeItem.class ), any( TransMeta.class ), any( GUIResource.class ) );
   }
 
-  private void callRefreshWith( TransMeta meta, String filter ) {
-    clustersFolderProvider.refresh( meta, treeNode, filter );
+
+  private void callRefreshWith( TransMeta meta ) {
+    spoon.refreshClustersSubtree( mock( TreeItem.class ), meta, mock( GUIResource.class ) );
   }
 
   private void verifyNumberOfNodesCreated( int times ) {
-    Assert.assertEquals( times, treeNode.getChildren().size() );
+    verify( spoon, times( times ) ).createTreeItem( any( TreeItem.class ), anyString(), any( Image.class ) );
   }
+
 
   @Test
   public void noClusters() {
     TransMeta meta = mock( TransMeta.class );
     when( meta.getClusterSchemas() ).thenReturn( Collections.<ClusterSchema>emptyList() );
 
-    callRefreshWith( meta, null );
-    verifyNumberOfNodesCreated( 0 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 1 );
   }
 
   @Test
   public void severalClustersExist() {
+    when( spoon.filterMatch( anyString() ) ).thenReturn( true );
     TransMeta meta = prepareMeta();
 
-    callRefreshWith( meta, null );
-    verifyNumberOfNodesCreated( 3 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 4 );
   }
 
   @Test
   public void onlyOneMatchesFiltering() {
+    when( spoon.filterMatch( eq( "2" ) ) ).thenReturn( true );
     TransMeta meta = prepareMeta();
 
-    callRefreshWith( meta, "2" );
-    verifyNumberOfNodesCreated( 1 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 2 );
   }
 
 

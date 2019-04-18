@@ -12,7 +12,7 @@
  * without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
  * See the GNU Lesser General Public License for more details.
  *
- * Copyright (c) 2002-2019 Hitachi Vantara..  All rights reserved.
+ * Copyright (c) 2002-2018 Hitachi Vantara..  All rights reserved.
  */
 
 package org.pentaho.ui.xul.swt.tags;
@@ -32,7 +32,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.swt.SWT;
-import org.eclipse.swt.SWTException;
 import org.eclipse.swt.events.ShellAdapter;
 import org.eclipse.swt.events.ShellEvent;
 import org.eclipse.swt.graphics.Image;
@@ -141,11 +140,12 @@ public class SwtDialog extends AbstractSwtXulContainer implements XulDialog {
       setAppicon( self.getAttributeValue( "appicon" ) );
     }
 
-    dialog = createDialog( self, parent );
+    dialog = createDialog( parent );
     Composite c = createDialogComposite();
     setManagedObject( c );
 
     settingsManager = container.getSettingsManager();
+
   }
 
   protected Shell getParentShell( XulComponent parent ) {
@@ -170,32 +170,15 @@ public class SwtDialog extends AbstractSwtXulContainer implements XulDialog {
   }
 
   private BasicDialog createDialog( XulComponent parent ) {
-    return createDialog( null, parent );
-  }
 
-  private BasicDialog createDialog( Element self, XulComponent parent ) {
-    Shell parentShell;
-
-    if ( self != null
-        && self.getAttributeValue( "proxyoutercontext" ) != null
-        && domContainer.getOuterContext() != null
-        && domContainer.getOuterContext() instanceof Shell ) {
-      parentShell = (Shell) domContainer.getOuterContext();
-    } else {
-      parentShell = getParentShell( parent );
-    }
-
+    Shell parentShell = getParentShell( parent );
     final BasicDialog newDialog = new BasicDialog( parentShell, this.getResizable() );
     newDialog.getShell().setBackgroundMode( SWT.INHERIT_DEFAULT );
 
     newDialog.getShell().addListener( SWT.Dispose, new Listener() {
       public void handleEvent( Event event ) {
         if ( !letDialogDispose ) {
-          try {
-            hide();
-          } catch ( SWTException e ) {
-            logger.error( e );
-          }
+          hide();
         }
       }
     } );
@@ -229,7 +212,7 @@ public class SwtDialog extends AbstractSwtXulContainer implements XulDialog {
 
   public void dispose() {
     letDialogDispose = true;
-    if ( getShell() != null && !getShell().isDisposed() ) {
+    if ( getShell() != null ) {
       getShell().dispose();
     }
   }
@@ -527,9 +510,7 @@ public class SwtDialog extends AbstractSwtXulContainer implements XulDialog {
     BasicDialog newDialog = createDialog( getParent() );
     Control[] controlz = newDialog.getMainArea().getChildren();
     for ( Control c : controlz ) {
-      if (  c != null && !c.isDisposed() ) {
-        c.dispose();
-      }
+      c.dispose();
     }
 
     Control[] controls = dialog.getMainArea().getChildren();

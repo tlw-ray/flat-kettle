@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -132,13 +132,6 @@ public class TeraFast extends AbstractStep implements StepInterface {
     return builder.toString();
   }
 
-  protected void verifyDatabaseConnection() throws KettleException {
-    // Confirming Database Connection is defined.
-    if ( this.meta.getDbMeta() == null ) {
-      throw new KettleException( BaseMessages.getString( PKG, "TeraFastDialog.GetSQL.NoConnectionDefined" ) );
-    }
-  }
-
   /**
    * {@inheritDoc}
    *
@@ -150,16 +143,7 @@ public class TeraFast extends AbstractStep implements StepInterface {
     this.meta = (TeraFastMeta) smi;
     // this.data = (GenericStepData) sdi;
     simpleDateFormat = new SimpleDateFormat( FastloadControlBuilder.DEFAULT_DATE_FORMAT );
-    if ( super.init( smi, sdi ) ) {
-      try {
-        verifyDatabaseConnection();
-      } catch ( KettleException ex ) {
-        logError( ex.getMessage() );
-        return false;
-      }
-      return true;
-    }
-    return false;
+    return super.init( smi, sdi );
   }
 
   /**
@@ -176,14 +160,11 @@ public class TeraFast extends AbstractStep implements StepInterface {
     Object[] row = getRow();
     if ( row == null ) {
 
-      /* In case we have no data, we need to ensure that the printstream was ever initialized. It will if there is
-      *  data. So we check for a null printstream, then we close the dataFile and execute only if it existed.
-      */
-      if ( this.dataFilePrintStream != null ) {
-        this.dataFilePrintStream.close();
-        IOUtils.closeQuietly( this.dataFile );
-        this.execute();
-      }
+      this.dataFilePrintStream.close();
+
+      IOUtils.closeQuietly( this.dataFile );
+
+      this.execute();
 
       setOutputDone();
 
@@ -246,7 +227,6 @@ public class TeraFast extends AbstractStep implements StepInterface {
    * @throws KettleException
    *           ...
    */
-  @SuppressWarnings( "ArrayToString" )
   public void writeToDataFile( RowMetaInterface rowMetaInterface, Object[] row ) throws KettleException {
     // Write the data to the output
     ValueMetaInterface valueMeta = null;
@@ -288,7 +268,6 @@ public class TeraFast extends AbstractStep implements StepInterface {
             break;
           case ValueMetaInterface.TYPE_BINARY:
             byte[] byt = rowMetaInterface.getBinary( row, i );
-            // REVIEW - this does an implicit byt.toString, which can't be what was intended.
             dataFilePrintStream.print( byt );
             break;
           default:

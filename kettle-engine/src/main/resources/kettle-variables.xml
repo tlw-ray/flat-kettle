@@ -384,7 +384,7 @@
 
   <kettle-variable>
     <description>Set this variable to Y to revert the Enterprise Repository node naming behavior back to the old mode.
-      See https://jira.pentaho.com/browse/PDI-6394 for details.
+      See http://jira.pentaho.com/browse/PDI-6394 for details.
     </description>
     <variable>KETTLE_COMPATIBILITY_PUR_OLD_NAMING_MODE</variable>
     <default-value>N</default-value>
@@ -504,12 +504,6 @@
     <description>A variable to configure Tab size</description>
     <variable>KETTLE_MAX_TAB_LENGTH</variable>
     <default-value>17</default-value>
-  </kettle-variable>
-
-  <kettle-variable>
-    <description>This environment variable is used by streaming consumer steps to limit the total of concurrent batches across transformations. Leave 0 for unlimited.</description>
-    <variable>SHARED_STREAMING_BATCH_POOL_SIZE</variable>
-    <default-value>0</default-value>
   </kettle-variable>
 </kettle-variables>
 

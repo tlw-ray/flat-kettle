@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -130,8 +130,6 @@ public class GUIResource {
   private ManagedColor colorHopDefault;
 
   private ManagedColor colorHopOK;
-
-  private ManagedColor colorDeprecated;
 
   /* * * Fonts * * */
   private ManagedFont fontGraph;
@@ -327,8 +325,6 @@ public class GUIResource {
 
   private Image imageVersionBrowser;
 
-  private Image imageDeprecated;
-
   private Image imageNew;
 
   private SwtUniversalImage imageEdit;
@@ -401,26 +397,6 @@ public class GUIResource {
   private Image imageRemoveAll;
 
   private Image imageRemoveSingle;
-
-  private SwtUniversalImage imageBackEnabled;
-
-  private SwtUniversalImage imageBackDisabled;
-
-  private SwtUniversalImage imageForwardEnabled;
-
-  private SwtUniversalImage imageForwardDisabled;
-
-  private SwtUniversalImage imageRefreshEnabled;
-
-  private SwtUniversalImage imageRefreshDisabled;
-
-  private SwtUniversalImage imageHomeEnabled;
-
-  private SwtUniversalImage imageHomeDisabled;
-
-  private SwtUniversalImage imagePrintEnabled;
-
-  private SwtUniversalImage imagePrintDisabled;
 
   /**
    * GUIResource also contains the clipboard as it has to be allocated only once! I don't want to put it in a separate
@@ -530,7 +506,6 @@ public class GUIResource {
 
     colorHopOK = new ManagedColor( display, 12, 178, 15 );
 
-    colorDeprecated = new ManagedColor( display, 246, 196, 56 );
     // Load all images from files...
     loadFonts();
     loadCommonImages();
@@ -637,7 +612,6 @@ public class GUIResource {
       imageWarning.dispose();
       imageVersionBrowser.dispose();
       imageClearText.dispose();
-      imageDeprecated.dispose();
       imageClearTextDisabled.dispose();
       imageExpandAll.dispose();
       imageSearchSmall.dispose();
@@ -678,16 +652,6 @@ public class GUIResource {
       imageAddSingle.dispose();
       imageRemoveAll.dispose();
       imageRemoveSingle.dispose();
-      imageBackEnabled.dispose();
-      imageBackDisabled.dispose();
-      imageForwardEnabled.dispose();
-      imageForwardDisabled.dispose();
-      imageRefreshEnabled.dispose();
-      imageRefreshDisabled.dispose();
-      imageHomeEnabled.dispose();
-      imageHomeDisabled.dispose();
-      imagePrintEnabled.dispose();
-      imagePrintDisabled.dispose();
 
       defaultArrow.dispose();
       okArrow.dispose();
@@ -1080,10 +1044,6 @@ public class GUIResource {
     // "ui/images/warning.png;
     imageWarning = SwtSvgImageUtil.getImageAsResource( display, BasePropertyHandler.getProperty( "Warning_image" ) );
 
-    // "ui/images/deprecated.svg
-    imageDeprecated = loadAsResource( display, BasePropertyHandler.getProperty( "Deprecated_image" ),
-      ConstUI.LARGE_ICON_SIZE );
-
     // "ui/images/version-history.png;
     imageVersionBrowser =
       loadAsResource( display, BasePropertyHandler.getProperty( "VersionBrowser_image" ), ConstUI.SMALL_ICON_SIZE );
@@ -1191,46 +1151,6 @@ public class GUIResource {
 
     // "ui/images/remove_single.png
     imageRemoveSingle = loadAsResource( display, BasePropertyHandler.getProperty( "RemoveSingle_image" ), 12 );
-
-    // ui/images/back-enabled.png
-    imageBackEnabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "BackEnabled" ) );
-
-    // ui/images/back-disabled.png
-    imageBackDisabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "BackDisabled" ) );
-
-    // ui/images/forward-enabled.png
-    imageForwardEnabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "ForwardEnabled" ) );
-
-    // ui/images/forward-disabled.png
-    imageForwardDisabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "ForwardDisabled" ) );
-
-    // ui/images/refresh-enabled.png
-    imageRefreshEnabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "RefreshEnabled" ) );
-
-    // ui/images/refresh-disabled.png
-    imageRefreshDisabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "RefreshDisabled" ) );
-
-    // ui/images/home-enabled.png
-    imageHomeEnabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "HomeEnabled" ) );
-
-    // ui/images/home-disabled.png
-    imageHomeDisabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "HomeDisabled" ) );
-
-    // ui/images/print-enabled.png
-    imagePrintEnabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "PrintEnabled" ) );
-
-    // ui/images/print-disabled.png
-    imagePrintDisabled = SwtSvgImageUtil.getUniversalImage( display, getClass().getClassLoader(),
-      BasePropertyHandler.getProperty( "PrintDisabled" ) );
 
     imageEmpty16x16 = new Image( display, 16, 16 );
 
@@ -2094,13 +2014,6 @@ public class GUIResource {
     return colorHopOK.getColor();
   }
 
-  /**
-   * @return the default color the deprecated condition
-   */
-  public Color getColorDeprecated() {
-    return colorDeprecated.getColor();
-  }
-
   public void drawPentahoGradient( Display display, GC gc, Rectangle rect, boolean vertical ) {
     if ( !vertical ) {
       gc.setForeground( display.getSystemColor( SWT.COLOR_WIDGET_BACKGROUND ) );
@@ -2373,10 +2286,6 @@ public class GUIResource {
 
   public Image getImageVersionBrowser() {
     return imageVersionBrowser;
-  }
-
-  public Image getImageDeprecated() {
-    return imageDeprecated;
   }
 
   public Image getImageNew() {
@@ -2678,56 +2587,6 @@ public class GUIResource {
 
   public Image getImageRemoveSingle() {
     return imageRemoveSingle;
-  }
-
-  public Image getImageBackEnabled() {
-    return imageBackEnabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageBackDisabled() {
-    return imageBackDisabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageForwardEnabled() {
-    return imageForwardEnabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageForwardDisabled() {
-    return imageForwardDisabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageRefreshEnabled() {
-    return imageRefreshEnabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageRefreshDisabled() {
-    return imageRefreshDisabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageHomeEnabled() {
-    return imageHomeEnabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImageHomeDisabled() {
-    return imageHomeDisabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImagePrintEnabled() {
-    return imagePrintEnabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
-  }
-
-  public Image getImagePrintDisabled() {
-    return imagePrintDisabled.getAsBitmapForSize( display,  ConstUI.DOCUMENTATION_ICON_SIZE,
-      ConstUI.DOCUMENTATION_ICON_SIZE );
   }
 
   public SwtUniversalImage getDefaultArrow() {

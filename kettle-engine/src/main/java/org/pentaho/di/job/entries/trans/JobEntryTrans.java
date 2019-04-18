@@ -88,7 +88,6 @@ import org.w3c.dom.Node;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
@@ -101,7 +100,6 @@ import java.util.Map;
  */
 public class JobEntryTrans extends JobEntryBase implements Cloneable, JobEntryInterface, HasRepositoryDirectories, JobEntryRunConfigurableInterface {
   private static Class<?> PKG = JobEntryTrans.class; // for i18n purposes, needed by Translator2!!
-  public static final int IS_PENTAHO = 1;
 
   private String transname;
 
@@ -898,26 +896,13 @@ public class JobEntryTrans extends JobEntryBase implements Cloneable, JobEntryIn
         SlaveServer remoteSlaveServer = null;
         TransExecutionConfiguration executionConfiguration = new TransExecutionConfiguration();
         if ( !Utils.isEmpty( runConfiguration ) ) {
-          runConfiguration = environmentSubstitute( runConfiguration );
           log.logBasic( BaseMessages.getString( PKG, "JobTrans.RunConfig.Message" ), runConfiguration );
+          runConfiguration = environmentSubstitute( runConfiguration );
           executionConfiguration.setRunConfiguration( runConfiguration );
           try {
             ExtensionPointHandler.callExtensionPoint( log, KettleExtensionPoint.SpoonTransBeforeStart.id, new Object[] {
               executionConfiguration, parentJob.getJobMeta(), transMeta, rep
             } );
-            List<Object> items = Arrays.asList( runConfiguration, false );
-            try {
-              ExtensionPointHandler.callExtensionPoint( log, KettleExtensionPoint
-                      .RunConfigurationSelection.id, items );
-              if ( waitingToFinish && (Boolean) items.get( IS_PENTAHO ) ) {
-                String jobName = parentJob.getJobMeta().getName();
-                String name = transMeta.getName();
-                logBasic( BaseMessages.getString( PKG, "JobTrans.Log.InvalidRunConfigurationCombination", jobName,
-                        name, jobName ) );
-              }
-            } catch ( Exception ignored ) {
-              // Ignored
-            }
             if ( !executionConfiguration.isExecutingLocally() && !executionConfiguration.isExecutingRemotely() && !executionConfiguration.isExecutingClustered() ) {
               result.setResult( true );
               return result;
@@ -1310,7 +1295,7 @@ public class JobEntryTrans extends JobEntryBase implements Cloneable, JobEntryIn
           } catch ( KettleException e ) {
             // try to load from repository, this trans may have been developed locally and later uploaded to the
             // repository
-            transMeta = rep == null ? new TransMeta( realFilename, metaStore, null, true, this, null ) : getTransMetaFromRepository( rep, r, realFilename );
+            transMeta = getTransMetaFromRepository( rep, r, realFilename );
           }
           break;
         case REPOSITORY_BY_NAME:

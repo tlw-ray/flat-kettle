@@ -411,8 +411,6 @@ public class SelectValuesMeta extends BaseStepMeta implements StepMetaInterface 
           if ( !v.getName().equals( metaChange.getRename() ) && !Utils.isEmpty( metaChange.getRename() ) ) {
             v.setName( metaChange.getRename() );
             v.setOrigin( name );
-            // need to reinsert to check name conflicts
-            inputRowMeta.setValueMeta( idx, v );
           }
           // Change the type?
           if ( metaChange.getType() != ValueMetaInterface.TYPE_NONE && v.getType() != metaChange.getType() ) {

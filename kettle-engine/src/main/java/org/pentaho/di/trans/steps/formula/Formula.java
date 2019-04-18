@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -23,7 +23,6 @@
 package org.pentaho.di.trans.steps.formula;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.Date;
 
 import org.pentaho.di.core.Const;
@@ -98,14 +97,14 @@ public class Formula extends BaseStep implements StepInterface {
     }
 
     if ( log.isRowLevel() ) {
-      logRowlevel( "Read row #" + getLinesRead() + " : " + Arrays.toString( r ) );
+      logRowlevel( "Read row #" + getLinesRead() + " : " + r );
     }
 
     Object[] outputRowData = calcFields( getInputRowMeta(), r );
     putRow( data.outputRowMeta, outputRowData ); // copy row to possible alternate rowset(s).
 
     if ( log.isRowLevel() ) {
-      logRowlevel( "Wrote row #" + getLinesWritten() + " : " + Arrays.toString( r ) );
+      logRowlevel( "Wrote row #" + getLinesWritten() + " : " + r );
     }
     if ( checkFeedback( getLinesRead() ) ) {
       logBasic( "Linenr " + getLinesRead() );

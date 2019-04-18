@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -27,7 +27,6 @@ import java.util.List;
 
 import org.pentaho.di.base.CommandExecutorCodes;
 import org.pentaho.di.core.Const;
-import org.pentaho.di.core.Result;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.KettleClientEnvironment;
 import org.pentaho.di.core.KettleEnvironment;
@@ -74,8 +73,6 @@ public class Pan {
     StringBuilder optionFilename, optionLoglevel, optionLogfile, optionLogfileOld, optionListdir;
     StringBuilder optionListtrans, optionListrep, optionExprep, optionNorep, optionSafemode;
     StringBuilder optionVersion, optionJarFilename, optionListParam, optionMetrics, initialDir;
-    StringBuilder optionResultSetStepName, optionResultSetCopyNumber;
-    StringBuilder optionBase64Zip;
 
     NamedParams optionParams = new NamedParamsDefault();
 
@@ -148,18 +145,8 @@ public class Pan {
           "initialDir", null, initialDir =
           new StringBuilder(), false, true ),
         new CommandLineOption(
-          "stepname", "ResultSetStepName", optionResultSetStepName =
-          new StringBuilder(), false, true ),
-        new CommandLineOption(
-          "copynum", "ResultSetCopyNumber", optionResultSetCopyNumber =
-          new StringBuilder(), false, true ),
-        new CommandLineOption(
-          "zip", "Base64Zip", optionBase64Zip =
-          new StringBuilder(), false, true ),
-        new CommandLineOption(
           "metrics", BaseMessages.getString( PKG, "Pan.ComdLine.Metrics" ), optionMetrics =
           new StringBuilder(), true, false ), maxLogLinesOption, maxLogTimeoutOption };
-
 
     if ( args.size() == 2 ) { // 2 internal hidden argument (flag and value)
       CommandLineOption.printUsage( options );
@@ -240,38 +227,13 @@ public class Pan {
         }
       }
 
-      TransParams transParams = new TransParams(
-              optionNorep.toString(),
-              optionRepname.toString(),
-              optionUsername.toString(),
-              optionTrustUser.toString(),
-              optionPassword.toString(),
-              optionDirname.toString(),
-              optionTransname.toString(),
-              optionListtrans.toString(),
-              optionListdir.toString(),
-              optionExprep.toString(),
-              optionFilename.toString(),
-              optionJarFilename.toString(),
-              initialDir.toString(),
-              optionListrep.toString(),
-              optionSafemode.toString(),
-              optionMetrics.toString(),
-              optionListParam.toString(),
-              "",
-              "",
-              "",
-              "",
-              "",
-              "",
-              optionResultSetStepName.toString(),
-              optionResultSetCopyNumber.toString(),
-              optionBase64Zip.toString(),
-              optionParams );
+      int returnCode = getCommandExecutor().execute( optionRepname.toString(), optionNorep.toString(), optionUsername.toString(),
+              optionTrustUser.toString(), optionPassword.toString(), optionDirname.toString(), optionFilename.toString(), optionJarFilename.toString(),
+              optionTransname.toString(), optionListtrans.toString(), optionListdir.toString(), optionExprep.toString(),
+              initialDir.toString(), optionListrep.toString(), optionSafemode.toString(), optionMetrics.toString(),
+              optionListParam.toString(), optionParams, args.toArray( new String[ args.size() ] ) );
 
-      Result result = getCommandExecutor().execute( transParams );
-
-      exitJVM( result.getExitStatus() );
+      exitJVM( returnCode );
 
     } catch ( Throwable t ) {
       t.printStackTrace();

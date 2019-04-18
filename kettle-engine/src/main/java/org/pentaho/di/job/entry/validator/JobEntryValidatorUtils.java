@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -136,9 +136,7 @@ public class JobEntryValidatorUtils {
    */
   public static boolean validateMask( CheckResultSourceInterface source, String propertyName,
     List<CheckResultInterface> remarks, String mask, int levelOnFail ) {
-    // TODO review.  Appears unused, and would cause stackoverflow if it _was_ used.  commenting out.
-    //return validateMask( source, propertyName, remarks, mask, LEVEL_FAILURE_DEFAULT );
-    throw new UnsupportedOperationException(  );
+    return validateMask( source, propertyName, remarks, mask, LEVEL_FAILURE_DEFAULT );
   }
 
   /**

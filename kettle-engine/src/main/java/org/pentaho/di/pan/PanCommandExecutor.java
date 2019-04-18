@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,20 +22,14 @@
 
 package org.pentaho.di.pan;
 
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
 import org.pentaho.di.base.AbstractBaseCommandExecutor;
 import org.pentaho.di.base.CommandExecutorCodes;
 import org.pentaho.di.core.Const;
-import org.pentaho.di.core.Result;
-import org.pentaho.di.core.RowMetaAndData;
 import org.pentaho.di.core.exception.KettleException;
-import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.logging.LogChannel;
 import org.pentaho.di.core.logging.LogChannelInterface;
 import org.pentaho.di.core.parameters.NamedParams;
 import org.pentaho.di.core.parameters.UnknownParamException;
-import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.util.FileUtil;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.xml.XMLHandler;
@@ -48,17 +42,11 @@ import org.pentaho.di.repository.RepositoryOperation;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.i18n.BaseMessages;
-import org.pentaho.di.trans.step.RowAdapter;
-import org.pentaho.di.trans.step.StepInterface;
 import org.w3c.dom.Document;
 
-import java.io.File;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 
 public class PanCommandExecutor extends AbstractBaseCommandExecutor {
 
@@ -71,7 +59,10 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
     setLog( log );
   }
 
-  public Result execute( final TransParams p ) throws Throwable {
+  public int execute( String repoName, String noRepo, String username, String trustUser, String password, String dirName, String filename,
+                      String jarFile, String transName, String listTrans, String listDirs, String exportRepo,
+                      String initialDir, String listRepos, String safemode, String metrics, String listParams,
+                      NamedParams params, String[] arguments ) throws Throwable {
 
     getLog().logMinimal( BaseMessages.getString( getPkgClazz(), "Pan.Log.StartingToRun" ) );
 
@@ -93,11 +84,11 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
       logDebug( "Pan.Log.StartingToLookOptions" );
 
       // Read kettle transformation specified
-      if ( !Utils.isEmpty( p.getRepoName() ) || !Utils.isEmpty( p.getLocalFile() ) || !Utils.isEmpty(  p.getLocalJarFile() ) ) {
+      if ( !Utils.isEmpty( repoName ) || !Utils.isEmpty( filename ) || !Utils.isEmpty( jarFile ) ) {
 
         logDebug( "Pan.Log.ParsingCommandline" );
 
-        if ( !Utils.isEmpty( p.getRepoName() ) && !isEnabled( p.getBlockRepoConns() ) ) {
+        if ( !Utils.isEmpty( repoName ) && !isEnabled( noRepo ) ) {
 
           /**
            * if set, _trust_user_ needs to be considered. See pur-plugin's:
@@ -105,36 +96,29 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
            * @link https://github.com/pentaho/pentaho-kettle/blob/8.0.0.0-R/plugins/pur/core/src/main/java/org/pentaho/di/repository/pur/PurRepositoryConnector.java#L97-L101
            * @link https://github.com/pentaho/pentaho-kettle/blob/8.0.0.0-R/plugins/pur/core/src/main/java/org/pentaho/di/repository/pur/WebServiceManager.java#L130-L133
            */
-          if ( isEnabled( p.getTrustRepoUser() ) ) {
+          if ( isEnabled( trustUser ) ) {
             System.setProperty( "pentaho.repository.client.attemptTrust", YES );
           }
 
           // In case we use a repository...
-          // some commands are to load a Trans from the repo; others are merely to output some repo-related information
-          RepositoryMeta repositoryMeta = loadRepositoryConnection( p.getRepoName(), "Pan.Log.LoadingAvailableRep", "Pan.Error.NoRepsDefined", "Pan.Log.FindingRep" );
+          // some commands are to load a Trans from the repo; others are merely to print some repo-related information
+          RepositoryMeta repositoryMeta = loadRepositoryConnection( repoName, "Pan.Log.LoadingAvailableRep", "Pan.Error.NoRepsDefined", "Pan.Log.FindingRep" );
 
-          logDebug( "Pan.Log.CheckSuppliedUserPass" );
-          repository = establishRepositoryConnection( repositoryMeta, p.getRepoUsername(), p.getRepoPassword(), RepositoryOperation.EXECUTE_TRANSFORMATION );
+          repository = establishRepositoryConnection( repositoryMeta, username, password, RepositoryOperation.EXECUTE_TRANSFORMATION );
 
-          // Is the command a request to output some repo-related information ( list directories, export repo content, ... ) ?
-          // If so, nothing else is needed ( other than executing the actual requested operation )
-          if ( isEnabled( p.getListRepoFiles() ) || isEnabled( p.getListRepoDirs() ) || !Utils.isEmpty( p.getExportRepo() ) ) {
-            executeRepositoryBasedCommand( repository, p.getInputDir(), p.getListRepoFiles(), p.getListRepoDirs(), p.getExportRepo() );
-            return exitWithStatus( CommandExecutorCodes.Pan.SUCCESS.getCode() );
-          }
-
-          trans = loadTransFromRepository( repository, p.getInputDir(), p.getInputFile() );
+          trans = executeRepositoryBasedCommand( repository, repositoryMeta, dirName, transName, listTrans, listDirs, exportRepo );
         }
+
 
         // Try to load the transformation from file, even if it failed to load from the repository
         // You could implement some fail-over mechanism this way.
         if ( trans == null ) {
-          trans = loadTransFromFilesystem( p.getLocalInitialDir(), p.getLocalFile(), p.getLocalJarFile(), p.getBase64Zip() );
+          trans = executeFilesystemBasedCommand( initialDir, filename, jarFile );
         }
 
       }
 
-      if ( isEnabled( p.getListRepos() ) ) {
+      if ( isEnabled( listRepos ) ) {
         printRepositories( loadRepositoryInfo( "Pan.Log.LoadingAvailableRep", "Pan.Error.NoRepsDefined" ) ); // list the repositories placed at repositories.xml
       }
 
@@ -147,66 +131,45 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
       if ( repository != null ) {
         repository.disconnect();
       }
-      return exitWithStatus( CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode() );
+      return CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode();
     }
 
     if ( trans == null ) {
 
-      if ( !isEnabled( p.getListRepoFiles() ) && !isEnabled( p.getListRepoDirs() ) && !isEnabled( p.getListRepos() ) && Utils.isEmpty(  p.getExportRepo() ) ) {
+      if ( !isEnabled( listTrans ) && !isEnabled( listDirs ) && !isEnabled( listRepos ) && Utils.isEmpty( exportRepo ) ) {
 
         System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.CanNotLoadTrans" ) );
-        return exitWithStatus( CommandExecutorCodes.Pan.COULD_NOT_LOAD_TRANS.getCode() );
+        return CommandExecutorCodes.Pan.COULD_NOT_LOAD_TRANS.getCode();
       } else {
-        return exitWithStatus( CommandExecutorCodes.Pan.SUCCESS.getCode() );
+        return CommandExecutorCodes.Pan.SUCCESS.getCode();
       }
     }
 
     try {
 
       trans.setLogLevel( getLog().getLogLevel() );
-      configureParameters( trans,  p.getNamedParams(), trans.getTransMeta() );
+      configureParameters( trans, params, trans.getTransMeta() );
 
-      trans.setSafeModeEnabled( isEnabled( p.getSafeMode() ) ); // run in safe mode if requested
-      trans.setGatheringMetrics( isEnabled( p.getMetrics() ) ); // enable kettle metric gathering if requested
+      trans.setSafeModeEnabled( isEnabled( safemode ) ); // run in safe mode if requested
+      trans.setGatheringMetrics( isEnabled( metrics ) ); // enable kettle metric gathering if requested
 
       // List the parameters defined in this transformation, and then simply exit
-      if ( isEnabled(  p.getListFileParams() ) ) {
+      if ( isEnabled( listParams ) ) {
 
         printTransformationParameters( trans );
 
         // stop right here...
-        return exitWithStatus( CommandExecutorCodes.Pan.COULD_NOT_LOAD_TRANS.getCode() ); // same as the other list options
+        return CommandExecutorCodes.Pan.COULD_NOT_LOAD_TRANS.getCode(); // same as the other list options
       }
-
-      final List<RowMetaAndData> rows = new ArrayList<RowMetaAndData>(  );
 
       // allocate & run the required sub-threads
       try {
-        trans.prepareExecution( convert( p.asMap() ) );
-
-        if ( !StringUtils.isEmpty( p.getResultSetStepName() ) ) {
-
-          int copyNr = NumberUtils.isNumber( p.getResultSetCopyNumber() ) ? Integer.parseInt( p.getResultSetCopyNumber() ) : 0 /* default */;
-
-          logDebug( "Collecting result-set for step '" +  p.getResultSetStepName() + "' and copy number " + copyNr );
-
-          StepInterface step = null;
-          if ( ( step = trans.findRunThread( p.getResultSetStepName() ) ) != null && step.getCopy() == copyNr ) {
-            step.addRowListener( new RowAdapter() {
-              @Override
-              public void rowWrittenEvent( RowMetaInterface rowMeta, Object[] data ) throws KettleStepException {
-                rows.add( new RowMetaAndData( rowMeta, data ) );
-              }
-            } );
-          }
-        }
-
-        trans.startThreads();
+        trans.execute( arguments );
 
       } catch ( KettleException ke ) {
         logDebug( ke.getLocalizedMessage() );
         System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.UnablePrepareInitTrans" ) );
-        return exitWithStatus( CommandExecutorCodes.Pan.UNABLE_TO_PREP_INIT_TRANS.getCode() );
+        return CommandExecutorCodes.Pan.UNABLE_TO_PREP_INIT_TRANS.getCode();
       }
 
       waitUntilFinished( trans, 100 ); // Give the transformation up to 10 seconds to finish execution
@@ -218,17 +181,13 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
       getLog().logMinimal( BaseMessages.getString( getPkgClazz(), "Pan.Log.Finished" ) );
       Date stop = Calendar.getInstance().getTime(); // capture execution stop time
 
-      trans.setResultRows( rows );
-      setResult( trans.getResult() ); // get the execution result
-
       int completionTimeSeconds = calculateAndPrintElapsedTime( start, stop, "Pan.Log.StartStop", "Pan.Log.ProcessingEndAfter",
               "Pan.Log.ProcessingEndAfterLong", "Pan.Log.ProcessingEndAfterLonger", "Pan.Log.ProcessingEndAfterLongest" );
-      getResult().setElapsedTimeMillis( stop.getTime() - start.getTime() );
 
-      if ( getResult().getNrErrors() == 0 ) {
+      if ( trans.getResult().getNrErrors() == 0 ) {
 
         trans.printStats( completionTimeSeconds );
-        return exitWithStatus( CommandExecutorCodes.Pan.SUCCESS.getCode() );
+        return CommandExecutorCodes.Pan.SUCCESS.getCode();
 
       } else {
 
@@ -238,18 +197,18 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
         if ( !Utils.isEmpty( transJVMExitCode ) ) {
 
           try {
-            return exitWithStatus( Integer.parseInt( transJVMExitCode ) );
+            return Integer.parseInt( transJVMExitCode );
 
           } catch ( NumberFormatException nfe ) {
             getLog().logError( BaseMessages.getString( getPkgClazz(), "Pan.Error.TransJVMExitCodeInvalid",
                     Const.KETTLE_TRANS_PAN_JVM_EXIT_CODE, transJVMExitCode ) );
             getLog().logError( BaseMessages.getString( getPkgClazz(), "Pan.Log.JVMExitCode", "1" ) );
-            return exitWithStatus( CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode() );
+            return CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode();
           }
 
         } else {
           // the trans does not have a return code.
-          return exitWithStatus( CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode() );
+          return CommandExecutorCodes.Pan.ERRORS_DURING_PROCESSING.getCode();
         }
       }
 
@@ -258,13 +217,13 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
       System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Log.ErrorOccurred", "" + ke.getMessage() ) );
       getLog().logError( BaseMessages.getString( getPkgClazz(), "Pan.Log.UnexpectedErrorOccurred", "" + ke.getMessage() ) );
 
-      return exitWithStatus( CommandExecutorCodes.Pan.UNEXPECTED_ERROR.getCode() );
+      return CommandExecutorCodes.Pan.UNEXPECTED_ERROR.getCode();
 
     } finally {
       if ( repository != null ) {
         repository.disconnect();
       }
-      if ( isEnabled( p.getTrustRepoUser() ) ) {
+      if ( isEnabled( trustUser ) ) {
         System.clearProperty( "pentaho.repository.client.attemptTrust" ); // we set it, now we sanitize it
       }
     }
@@ -275,81 +234,80 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
     return CommandExecutorCodes.Pan.KETTLE_VERSION_PRINT.getCode();
   }
 
-  protected void executeRepositoryBasedCommand( Repository repository, String dirName, String listTrans, String listDirs, String exportRepo ) throws Exception {
+  public Trans executeRepositoryBasedCommand( Repository repository, RepositoryMeta repositoryMeta, final String dirName,
+                                              final String transName, final String listTrans, final String listDirs, final String exportRepo ) throws Exception {
 
-    RepositoryDirectoryInterface directory = loadRepositoryDirectory( repository, dirName, "Pan.Error.NoRepProvided",
-                "Pan.Log.Allocate&ConnectRep", "Pan.Error.CanNotFindSpecifiedDirectory" );
+    try {
 
-    if ( directory == null ) {
-      return; // not much we can do here
-    }
+      if ( repository != null && repositoryMeta != null ) {
+        // Define and connect to the repository...
+        logDebug( "Pan.Log.Allocate&ConnectRep" );
 
-    if ( isEnabled( listTrans ) ) {
-      printRepositoryStoredTransformations( repository, directory ); // List the transformations in the repository
+        // Default is the root directory
+        RepositoryDirectoryInterface directory = repository.loadRepositoryDirectoryTree();
 
-    } else if ( isEnabled( listDirs ) ) {
-      printRepositoryDirectories( repository, directory ); // List the directories in the repository
+        // Add the IMetaStore of the repository to our delegation
+        if ( repository.getMetaStore() != null && getMetaStore() != null ) {
+          getMetaStore().addMetaStore( repository.getMetaStore() );
+        }
 
-    } else if ( !Utils.isEmpty( exportRepo ) ) {
-      // Export the repository
-      System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Log.ExportingObjectsRepToFile", "" + exportRepo ) );
-      repository.getExporter().exportAllObjects( null, exportRepo, directory, "all" );
-      System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Log.FinishedExportObjectsRepToFile", "" + exportRepo ) );
-    }
-  }
+        // Find the directory name if one is specified...
+        if ( !Utils.isEmpty( dirName ) ) {
+          directory = directory.findDirectory( dirName );
+        }
 
-  public Trans loadTransFromRepository( Repository repository, String dirName, String transName ) throws Exception {
+        if ( directory != null ) {
+          // Check username, password
+          logDebug( "Pan.Log.CheckSuppliedUserPass" );
 
-    if ( Utils.isEmpty( transName ) ) {
-      System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.NoTransNameSupplied" ) );
-      return null;
-    }
+          // transname is not empty ? then command it to load a transformation
+          if ( !Utils.isEmpty( transName ) ) {
 
-    RepositoryDirectoryInterface directory = loadRepositoryDirectory( repository, dirName, "Pan.Error.NoRepProvided",
-            "Pan.Log.Allocate&ConnectRep", "Pan.Error.CanNotFindSpecifiedDirectory" );
+            logDebug( "Pan.Log.LoadTransInfo" );
+            TransMeta transMeta = repository.loadTransformation( transName, directory, null, true, null );
 
-    if ( directory == null ) {
-      return null; // not much we can do here
-    }
+            logDebug( "Pan.Log.AllocateTrans" );
+            Trans trans = new Trans( transMeta );
+            trans.setRepository( repository );
+            trans.setMetaStore( getMetaStore() );
 
-    // Add the IMetaStore of the repository to our delegation
-    if ( repository.getMetaStore() != null && getMetaStore() != null ) {
-      getMetaStore().addMetaStore( repository.getMetaStore() );
-    }
+            return trans; // return transformation loaded from the repo
 
-    logDebug( "Pan.Log.LoadTransInfo" );
-    TransMeta transMeta = repository.loadTransformation( transName, directory, null, true, null );
+          } else if ( isEnabled( listTrans ) ) {
 
-    logDebug( "Pan.Log.AllocateTrans" );
-    Trans trans = new Trans( transMeta );
-    trans.setRepository( repository );
-    trans.setMetaStore( getMetaStore() );
+            printRepositoryStoredTransformations( repository, directory ); // List the transformations in the repository
 
-    return trans; // return transformation loaded from the repo
-  }
+          } else if ( isEnabled( listDirs ) ) {
 
-  public Trans loadTransFromFilesystem( String initialDir, String filename, String jarFilename, String base64Zip )
-    throws Exception {
+            printRepositoryDirectories( repository, directory ); // List the directories in the repository
 
-    Trans trans = null;
+          } else if ( !Utils.isEmpty( exportRepo ) ) {
 
-    if ( !Utils.isEmpty( base64Zip ) ) {
-      //expected form of filename "*.ktr"
-      String zipPath = Const.getUserHomeDirectory() + File.separator + java.util.UUID.randomUUID().toString() + ".zip";
-      filename = "zip:file:" + File.separator + File.separator + zipPath + "!" + filename;
-      File zipFile;
+            // Export the repository
+            System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Log.ExportingObjectsRepToFile", "" + exportRepo ) );
+            repository.getExporter().exportAllObjects( null, exportRepo, directory, "all" );
+            System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Log.FinishedExportObjectsRepToFile", "" + exportRepo ) );
 
-      //responsibly attempt to write to file
-      try {
-        zipFile = decodeBase64StringToFile( base64Zip, zipPath );
-      } catch ( IOException e ) {
-        getLog().logError( e.toString() + "\n" );
-        e.printStackTrace();
-        return null;
+          } else {
+            System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.NoTransNameSupplied" ) );
+          }
+        } else {
+          System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.CanNotFindSpecifiedDirectory", "" + dirName ) );
+        }
+      } else {
+        System.out.println( BaseMessages.getString( getPkgClazz(), "Pan.Error.NoRepProvided" ) );
       }
 
-      zipFile.deleteOnExit();
+    } catch ( Exception e ) {
+      getLog().logError( e.getMessage() );
     }
+
+    return null;
+  }
+
+  public Trans executeFilesystemBasedCommand( final String initialDir, final String filename, final String jarFilename ) throws Exception {
+
+    Trans trans = null;
 
     // Try to load the transformation from file
     if ( !Utils.isEmpty( filename ) ) {
@@ -364,6 +322,7 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
       logDebug( "Pan.Log.LoadingTransXML", "" + filepath );
       TransMeta transMeta = new TransMeta( filepath );
       trans = new Trans( transMeta );
+
     }
 
     if ( !Utils.isEmpty( jarFilename ) ) {
@@ -389,10 +348,6 @@ public class PanCommandExecutor extends AbstractBaseCommandExecutor {
         System.out.println( Const.getStackTracker( e ) );
         throw e;
       }
-    }
-
-    if ( trans != null ) {
-      trans.setMetaStore( getMetaStore() );
     }
 
     return trans;

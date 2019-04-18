@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -49,7 +49,6 @@ import org.pentaho.di.repository.StringObjectId;
 import org.pentaho.di.resource.ResourceEntry;
 import org.pentaho.di.resource.ResourceEntry.ResourceType;
 import org.pentaho.di.resource.ResourceReference;
-import org.pentaho.di.trans.ISubTransAwareMeta;
 import org.pentaho.di.trans.StepWithMappingMeta;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
@@ -76,8 +75,7 @@ import java.util.List;
  * @author Matt
  * @since 18-mar-2013
  */
-public class TransExecutorMeta extends StepWithMappingMeta implements StepMetaInterface, HasRepositoryInterface,
-  ISubTransAwareMeta {
+public class TransExecutorMeta extends StepWithMappingMeta implements StepMetaInterface, HasRepositoryInterface {
 
   private static Class<?> PKG = TransExecutorMeta.class; // for i18n purposes, needed by Translator2!!
 
@@ -594,8 +592,8 @@ public class TransExecutorMeta extends StepWithMappingMeta implements StepMetaIn
   }
 
   @Deprecated
-  public static TransMeta loadTransMeta( TransExecutorMeta executorMeta, Repository rep, VariableSpace space ) throws KettleException {
-    // Note - was a synchronized static method, but as no static variables are manipulated, this is entirely unnecessary
+  public static synchronized TransMeta loadTransMeta( TransExecutorMeta executorMeta, Repository rep,
+                                                      VariableSpace space ) throws KettleException {
     return loadMappingMeta( executorMeta, rep, null, space );
   }
 

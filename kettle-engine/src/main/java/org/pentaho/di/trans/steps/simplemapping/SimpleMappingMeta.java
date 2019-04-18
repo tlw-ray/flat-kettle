@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -30,8 +30,6 @@ import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.exception.KettleXMLException;
-import org.pentaho.di.core.injection.InjectionDeep;
-import org.pentaho.di.core.injection.InjectionSupported;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.core.util.Utils;
@@ -49,7 +47,6 @@ import org.pentaho.di.repository.StringObjectId;
 import org.pentaho.di.resource.ResourceEntry;
 import org.pentaho.di.resource.ResourceEntry.ResourceType;
 import org.pentaho.di.resource.ResourceReference;
-import org.pentaho.di.trans.ISubTransAwareMeta;
 import org.pentaho.di.trans.StepWithMappingMeta;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
@@ -78,18 +75,13 @@ import java.util.List;
  * @author Matt
  *
  */
-@InjectionSupported( localizationPrefix = "SimpleMappingMeta.Injection.", groups = { "PARAMETERS", "INPUTS" } )
-public class SimpleMappingMeta extends StepWithMappingMeta implements StepMetaInterface, HasRepositoryInterface,
-  ISubTransAwareMeta {
+
+public class SimpleMappingMeta extends StepWithMappingMeta implements StepMetaInterface, HasRepositoryInterface {
 
   private static Class<?> PKG = SimpleMappingMeta.class; // for i18n purposes, needed by Translator2!!
 
-  @InjectionDeep
   private MappingIODefinition inputMapping;
-
   private MappingIODefinition outputMapping;
-
-  @InjectionDeep
   private MappingParameters mappingParameters;
 
   /*
@@ -300,7 +292,7 @@ public class SimpleMappingMeta extends StepWithMappingMeta implements StepMetaIn
       // This just means: set a number of variables or parameter values:
       //
       StepWithMappingMeta.activateParams( mappingTransMeta, mappingTransMeta, space, mappingTransMeta.listParameters(),
-        mappingParameters.getVariable(), mappingParameters.getInputField(), mappingParameters.isInheritingAllVariables() );
+        mappingParameters.getVariable(), mappingParameters.getInputField() );
     }
 
     // Keep track of all the fields that need renaming...
@@ -575,17 +567,4 @@ public class SimpleMappingMeta extends StepWithMappingMeta implements StepMetaIn
     this.outputMapping = outputMapping;
   }
 
-  @Override
-  public List<MappingIODefinition> getInputMappings() {
-    final List<MappingIODefinition> inputMappings = new ArrayList();
-    inputMappings.add( inputMapping );
-    return inputMappings;
-  }
-
-  @Override
-  public List<MappingIODefinition> getOutputMappings() {
-    final List<MappingIODefinition> outputMappings = new ArrayList();
-    outputMappings.add( outputMapping );
-    return outputMappings;
-  }
 }

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -261,15 +261,6 @@ public class OSGIPlugin implements PluginInterface, ClassLoadingPluginInterface 
   @Override
   public void setClassLoaderGroup( String arg0 ) {
     // noop
-  }
-
-  @Override
-  public void setSuggestion( String suggestion ) {
-  }
-
-  @Override
-  public String getSuggestion() {
-    return null;
   }
 
   public void setClassToBeanMap( Map<Class, String> classToBeanMap ) {

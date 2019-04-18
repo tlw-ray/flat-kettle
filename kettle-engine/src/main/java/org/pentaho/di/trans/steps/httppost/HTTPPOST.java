@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -23,7 +23,6 @@
 package org.pentaho.di.trans.steps.httppost;
 
 
-import com.google.common.annotations.VisibleForTesting;
 import org.apache.commons.lang.StringUtils;
 import org.apache.http.Header;
 import org.apache.http.HttpEntity;
@@ -51,7 +50,6 @@ import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.row.RowDataUtil;
 import org.pentaho.di.core.util.HttpClientManager;
-import org.pentaho.di.core.util.StringUtil;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.trans.Trans;
@@ -72,8 +70,6 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-
-import static org.pentaho.di.trans.steps.httppost.HTTPPOSTMeta.DEFAULT_ENCODING;
 
 /**
  * Make a HTTP Post call
@@ -503,8 +499,7 @@ public class HTTPPOST extends BaseStep implements StepInterface {
     return true;
   }
 
-  @VisibleForTesting
-  String getRequestBodyParamsAsStr( NameValuePair[] pairs, String charset ) throws KettleException {
+  private String getRequestBodyParamsAsStr( NameValuePair[] pairs, String charset ) throws KettleException {
     StringBuffer buf = new StringBuffer();
     try {
       for ( int i = 0; i < pairs.length; ++i ) {
@@ -514,10 +509,10 @@ public class HTTPPOST extends BaseStep implements StepInterface {
             buf.append( "&" );
           }
 
-          buf.append( URLEncoder.encode( pair.getName(), !StringUtil.isEmpty( charset ) ? charset : DEFAULT_ENCODING ) );
+          buf.append( URLEncoder.encode( pair.getName(), charset ) );
           buf.append( "=" );
           if ( pair.getValue() != null ) {
-            buf.append( URLEncoder.encode( pair.getValue(), !StringUtil.isEmpty( charset ) ? charset : DEFAULT_ENCODING ) );
+            buf.append( URLEncoder.encode( pair.getValue(), charset ) );
           }
         }
       }

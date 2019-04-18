@@ -99,7 +99,6 @@ public class CalculatorMetaTest implements InitializerInterface<CalculatorMeta> 
     meta.setDefault();
     assertNotNull( meta.getCalculation() );
     assertEquals( 0, meta.getCalculation().length );
-    assertTrue( meta.isFailIfNoFile() );
   }
 
   public class CalculatorMetaFunctionLoadSaveValidator implements FieldLoadSaveValidator<CalculatorMetaFunction> {

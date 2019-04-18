@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,7 +22,6 @@
 
 package org.pentaho.di.trans.steps.mergerows;
 
-import java.util.Arrays;
 import java.util.List;
 
 import org.pentaho.di.core.Const;
@@ -83,8 +82,7 @@ public class MergeRows extends BaseStep implements StepInterface {
 
       //rowSetWhenIdentical is use in case the comparison is IDENTICAL.
       //this should be the "Comparison" stream but can be the "Reference" stream for backward compatibility (PDI-736)
-      String useRefWhenIdenticalVar = Const
-        .NVL( System.getProperty( Const.KETTLE_COMPATIBILITY_MERGE_ROWS_USE_REFERENCE_STREAM_WHEN_IDENTICAL ), "N" );
+      String useRefWhenIdenticalVar = Const.NVL( System.getProperty( Const.KETTLE_COMPATIBILITY_MERGE_ROWS_USE_REFERENCE_STREAM_WHEN_IDENTICAL ), "N" );
       if ( "N".equalsIgnoreCase( useRefWhenIdenticalVar ) ) {
         //use the reference stream (as per documentation)
         useRefWhenIdentical = false;
@@ -103,13 +101,13 @@ public class MergeRows extends BaseStep implements StepInterface {
 
       if ( data.one != null ) {
         // Find the key indexes:
-        data.keyNrs = new int[ meta.getKeyFields().length ];
+        data.keyNrs = new int[meta.getKeyFields().length];
         for ( int i = 0; i < data.keyNrs.length; i++ ) {
-          data.keyNrs[ i ] = data.oneRowSet.getRowMeta().indexOfValue( meta.getKeyFields()[ i ] );
-          if ( data.keyNrs[ i ] < 0 ) {
+          data.keyNrs[i] = data.oneRowSet.getRowMeta().indexOfValue( meta.getKeyFields()[i] );
+          if ( data.keyNrs[i] < 0 ) {
             String message =
               BaseMessages.getString( PKG, "MergeRows.Exception.UnableToFindFieldInReferenceStream", meta
-                .getKeyFields()[ i ] );
+                .getKeyFields()[i] );
             logError( message );
             throw new KettleStepException( message );
           }
@@ -117,13 +115,13 @@ public class MergeRows extends BaseStep implements StepInterface {
       }
 
       if ( data.two != null ) {
-        data.valueNrs = new int[ meta.getValueFields().length ];
+        data.valueNrs = new int[meta.getValueFields().length];
         for ( int i = 0; i < data.valueNrs.length; i++ ) {
-          data.valueNrs[ i ] = data.twoRowSet.getRowMeta().indexOfValue( meta.getValueFields()[ i ] );
-          if ( data.valueNrs[ i ] < 0 ) {
+          data.valueNrs[i] = data.twoRowSet.getRowMeta().indexOfValue( meta.getValueFields()[i] );
+          if ( data.valueNrs[i] < 0 ) {
             String message =
               BaseMessages.getString( PKG, "MergeRows.Exception.UnableToFindFieldInReferenceStream", meta
-                .getValueFields()[ i ] );
+                .getValueFields()[i] );
             logError( message );
             throw new KettleStepException( message );
           }
@@ -132,8 +130,7 @@ public class MergeRows extends BaseStep implements StepInterface {
     }
 
     if ( log.isRowLevel() ) {
-      logRowlevel( BaseMessages.getString( PKG, "MergeRows.Log.DataInfo",
-        Arrays.toString( data.one ) + "" ) + Arrays.toString( data.two ) );
+      logRowlevel( BaseMessages.getString( PKG, "MergeRows.Log.DataInfo", data.one + "" ) + data.two );
     }
 
     if ( data.one == null && data.two == null ) {
@@ -251,9 +248,9 @@ public class MergeRows extends BaseStep implements StepInterface {
   /**
    * Checks whether 2 template rows are compatible for the mergestep.
    *
-   * @param referenceRowMeta
+   * @param referenceRow
    *          Reference row
-   * @param compareRowMeta
+   * @param compareRow
    *          Row to compare to
    *
    * @return true when templates are compatible.

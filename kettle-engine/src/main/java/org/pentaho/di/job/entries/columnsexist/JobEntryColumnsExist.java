@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -246,17 +246,24 @@ public class JobEntryColumnsExist extends JobEntryBase implements Cloneable, Job
         String realSchemaname = environmentSubstitute( schemaname );
         String realTablename = environmentSubstitute( tablename );
 
+        if ( !Utils.isEmpty( realSchemaname ) ) {
+          realTablename = db.getDatabaseMeta().getQuotedSchemaTableCombination( realSchemaname, realTablename );
+        } else {
+          realTablename = db.getDatabaseMeta().quoteField( realTablename );
+        }
+
         db.connect( parentJob.getTransactionId(), null );
 
-        if ( db.checkTableExists( realSchemaname, realTablename ) ) {
+        if ( db.checkTableExists( realTablename ) || db.checkTableExistsByDbMeta( realSchemaname, db.getDatabaseMeta().quoteField( environmentSubstitute( tablename ) ) ) ) {
           if ( log.isDetailed() ) {
             logDetailed( BaseMessages.getString( PKG, "JobEntryColumnsExist.Log.TableExists", realTablename ) );
           }
 
           for ( int i = 0; i < arguments.length && !parentJob.isStopped(); i++ ) {
             String realColumnname = environmentSubstitute( arguments[i] );
+            realColumnname = db.getDatabaseMeta().quoteField( realColumnname );
 
-            if ( db.checkColumnExists( realSchemaname, realTablename, realColumnname ) ) {
+            if ( db.checkColumnExists( realColumnname, realTablename ) ) {
               if ( log.isDetailed() ) {
                 logDetailed( BaseMessages.getString(
                   PKG, "JobEntryColumnsExist.Log.ColumnExists", realColumnname, realTablename ) );

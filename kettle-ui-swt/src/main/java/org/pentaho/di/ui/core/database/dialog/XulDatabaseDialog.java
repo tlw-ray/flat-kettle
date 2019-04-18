@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,6 +22,7 @@
 
 package org.pentaho.di.ui.core.database.dialog;
 
+import java.util.Locale;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
@@ -34,6 +35,7 @@ import org.pentaho.di.core.logging.LogChannelInterface;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.i18n.BaseMessages;
 import org.pentaho.di.i18n.GlobalMessages;
+import org.pentaho.di.i18n.LanguageChoice;
 import org.pentaho.di.repository.ObjectId;
 import org.pentaho.di.ui.core.dialog.ErrorDialog;
 import org.pentaho.di.ui.xul.KettleXulLoader;
@@ -172,11 +174,21 @@ public class XulDatabaseDialog {
       XulComponent parentElement = boxElement.getParent();
 
       ResourceBundle res = null;
+      Locale primaryLocale = GlobalMessages.getLocale();
+      Locale failOverLocale = LanguageChoice.getInstance().getFailoverLocale();
       try {
-        res = GlobalMessages.getBundle( MESSAGES );
+        res = GlobalMessages.getBundle( primaryLocale, MESSAGES );
       } catch ( MissingResourceException e ) {
-        log.logError(
-          BaseMessages.getString( PKG, "XulDatabaseDialog.Error.ResourcesNotFound.Title" ), e.getMessage(), e );
+        try {
+          res = GlobalMessages.getBundle( failOverLocale, MESSAGES );
+        } catch ( MissingResourceException e2 ) {
+          res = null;
+          log.logError(
+            BaseMessages.getString( PKG, "XulDatabaseDialog.Error.ResourcesNotFound.Title" ), BaseMessages
+              .getString( PKG, "XulDatabaseDialog.Error.ResourcesNotFound", primaryLocale == null
+                ? "" : primaryLocale.toString(), failOverLocale == null ? "" : failOverLocale.toString() ),
+            e2 );
+        }
       }
 
       XulDomContainer fragmentContainer = null;

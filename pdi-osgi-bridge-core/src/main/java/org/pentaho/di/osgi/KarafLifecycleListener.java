@@ -70,7 +70,7 @@ public class KarafLifecycleListener implements IPhasedLifecycleListener<KettleLi
   }
 
   private static long calculateTimeout() {
-    long result = TimeUnit.SECONDS.toMillis( 10 );
+    long result = TimeUnit.SECONDS.toMillis( 100 );
     String timeoutProp = System.getProperty( KarafLifecycleListener.class.getCanonicalName() + ".timeout" );
     if ( timeoutProp != null ) {
       try {
@@ -130,11 +130,8 @@ public class KarafLifecycleListener implements IPhasedLifecycleListener<KettleLi
   }
 
   private void maybeStartWatchers() {
-    //TLW::
-    System.out.println("KarafLifecycleListener.maybeStartWatchers()");
     if ( bundleContext != null && listenerActive.get() ) {
-      //TLW::
-      System.out.println("KarafLifecycleListener.maybeStartWatchers()::bundleContext != null && listenerActive.get()");
+
       Thread thread = new Thread( new Runnable() {
         @Override public void run() {
           ServiceReference<IKarafFeatureWatcher> featureWatcherServiceReference =
@@ -185,8 +182,6 @@ public class KarafLifecycleListener implements IPhasedLifecycleListener<KettleLi
       thread.setDaemon( true );
       thread.start();
       initialized.set( true );
-      //TLW::
-      System.out.println("KarafLifecycleListener.maybeStartWatchers().finish");
     }
   }
 

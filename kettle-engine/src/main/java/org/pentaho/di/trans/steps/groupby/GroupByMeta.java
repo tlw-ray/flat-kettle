@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -99,15 +99,11 @@ public class GroupByMeta extends BaseStepMeta implements StepMetaInterface {
 
   public static final int TYPE_GROUP_COUNT_ANY = 18;
 
-  public static final int TYPE_GROUP_STANDARD_DEVIATION_SAMPLE = 19;
-
-  public static final int TYPE_GROUP_PERCENTILE_NEAREST_RANK = 20;
-
   public static final String[] typeGroupCode = /* WARNING: DO NOT TRANSLATE THIS. WE ARE SERIOUS, DON'T TRANSLATE! */
   {
     "-", "SUM", "AVERAGE", "MEDIAN", "PERCENTILE", "MIN", "MAX", "COUNT_ALL", "CONCAT_COMMA", "FIRST", "LAST",
     "FIRST_INCL_NULL", "LAST_INCL_NULL", "CUM_SUM", "CUM_AVG", "STD_DEV", "CONCAT_STRING", "COUNT_DISTINCT",
-    "COUNT_ANY", "STD_DEV_SAMPLE", "PERCENTILE_NEAREST_RANK" };
+    "COUNT_ANY", };
 
   public static final String[] typeGroupLongDesc = {
     "-", BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.SUM" ),
@@ -127,11 +123,7 @@ public class GroupByMeta extends BaseStepMeta implements StepMetaInterface {
     BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.STANDARD_DEVIATION" ),
     BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.CONCAT_STRING" ),
     BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.COUNT_DISTINCT" ),
-    BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.COUNT_ANY" ),
-    BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.STANDARD_DEVIATION_SAMPLE" ),
-    BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.PERCENTILE_NEAREST_RANK" )
-  };
-
+    BaseMessages.getString( PKG, "GroupByMeta.TypeGroupLongDesc.COUNT_ANY" ), };
 
   /**
    * All rows need to pass, adding an extra row at the end of each group/block.
@@ -308,7 +300,7 @@ public class GroupByMeta extends BaseStepMeta implements StepMetaInterface {
   }
 
   /**
-   * @param valueField The valueField to set.
+   * @param separatorField The valueField to set.
    */
   public void setValueField( String[] valueField ) {
     this.valueField = valueField;
@@ -499,9 +491,7 @@ public class GroupByMeta extends BaseStepMeta implements StepMetaInterface {
             break;
           case TYPE_GROUP_STANDARD_DEVIATION:
           case TYPE_GROUP_MEDIAN:
-          case TYPE_GROUP_STANDARD_DEVIATION_SAMPLE:
           case TYPE_GROUP_PERCENTILE:
-          case TYPE_GROUP_PERCENTILE_NEAREST_RANK:
             valueType = ValueMetaInterface.TYPE_NUMBER;
             break;
           case TYPE_GROUP_CONCAT_STRING:

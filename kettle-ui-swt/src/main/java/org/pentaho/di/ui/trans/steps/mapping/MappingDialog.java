@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -75,7 +75,6 @@ import org.pentaho.di.ui.core.ConstUI;
 import org.pentaho.di.ui.core.dialog.EnterMappingDialog;
 import org.pentaho.di.ui.core.dialog.EnterSelectionDialog;
 import org.pentaho.di.ui.core.dialog.ErrorDialog;
-import org.pentaho.di.ui.core.dialog.WarningDialog;
 import org.pentaho.di.ui.core.gui.GUIResource;
 import org.pentaho.di.ui.core.widget.ColumnInfo;
 import org.pentaho.di.ui.core.widget.ColumnsResizer;
@@ -90,9 +89,7 @@ import org.pentaho.vfs.ui.VfsFileChooserDialog;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 public class MappingDialog extends BaseStepDialog implements StepDialogInterface {
   private static Class<?> PKG = MappingMeta.class; // for i18n purposes, needed by Translator2!!
@@ -406,8 +403,8 @@ public class MappingDialog extends BaseStepDialog implements StepDialogInterface
 
   protected Image getImage() {
     return SwtSvgImageUtil
-      .getImage( shell.getDisplay(), getClass().getClassLoader(), "MAP.svg", ConstUI.LARGE_ICON_SIZE,
-        ConstUI.LARGE_ICON_SIZE );
+      .getImage( shell.getDisplay(), getClass().getClassLoader(), "MAP.svg", ConstUI.ICON_SIZE,
+        ConstUI.ICON_SIZE );
   }
 
   private void selectRepositoryTrans() {
@@ -1039,15 +1036,8 @@ public class MappingDialog extends BaseStepDialog implements StepDialogInterface
             wFieldMappings.optWidth( true );
           }
         } catch ( KettleException e ) {
-          Listener ok = new Listener() {
-            @Override
-            public void handleEvent( final Event event ) { /* do nothing for now */ }
-          };
-          Map<String, Listener> listenerMap = new LinkedHashMap<>();
-          listenerMap.put( BaseMessages.getString( "System.Button.OK" ), ok );
-          new WarningDialog( shell, BaseMessages.getString( PKG, "System.Dialog.Error.Title" ), e.getMessage(), listenerMap );
-          //new ErrorDialog( shell, BaseMessages.getString( PKG, "System.Dialog.Error.Title" ), BaseMessages.getString(
-           // PKG, "MappingDialog.Exception.ErrorGettingMappingSourceAndTargetFields", e.toString() ), e );
+          new ErrorDialog( shell, BaseMessages.getString( PKG, "System.Dialog.Error.Title" ), BaseMessages.getString(
+            PKG, "MappingDialog.Exception.ErrorGettingMappingSourceAndTargetFields", e.toString() ), e );
         }
       }
 
@@ -1062,15 +1052,7 @@ public class MappingDialog extends BaseStepDialog implements StepDialogInterface
         } catch ( KettleException e ) {
           // Show the missing/wrong step name error
           //
-          Listener ok = new Listener() {
-            @Override
-            public void handleEvent( final Event event ) { /* do nothing for now */ }
-          };
-          Map<String, Listener> listenerMap = new LinkedHashMap<>();
-          listenerMap.put( BaseMessages.getString( "System.Button.OK" ), ok );
-          new WarningDialog( shell, "Error", e.getMessage(), listenerMap ).open();
-          //
-          //new ErrorDialog( shell, "Error", "Unexpected error", e );
+          new ErrorDialog( shell, "Error", "Unexpected error", e );
         }
       }
     } );

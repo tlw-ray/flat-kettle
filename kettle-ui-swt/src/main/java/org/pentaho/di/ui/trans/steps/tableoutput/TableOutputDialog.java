@@ -1113,10 +1113,10 @@ public class TableOutputDialog extends BaseStepDialog implements StepDialogInter
               try {
                 db.connect();
 
-                RowMetaInterface r =
-                  db.getTableFieldsMeta(
-                    transMeta.environmentSubstitute( schemaName ),
-                    transMeta.environmentSubstitute( tableName ) );
+                String schemaTable =
+                  ci.getQuotedSchemaTableCombination( transMeta.environmentSubstitute( schemaName ), transMeta
+                    .environmentSubstitute( tableName ) );
+                RowMetaInterface r = db.getTableFields( schemaTable );
                 if ( null != r ) {
                   String[] fieldNames = r.getFieldNames();
                   if ( null != fieldNames ) {

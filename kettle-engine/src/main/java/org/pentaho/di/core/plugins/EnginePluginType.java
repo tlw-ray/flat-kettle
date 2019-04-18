@@ -134,11 +134,6 @@ public class EnginePluginType extends BasePluginType implements PluginTypeInterf
   }
 
   @Override
-  protected String extractSuggestion( Annotation annotation ) {
-    return null;
-  }
-
-  @Override
   protected String extractClassLoaderGroup( Annotation annotation ) {
     return ( (EnginePlugin) annotation ).classLoaderGroup();
   }

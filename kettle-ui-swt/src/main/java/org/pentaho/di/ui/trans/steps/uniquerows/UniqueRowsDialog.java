@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -27,7 +27,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.IntStream;
 
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.dialogs.MessageDialogWithToggle;
@@ -55,7 +54,6 @@ import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.RowMetaInterface;
 import org.pentaho.di.i18n.BaseMessages;
-import org.pentaho.di.trans.TransHopMeta;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;
 import org.pentaho.di.trans.step.StepDialogInterface;
@@ -467,19 +465,6 @@ public class UniqueRowsDialog extends BaseStepDialog implements StepDialogInterf
       md.open();
       props.setCustomParameter( STRING_SORT_WARNING_PARAMETER, md.getToggleState() ? "N" : "Y" );
       props.saveProps();
-    }
-
-    // Remove any error hops coming out of UniqueRows when Reject Duplicate Rows checkbox is unselected.
-    if ( wRejectDuplicateRow.getSelection() == false ) {
-      List<TransHopMeta> hops = this.transMeta.getTransHops();
-      IntStream.range( 0, hops.size() )
-        .filter( hopInd -> {
-          TransHopMeta hop = hops.get( hopInd );
-          return (
-            hop.isErrorHop()
-            && hop.getFromStep().getStepID().equals( this.input.getParentStepMeta().getStepID() ) );
-        } )
-        .forEach( hopInd -> this.transMeta.removeTransHop( hopInd ) );
     }
 
     dispose();

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,21 +22,13 @@
 
 package org.pentaho.di.base;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Base64;
 import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
-import org.apache.commons.lang.StringUtils;
 import org.pentaho.di.core.Const;
-import org.pentaho.di.core.Result;
 import org.pentaho.di.core.logging.LogChannelInterface;
 import org.pentaho.di.core.exception.KettleException;
+import org.pentaho.di.core.exception.KettleSecurityException;
 import org.pentaho.di.core.plugins.PluginRegistry;
 import org.pentaho.di.core.plugins.RepositoryPluginType;
 import org.pentaho.di.core.util.Utils;
@@ -61,13 +53,6 @@ public abstract class AbstractBaseCommandExecutor {
   private Class<?> pkgClazz;
   DelegatingMetaStore metaStore;
 
-  private Result result = new Result();
-
-  protected Result exitWithStatus( final int exitStatus ) {
-    getResult().setExitStatus( exitStatus );
-    return getResult();
-  }
-
   public DelegatingMetaStore createDefaultMetastore() throws MetaStoreException {
     DelegatingMetaStore metaStore = new DelegatingMetaStore();
     metaStore.addMetaStore( MetaStoreConst.openLocalPentahoMetaStore() );
@@ -91,8 +76,8 @@ public abstract class AbstractBaseCommandExecutor {
                                               String processingEndAfterLongMsgTkn, String processingEndAfterLongerMsgTkn,
                                               String processingEndAfterLongestMsgTkn ) {
 
-    String begin = getDateFormat().format( start );
-    String end = getDateFormat().format( stop );
+    String begin = getDateFormat().format( start ).toString();
+    String end = getDateFormat().format( stop ).toString();
 
     getLog().logMinimal( BaseMessages.getString( getPkgClazz(), startStopMsgTkn, begin, end ) );
 
@@ -163,33 +148,8 @@ public abstract class AbstractBaseCommandExecutor {
     return repsinfo;
   }
 
-  public RepositoryDirectoryInterface loadRepositoryDirectory( Repository repository, String dirName, String noRepoProvidedMsgTkn,
-                                                                  String allocateAndConnectRepoMsgTkn, String cannotFindDirMsgTkn ) throws KettleException {
-
-    if ( repository == null ) {
-      System.out.println( BaseMessages.getString( getPkgClazz(), noRepoProvidedMsgTkn ) );
-      return null;
-    }
-
-    RepositoryDirectoryInterface directory;
-
-    // Default is the root directory
-    logDebug( allocateAndConnectRepoMsgTkn );
-    directory = repository.loadRepositoryDirectoryTree();
-
-    if ( !StringUtils.isEmpty( dirName ) ) {
-
-      directory = directory.findDirectory( dirName ); // Find the directory name if one is specified...
-
-      if ( directory == null ) {
-        System.out.println( BaseMessages.getString( getPkgClazz(), cannotFindDirMsgTkn, "" + dirName ) );
-      }
-    }
-    return directory;
-  }
-
   public Repository establishRepositoryConnection( RepositoryMeta repositoryMeta, final String username, final String password,
-                                                     final RepositoryOperation... operations ) throws KettleException {
+                                                     final RepositoryOperation... operations ) throws KettleException, KettleSecurityException {
 
     Repository rep = PluginRegistry.getInstance().loadClass( RepositoryPluginType.class, repositoryMeta, Repository.class );
     rep.init( repositoryMeta );
@@ -223,41 +183,8 @@ public abstract class AbstractBaseCommandExecutor {
     }
   }
 
-  protected String[] convert( Map<String, String> map ) {
-
-    List<String> list = new ArrayList<>();
-
-    if ( map != null ) {
-      map.keySet().forEach( key -> list.add( key + "=" + map.get( key ) ) );
-    }
-
-    return list.toArray( new String[] {} );
-  }
-
   public boolean isEnabled( final String value ) {
     return YES.equalsIgnoreCase( value ) || Boolean.parseBoolean( value ); // both are NPE safe, both are case-insensitive
-  }
-
-  /**
-   * Decodes the provided base64String into the specified filePath. Parent directories must already exist.
-   *
-   * @param base64String String BASE64 representation of a file
-   * @param filePath     String The path to which the base64String is to be decoded
-   * @return File the newly created File
-   */
-  protected File decodeBase64StringToFile( String base64String, String filePath ) throws IOException {
-    //Decode base64String to byte[]
-    byte[] decodedBytes = Base64.getDecoder().decode( base64String );
-    File file = new File( filePath );
-
-    //Try-with-resources, write to file, ensure fos is always closed
-    try ( FileOutputStream fos = new FileOutputStream( file ) ) {
-      fos.write( decodedBytes );
-    } catch ( IOException e ) {
-      throw e;
-    }
-
-    return file;
   }
 
   public LogChannelInterface getLog() {
@@ -290,13 +217,5 @@ public abstract class AbstractBaseCommandExecutor {
 
   public void setDateFormat( SimpleDateFormat dateFormat ) {
     this.dateFormat = dateFormat;
-  }
-
-  public Result getResult() {
-    return result;
-  }
-
-  public void setResult( Result result ) {
-    this.result = result;
   }
 }

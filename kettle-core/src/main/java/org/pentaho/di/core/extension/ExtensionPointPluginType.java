@@ -141,9 +141,4 @@ public class ExtensionPointPluginType extends BasePluginType implements PluginTy
   protected String extractClassLoaderGroup( Annotation annotation ) {
     return ( (ExtensionPoint) annotation ).classLoaderGroup();
   }
-
-  @Override
-  protected String extractSuggestion( Annotation annotation ) {
-    return null;
-  }
 }

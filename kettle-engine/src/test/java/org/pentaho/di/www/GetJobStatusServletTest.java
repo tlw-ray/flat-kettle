@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -146,7 +146,6 @@ public class GetJobStatusServletTest {
     PowerMockito.when( mockJob.isFinished() ).thenReturn( true );
     PowerMockito.when( mockJob.getLogChannelId() ).thenReturn( logId );
     PowerMockito.when( mockJobMeta.getMaximum() ).thenReturn( new Point( 10, 10 ) );
-    when( mockJob.getStatus() ).thenReturn( "Finished" );
 
     getJobStatusServlet.doGet( mockHttpServletRequest, mockHttpServletResponse );
 
@@ -155,7 +154,7 @@ public class GetJobStatusServletTest {
 
     verify( cacheMock, times( 2 ) ).get( logId, 0 );
     verify( cacheMock, times( 1 ) ).put( eq( logId ), anyString(), eq( 0 ) );
-    verify( mockJob, times( 1 ) ).getLogChannel();
+    verify( mockJob.getLogChannel(), times( 1 ) );
 
   }
 }

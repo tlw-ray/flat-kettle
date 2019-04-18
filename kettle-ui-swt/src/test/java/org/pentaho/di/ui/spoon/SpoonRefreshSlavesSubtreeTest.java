@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,43 +22,54 @@
 
 package org.pentaho.di.ui.spoon;
 
-import org.junit.Assert;
+import org.eclipse.swt.graphics.Image;
+import org.eclipse.swt.widgets.TreeItem;
 import org.junit.Before;
 import org.junit.Test;
 import org.pentaho.di.base.AbstractMeta;
 import org.pentaho.di.cluster.SlaveServer;
 import org.pentaho.di.ui.core.gui.GUIResource;
-import org.pentaho.di.ui.core.widget.tree.TreeNode;
-import org.pentaho.di.ui.spoon.tree.provider.SlavesFolderProvider;
+import org.pentaho.di.ui.spoon.delegates.SpoonDelegates;
+import org.pentaho.di.ui.spoon.delegates.SpoonSlaveDelegate;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
+import static java.util.Arrays.asList;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
 
 /**
  * @author Andrey Khayrutdinov
  */
 public class SpoonRefreshSlavesSubtreeTest {
 
-  private SlavesFolderProvider slavesFolderProvider;
-  private TreeNode treeNode;
+  private Spoon spoon;
 
   @Before
   public void setUp() throws Exception {
-    GUIResource guiResource = mock( GUIResource.class );
-    slavesFolderProvider = new SlavesFolderProvider( guiResource );
-    treeNode = new TreeNode();
+    spoon = mock( Spoon.class );
+    spoon.delegates = mock( SpoonDelegates.class );
+    spoon.delegates.slaves = new SpoonSlaveDelegate( spoon );
+
+    TreeItem mockItem = mock( TreeItem.class );
+    when( spoon.createTreeItem( any( TreeItem.class ), anyString(), any( Image.class ) ) ).thenReturn( mockItem );
+
+    doCallRealMethod().when( spoon )
+      .refreshSlavesSubtree( any( TreeItem.class ), any( AbstractMeta.class ), any( GUIResource.class ) );
+
   }
 
-  private void callRefreshWith( AbstractMeta meta, String filter ) {
-    slavesFolderProvider.refresh( meta, treeNode, filter );
+
+  private void callRefreshWith( AbstractMeta meta ) {
+    spoon.refreshSlavesSubtree( mock( TreeItem.class ), meta, mock( GUIResource.class ) );
   }
 
   private void verifyNumberOfNodesCreated( int times ) {
-    Assert.assertEquals( times, treeNode.getChildren().size() );
+    verify( spoon, times( times ) ).createTreeItem( any( TreeItem.class ), anyString(), any( Image.class ) );
   }
 
 
@@ -67,30 +78,33 @@ public class SpoonRefreshSlavesSubtreeTest {
     AbstractMeta meta = mock( AbstractMeta.class );
     when( meta.getSlaveServers() ).thenReturn( Collections.<SlaveServer>emptyList() );
 
-    callRefreshWith( meta, null );
-    verifyNumberOfNodesCreated( 0 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 1 );
   }
 
   @Test
   public void severalConnectionsExist() {
+    when( spoon.filterMatch( anyString() ) ).thenReturn( true );
     AbstractMeta meta = prepareMetaWithThreeSlaves();
 
-    callRefreshWith( meta, null );
-    verifyNumberOfNodesCreated( 3 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 4 );
   }
 
   @Test
   public void onlyOneMatchesFiltering() {
+    when( spoon.filterMatch( eq( "2" ) ) ).thenReturn( true );
     AbstractMeta meta = prepareMetaWithThreeSlaves();
 
-    callRefreshWith( meta, "2" );
-    verifyNumberOfNodesCreated( 1 );
+    callRefreshWith( meta );
+    verifyNumberOfNodesCreated( 2 );
   }
 
 
   private static AbstractMeta prepareMetaWithThreeSlaves() {
     AbstractMeta meta = mock( AbstractMeta.class );
-    List<SlaveServer> servers = Arrays.asList( mockServer( "1" ), mockServer( "2" ), mockServer( "3" ) );
+    List<SlaveServer> servers =
+      asList( mockServer( "1" ), mockServer( "2" ), mockServer( "3" ) );
     when( meta.getSlaveServers() ).thenReturn( servers );
     return meta;
   }

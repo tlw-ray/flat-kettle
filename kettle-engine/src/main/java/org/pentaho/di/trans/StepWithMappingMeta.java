@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -21,6 +21,11 @@
  ******************************************************************************/
 
 package org.pentaho.di.trans;
+
+import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY;
+import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_DIRECTORY;
+import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY;
+import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_NAME;
 
 import org.apache.commons.lang.ArrayUtils;
 import org.pentaho.di.core.Const;
@@ -44,21 +49,13 @@ import org.pentaho.di.repository.RepositoryDirectoryInterface;
 import org.pentaho.di.resource.ResourceDefinition;
 import org.pentaho.di.resource.ResourceNamingInterface;
 import org.pentaho.di.trans.step.StepMetaInterface;
-import org.pentaho.di.trans.steps.mapping.MappingIODefinition;
 import org.pentaho.metastore.api.IMetaStore;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-
-import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_ENTRY_CURRENT_DIRECTORY;
-import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_DIRECTORY;
-import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_NAME;
-import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY;
 
 /**
  * This class is supposed to use in steps where the mapping to sub transformations takes place
@@ -100,9 +97,8 @@ public abstract class StepWithMappingMeta extends BaseSerializingMeta implements
     return tmpSpace;
   }
 
-  public static TransMeta loadMappingMeta( StepWithMappingMeta executorMeta, Repository rep, IMetaStore metaStore, VariableSpace space, boolean share ) throws KettleException {
-    // Note - was a synchronized static method, but as no static variables are manipulated, this is entirely unnecessary
-
+  public static synchronized TransMeta loadMappingMeta( StepWithMappingMeta executorMeta, Repository rep,
+                                                        IMetaStore metaStore, VariableSpace space, boolean share ) throws KettleException {
     TransMeta mappingTransMeta = null;
 
     CurrentDirectoryResolver r = new CurrentDirectoryResolver();
@@ -206,11 +202,10 @@ public abstract class StepWithMappingMeta extends BaseSerializingMeta implements
       return null;
     }
 
-
+    //  When the child parameter does exist in the parent parameters, overwrite the child parameter by the
+    // parent parameter.
+    replaceVariableValues( mappingTransMeta, space );
     if ( share ) {
-      //  When the child parameter does exist in the parent parameters, overwrite the child parameter by the
-      // parent parameter.
-      replaceVariableValues( mappingTransMeta, space );
       // All other parent parameters need to get copied into the child parameters  (when the 'Inherit all
       // variables from the transformation?' option is checked)
       addMissingVariables( mappingTransMeta, space );
@@ -439,28 +434,9 @@ public abstract class StepWithMappingMeta extends BaseSerializingMeta implements
     }
     String[] variableNames = replaceBy.listVariables();
     for ( String variableName : variableNames ) {
-      if ( childTransMeta.getVariable( variableName ) != null && !isInternalVariable( variableName ) ) {
+      if ( childTransMeta.getVariable( variableName ) != null ) {
         childTransMeta.setVariable( variableName, replaceBy.getVariable( variableName ) );
       }
     }
-  }
-
-  private static boolean isInternalVariable( String variableName ) {
-    return ( Arrays.asList( Const.INTERNAL_JOB_VARIABLES ).contains( variableName )
-      || Arrays.asList( Const.INTERNAL_TRANS_VARIABLES ).contains( variableName ) );
-  }
-
-  /**
-   * @return the inputMappings
-   */
-  public List<MappingIODefinition> getInputMappings() {
-    return Collections.emptyList();
-  }
-
-  /**
-   * @return the outputMappings
-   */
-  public List<MappingIODefinition> getOutputMappings() {
-    return Collections.emptyList();
   }
 }

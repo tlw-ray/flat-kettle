@@ -152,7 +152,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
   private FormData fdlEnclosure, fdEnclosure;
 
   private Label wlEndedLine;
-  private TextVar wEndedLine;
+  private Text wEndedLine;
   private FormData fdlEndedLine, fdEndedLine;
 
   private Label wlEnclForced;
@@ -192,7 +192,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
   private FormData fdlFastDump, fdFastDump;
 
   private Label wlSplitEvery;
-  private TextVar wSplitEvery;
+  private Text wSplitEvery;
   private FormData fdlSplitEvery, fdSplitEvery;
 
   private TableView wFields;
@@ -976,7 +976,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
     fdlSplitEvery.top = new FormAttachment( wFastDump, margin );
     fdlSplitEvery.right = new FormAttachment( middle, -margin );
     wlSplitEvery.setLayoutData( fdlSplitEvery );
-    wSplitEvery = new TextVar( transMeta, wContentComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
+    wSplitEvery = new Text( wContentComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
     props.setLook( wSplitEvery );
     wSplitEvery.addModifyListener( lsMod );
     fdSplitEvery = new FormData();
@@ -994,7 +994,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
     fdlEndedLine.top = new FormAttachment( wSplitEvery, margin );
     fdlEndedLine.right = new FormAttachment( middle, -margin );
     wlEndedLine.setLayoutData( fdlEndedLine );
-    wEndedLine = new TextVar( transMeta, wContentComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
+    wEndedLine = new Text( wContentComp, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
     props.setLook( wEndedLine );
     wEndedLine.addModifyListener( lsMod );
     fdEndedLine = new FormData();
@@ -1228,7 +1228,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
             file = file.replace( "file://", "" ).replace( "/C:", "C:" );
           }
           if ( !file.contains( System.getProperty( "file.separator" ) ) ) {
-            if ( !System.getProperty( "file.separator" ).equals( "/" ) && !Const.isWindows() ) {
+            if ( !System.getProperty( "file.separator" ).equals( "/" ) ) {
               file = file.replace( "/", System.getProperty( "file.separator" ) );
             }
           }
@@ -1466,7 +1466,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
       wFileNameField.setText( input.getFileNameField() );
     }
 
-    wSplitEvery.setText( Const.NVL( input.getSplitEveryRows(), "" ) );
+    wSplitEvery.setText( "" + input.getSplitEvery() );
 
     wEnclForced.setSelection( input.isEnclosureForced() );
     wDisableEnclosureFix.setSelection( input.isEnclosureFixDisabled() );
@@ -1546,7 +1546,7 @@ public class TextFileOutputDialog extends BaseStepDialog implements StepDialogIn
     tfoi.setSeparator( wSeparator.getText() );
     tfoi.setEnclosure( wEnclosure.getText() );
     tfoi.setExtension( wExtension.getText() );
-    tfoi.setSplitEveryRows( wSplitEvery.getText() );
+    tfoi.setSplitEvery( Const.toInt( wSplitEvery.getText(), 0 ) );
     tfoi.setEndedLine( wEndedLine.getText() );
 
     tfoi.setFileNameField( wFileNameField.getText() );

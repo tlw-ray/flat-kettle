@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -47,7 +47,6 @@ import org.pentaho.di.ui.core.gui.GUIResource;
 import org.pentaho.di.ui.spoon.Spoon;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -72,7 +71,6 @@ public class JobExecutionConfigurationDialog extends ConfigurationDialog {
     fd_expandCheckButton.top = new FormAttachment( 0, 10 );
     fd_expandCheckButton.left = new FormAttachment( 0, 10 );
     wExpandRemote.setLayoutData( fd_expandCheckButton );
-    addRunConfigurationListenerForExpandRemoteOption();
 
     wClearLog = new Button( gDetails, SWT.CHECK );
     wClearLog.setText( BaseMessages.getString( PKG, "JobExecutionConfigurationDialog.ClearLog.Label" ) );
@@ -223,8 +221,6 @@ public class JobExecutionConfigurationDialog extends ConfigurationDialog {
       wRunConfiguration.setText( getConfiguration().getRunConfiguration() );
     }
 
-    wExpandRemote.setEnabled( getConfiguration().isExecutingRemotely() );
-
     String startCopy = "";
     if ( !Utils.isEmpty( getConfiguration().getStartCopyName() ) ) {
       JobEntryCopy copy =
@@ -280,23 +276,5 @@ public class JobExecutionConfigurationDialog extends ConfigurationDialog {
    */
   public JobExecutionConfiguration getConfiguration() {
     return (JobExecutionConfiguration) configuration;
-  }
-
-  public void addRunConfigurationListenerForExpandRemoteOption() {
-    wRunConfiguration.addModifyListener( modifyEvent -> {
-      List<Object> items = Arrays.asList( wRunConfiguration.getText(), true );
-      try {
-        ExtensionPointHandler.callExtensionPoint( Spoon.getInstance().getLog(), KettleExtensionPoint
-          .RunConfigurationIsRemote.id, items );
-      } catch ( KettleException ignored ) {
-        // Ignore errors - keep old behavior - expand remote job always enabled
-      }
-      Boolean isRemote = (Boolean) items.get( 1 );
-      getConfiguration().setRunConfiguration( wRunConfiguration.getText() );
-      getConfiguration().setExecutingRemotely( isRemote );
-      getConfiguration().setExecutingLocally( !isRemote );
-      wExpandRemote.setEnabled( isRemote );
-      wExpandRemote.setSelection( wExpandRemote.isEnabled() && wExpandRemote.getSelection() );
-    } );
   }
 }

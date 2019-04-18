@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,27 +22,21 @@
 
 package org.pentaho.ui.database;
 
-import org.pentaho.di.i18n.GlobalMessageUtil;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.MessageFormat;
 import java.util.MissingResourceException;
 import java.util.ResourceBundle;
 
 public class Messages {
-  private static final Logger log = LoggerFactory.getLogger( Messages.class );
-
   private static final String BUNDLE_NAME = "org.pentaho.ui.database.databasedialog";
 
-  private static ResourceBundle RESOURCE_BUNDLE = GlobalMessageUtil.getBundle( BUNDLE_NAME, Messages.class );
+  private static ResourceBundle RESOURCE_BUNDLE = ResourceBundle.getBundle( BUNDLE_NAME );
 
   private Messages() {
   }
 
   public static ResourceBundle getBundle() {
     if ( RESOURCE_BUNDLE == null ) {
-      RESOURCE_BUNDLE = GlobalMessageUtil.getBundle( BUNDLE_NAME, Messages.class );
+      RESOURCE_BUNDLE = ResourceBundle.getBundle( BUNDLE_NAME );
     }
 
     return RESOURCE_BUNDLE;
@@ -50,7 +44,7 @@ public class Messages {
 
   public static String getString( String key ) {
     try {
-      return getBundle().getString( key );
+      return RESOURCE_BUNDLE.getString( key );
     } catch ( MissingResourceException e ) {
       return '!' + key + '!';
     }

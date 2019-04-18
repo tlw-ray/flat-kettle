@@ -67,10 +67,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
-import static com.google.common.base.Strings.isNullOrEmpty;
 import static java.util.stream.Collectors.toMap;
-import static org.pentaho.di.trans.step.BaseStepData.StepExecutionStatus.STATUS_HALTING;
-import static org.pentaho.di.trans.step.BaseStepData.StepExecutionStatus.STATUS_RUNNING;
 
 /**
  * Created by fcamara on 8/17/17.
@@ -124,7 +121,7 @@ public class TransWebSocketEngineAdapter extends Trans {
     this.ssl = ssl;
   }
 
-  DaemonMessagesClientEndpoint getDaemonEndpoint() throws KettleException {
+  private DaemonMessagesClientEndpoint getDaemonEndpoint() throws KettleException {
     try {
       if ( daemonMessagesClientEndpoint == null ) {
         daemonMessagesClientEndpoint = new DaemonMessagesClientEndpoint( host, port, ssl, messageEventService );
@@ -157,27 +154,6 @@ public class TransWebSocketEngineAdapter extends Trans {
       getLogChannel().logDebug( e.getMessage() );
     } finally {
       cancelling = false;
-    }
-  }
-
-  @Override public void safeStop() {
-    try {
-      getDaemonEndpoint().sendMessage(
-        StopMessage.builder()
-          .reasonPhrase( "User Request" )
-          .safeStop( true )
-          .build() );
-
-      //stopped but still running will yield status Halting
-      getSteps().stream().map( stepMetaDataCombi -> stepMetaDataCombi.step )
-        .filter( stepInterface -> stepInterface.getInputRowSets().isEmpty() )
-        .forEach( step -> step.setStopped( true ) );
-      Executors.newSingleThreadExecutor().submit( () -> {
-        waitUntilFinished();
-        finishProcess( true );
-      } );
-    } catch ( KettleException e ) {
-      getLogChannel().logDebug( e.getMessage(), e );
     }
   }
 
@@ -298,13 +274,6 @@ public class TransWebSocketEngineAdapter extends Trans {
                 case FINISHED:
                   l.transFinished( TransWebSocketEngineAdapter.this );
                   setFinished( true );
-                  getSteps().stream()
-                    .map( c -> c.step )
-                    .filter( s -> STATUS_RUNNING.equals( s.getStatus() ) || STATUS_HALTING.equals( s.getStatus() ) )
-                    .forEach( si -> {
-                      si.setStopped( true );
-                      si.setRunning( false );
-                    } );
                   break;
               }
             } catch ( KettleException e ) {
@@ -323,18 +292,9 @@ public class TransWebSocketEngineAdapter extends Trans {
       .addHandler( Util.getTransformationErrorEvent(), new MessageEventHandler() {
         @Override
         public void execute( Message message ) throws MessageEventHandlerExecutionException {
-          String errorMessage = "Error Executing Transformation";
-          LogEntry data = ( (PDIEvent<RemoteSource, LogEntry>) message ).getData();
+          Throwable throwable = ( (PDIEvent<RemoteSource, LogEntry>) message ).getData().getThrowable();
 
-          if ( !isNullOrEmpty( data.getMessage() ) ) {
-            errorMessage = errorMessage + System.lineSeparator() + data.getMessage();
-          }
-
-          if ( data.getThrowable() != null ) {
-            getLogChannel().logError( errorMessage, data.getThrowable() );
-          } else {
-            getLogChannel().logError( errorMessage );
-          }
+          getLogChannel().logError( "Error Executing Transformation", throwable );
           errors.incrementAndGet();
           finishProcess( true );
         }
@@ -353,7 +313,6 @@ public class TransWebSocketEngineAdapter extends Trans {
 
           if ( stopMessage.sessionWasKilled() || stopMessage.operationFailed() ) {
             getLogChannel().logError( "Finalizing execution: " + stopMessage.getReasonPhrase() );
-            errors.incrementAndGet();
           } else {
             getLogChannel().logBasic( "Finalizing execution: " + stopMessage.getReasonPhrase() );
           }
@@ -407,7 +366,7 @@ public class TransWebSocketEngineAdapter extends Trans {
     return new ArrayList<>( operationToCombi.values() );
   }
 
-  @SuppressWarnings ( "unchecked" )
+  @SuppressWarnings( "unchecked" )
   private List<StepMetaDataCombi> getSubSteps( Transformation transformation, StepMetaDataCombi combi ) {
     HashMap<String, Transformation> config =
       ( (Optional<HashMap<String, Transformation>>) transformation

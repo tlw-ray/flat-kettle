@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -221,25 +221,6 @@ public interface DatabaseInterface extends Cloneable {
   public void setAttributes( Properties attributes );
 
   /**
-   * Add extra attribute on this connection
-   * @param attributeId the attribute identifier
-   * @param value the value of the attribute
-   */
-  public default void addAttribute( String attributeId, String value ) {
-    // Default implementation does nothing
-  };
-
-  /**
-   * Gets an attribute from the connection
-   * @param attributeId the attribute identifier
-   * @param defaultValue the default value in case the attribute is not found
-   * @return the attribute value
-   */
-  public default String getAttribute( String attributeId, String defaultValue ) {
-    return "";
-  };
-
-  /**
    * See if this database supports the setCharacterStream() method on a PreparedStatement.
    *
    * @return true if we can set a Stream on a field in a PreparedStatement. False if not.
@@ -381,13 +362,6 @@ public interface DatabaseInterface extends Cloneable {
    * @return true if the database supports bitmap indexes
    */
   public boolean supportsBitmapIndex();
-
-  /**
-   * @return true if the database supports indexes at all.  (Exasol and Snowflake do not)
-   */
-  default boolean supportsIndexes() {
-    return true;
-  }
 
   /**
    * @return true if the database JDBC driver supports the setLong command
@@ -745,21 +719,10 @@ public interface DatabaseInterface extends Cloneable {
   public int getMaximumPoolSize();
 
   /**
-    * @return the maximum pool size variable name
-   */
-  public String getMaximumPoolSizeString();
-
-  /**
    * @param maximumPoolSize
    *          the maximum pool size
    */
   public void setMaximumPoolSize( int maximumPoolSize );
-
-  /**
-   * @param maximumPoolSize
-   *          the maximum pool size variable name
-   */
-  public void setMaximumPoolSizeString( String maximumPoolSize );
 
   /**
    * @return the initial pool size
@@ -767,21 +730,10 @@ public interface DatabaseInterface extends Cloneable {
   public int getInitialPoolSize();
 
   /**
-   * @return the initial pool size variable name
-   */
-  public String getInitialPoolSizeString();
-
-  /**
    * @param initalPoolSize
    *          the initial pool size
    */
   public void setInitialPoolSize( int initalPoolSize );
-
-  /**
-   * @param initalPoolSize
-   *          the initial pool size variable name
-   */
-  public void setInitialPoolSizeString( String initalPoolSize );
 
   /**
    * @return true if the connection contains partitioning information

@@ -22,7 +22,7 @@
 
 package org.pentaho.di.trans.streaming.api;
 
-import io.reactivex.Flowable;
+import io.reactivex.Observable;
 
 /** A StreamWindow governs buffering and sending rows to a sub-transformation.
  *
@@ -35,7 +35,7 @@ import io.reactivex.Flowable;
 public interface StreamWindow<I, O> {
 
   /**
-   * Takes an iterable (would typically be a {@link StreamSource#flowable()}}
+   * Takes an iterable (would typically be a {@link StreamSource#observable()}}
    * call) and buffers it according to the window strategy.
    *
    * Returns an iterable of data for the window.  Depending on stream implementation,
@@ -44,6 +44,6 @@ public interface StreamWindow<I, O> {
    * will pass windowed data to a subtransformation, and return the
    * transformed results.
    */
-  Iterable<O> buffer( Flowable<I> flowable );
+  Iterable<O> buffer( Observable<I> observable );
 }
 

@@ -190,8 +190,7 @@ public class SFTPClient {
 
   public void chdir( String dirToChangeTo ) throws KettleJobException {
     try {
-      c.cd( dirToChangeTo.replace( "\\\\", "/" ).
-        replace( "\\", "/" ) );
+      c.cd( dirToChangeTo );
     } catch ( SftpException e ) {
       throw new KettleJobException( e );
     }

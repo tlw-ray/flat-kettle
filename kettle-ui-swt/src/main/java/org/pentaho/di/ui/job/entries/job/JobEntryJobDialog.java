@@ -207,7 +207,6 @@ public class JobEntryJobDialog extends JobEntryBaseDialog implements JobEntryDia
     fdRunConfiguration.top = new FormAttachment( wlRunConfiguration, 5 );
     fdRunConfiguration.left = new FormAttachment( 0 );
     wRunConfiguration.setLayoutData( fdRunConfiguration );
-    wRunConfiguration.addModifyListener( new RunConfigurationModifyListener() );
 
     fdgExecution.top = new FormAttachment( cRunConfiguration, 10 );
 
@@ -241,8 +240,8 @@ public class JobEntryJobDialog extends JobEntryBaseDialog implements JobEntryDia
 
   protected Image getImage() {
     return SwtSvgImageUtil
-      .getImage( shell.getDisplay(), getClass().getClassLoader(), "JOB.svg", ConstUI.LARGE_ICON_SIZE,
-        ConstUI.LARGE_ICON_SIZE );
+      .getImage( shell.getDisplay(), getClass().getClassLoader(), "JOB.svg", ConstUI.ICON_SIZE,
+        ConstUI.ICON_SIZE );
   }
 
   protected boolean getArgFromPrev() {

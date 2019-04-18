@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -36,11 +36,6 @@ import java.io.PrintWriter;
  */
 public abstract class CsvInputUnitTestBase {
 
-  static final String BUFFER_SIZE = "1024";
-  static final String ENCODING = "utf-8";
-  static final String ENCLOSURE = "\"";
-  static final String DELIMITER = ",";
-
   @BeforeClass
   public static void initKettle() throws Exception {
     KettleEnvironment.init();
@@ -50,8 +45,11 @@ public abstract class CsvInputUnitTestBase {
     File tempFile = File.createTempFile( "PDI_tmp", ".tmp" );
     tempFile.deleteOnExit();
 
-    try ( PrintWriter osw = new PrintWriter( tempFile, encoding ) ) {
+    PrintWriter osw = new PrintWriter( tempFile, encoding );
+    try {
       osw.write( content );
+    } finally {
+      osw.close();
     }
 
     return tempFile;
@@ -70,17 +68,5 @@ public abstract class CsvInputUnitTestBase {
     field.setName( name );
     field.setType( ValueMetaInterface.TYPE_STRING );
     return field;
-  }
-
-  CsvInputMeta createMeta( File file, TextFileInputField[] fields ) {
-    CsvInputMeta meta = new CsvInputMeta();
-    meta.setFilename( file.getAbsolutePath() );
-    meta.setBufferSize( BUFFER_SIZE );
-    meta.setDelimiter( DELIMITER );
-    meta.setEnclosure( ENCLOSURE );
-    meta.setEncoding( ENCODING );
-    meta.setInputFields( fields );
-    meta.setHeaderPresent( false );
-    return meta;
   }
 }

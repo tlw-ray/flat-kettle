@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -38,7 +38,6 @@ import org.pentaho.di.ui.spoon.Spoon;
 import org.pentaho.di.ui.spoon.SpoonSlave;
 import org.pentaho.di.ui.spoon.TabMapEntry;
 import org.pentaho.di.ui.spoon.TabMapEntry.ObjectType;
-import org.pentaho.di.ui.spoon.tree.provider.SlavesFolderProvider;
 import org.pentaho.xul.swt.tab.TabItem;
 import org.pentaho.xul.swt.tab.TabSet;
 
@@ -82,7 +81,7 @@ public class SpoonSlaveDelegate extends SpoonSharedObjectDelegate {
       }
     }
     hasSlaveServersInterface.getSlaveServers().remove( slaveServer );
-    refreshTree();
+    spoon.refreshTree();
 
   }
 
@@ -113,7 +112,7 @@ public class SpoonSlaveDelegate extends SpoonSharedObjectDelegate {
         }
       }
 
-      refreshTree();
+      spoon.refreshTree();
     }
   }
 
@@ -131,7 +130,7 @@ public class SpoonSlaveDelegate extends SpoonSharedObjectDelegate {
       if ( sharedObjectSyncUtil != null ) {
         sharedObjectSyncUtil.synchronizeSlaveServers( slaveServer, originalName );
       }
-      refreshTree();
+      spoon.refreshTree();
       spoon.refreshGraph();
       return true;
     }
@@ -142,9 +141,5 @@ public class SpoonSlaveDelegate extends SpoonSharedObjectDelegate {
     new ErrorDialog(
         spoon.getShell(), BaseMessages.getString( PKG, "Spoon.Dialog.ErrorSavingSlave.Title" ),
         BaseMessages.getString( PKG, "Spoon.Dialog.ErrorSavingSlave.Message", slaveServer.getName() ), e );
-  }
-
-  private void refreshTree() {
-    spoon.refreshTree( SlavesFolderProvider.STRING_SLAVES );
   }
 }

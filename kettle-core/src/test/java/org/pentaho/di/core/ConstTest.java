@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -22,7 +22,10 @@
 
 package org.pentaho.di.core;
 
+import junit.framework.TestCase;
 import org.apache.commons.lang.SystemUtils;
+import org.junit.Assert;
+import org.junit.Test;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.ValueMetaInterface;
 
@@ -33,23 +36,11 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.pentaho.di.junit.rules.RestorePDIEnvironment;
-import org.junit.Assert;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
-import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
-
 /**
  * Test class for the basic functionality of Const.
  *
  */
-public class ConstTest {
-  @ClassRule public static RestorePDIEnvironment env = new RestorePDIEnvironment();
+public class ConstTest extends TestCase {
 
   private static String DELIMITER1 = ",";
   private static String DELIMITER2 = "</newpage>";
@@ -157,13 +148,6 @@ public class ConstTest {
     assertEquals( "test", Const.NVL( "test", "test1" ) );
     assertEquals( "test", Const.NVL( "test", null ) );
     assertEquals( "test1", Const.NVL( null, "test1" ) );
-  }
-
-  @Test
-  public void testNullToEmpty_NVL() {
-    assertEquals( Const.NVL( null, "" ), Const.nullToEmpty( null ) );
-    assertEquals( Const.NVL( "", "" ), Const.nullToEmpty( "" ) );
-    assertEquals( Const.NVL( "xpto", "" ), Const.nullToEmpty( "xpto" ) );
   }
 
   @Test

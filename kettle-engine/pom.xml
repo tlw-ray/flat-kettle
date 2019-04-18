@@ -6,7 +6,7 @@
 
   <groupId>pentaho-kettle</groupId>
   <artifactId>kettle-engine</artifactId>
-  <version>8.3.0.0-84</version>
+  <version>8.1.0.6-682</version>
   <packaging>jar</packaging>
 
   <name>PDI Engine</name>
@@ -14,7 +14,7 @@
   <parent>
     <groupId>org.pentaho.di</groupId>
     <artifactId>pdi</artifactId>
-    <version>8.3.0.0-84</version>
+    <version>8.1.0.6-682</version>
   </parent>
 
   <properties>
@@ -23,10 +23,10 @@
     <maven-failsafe-plugin.reuseForks>false</maven-failsafe-plugin.reuseForks>
 
     <!-- Pentaho dependencies -->
-    <pentaho-reporting.version>8.3.0.0-84</pentaho-reporting.version>
-    <pentaho-registry.version>8.3.0.0-84</pentaho-registry.version>
-    <pentaho-connections.version>8.3.0.0-84</pentaho-connections.version>
-    <mondrian.version>8.3.0.0-84</mondrian.version>
+    <pentaho-reporting.version>8.1.0.6-682</pentaho-reporting.version>
+    <pentaho-registry.version>8.1.0.6-682</pentaho-registry.version>
+    <pentaho-connections.version>8.1.0.6-682</pentaho-connections.version>
+    <mondrian.version>8.1.0.6-682</mondrian.version>
 
     <!-- Third-party dependencies -->
     <antlr-complete.version>3.5.2</antlr-complete.version>
@@ -38,8 +38,7 @@
     <georss-rome.version>0.9.8</georss-rome.version>
     <infobright-core.version>3.4</infobright-core.version>
     <ini4j.version>0.5.1</ini4j.version>
-    <!-- https://jira.pentaho.com/browse/PDI-44134 update janino to latest -->
-    <janino.version>3.0.8</janino.version>
+    <janino.version>2.5.16</janino.version>
     <javadbf.version>20081125</javadbf.version>
     <jcommon.version>1.0.16</jcommon.version>
     <json-simple.version>1.1</json-simple.version>
@@ -91,7 +90,7 @@
     <javax.servlet-api.version>3.0.1</javax.servlet-api.version>
     <oro.version>2.0.8</oro.version>
     <javax.websocket-api.version>1.1</javax.websocket-api.version>
-    <rxjava.version>2.2.3</rxjava.version>
+    <rxjava.version>2.0.4</rxjava.version>
     <xmlunit.version>1.5</xmlunit.version>
   </properties>
 
@@ -277,18 +276,7 @@
       </exclusions>
     </dependency>
     <dependency>
-      <groupId>org.codehaus.janino</groupId>
-      <artifactId>commons-compiler</artifactId>
-      <version>${janino.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>*</groupId>
-          <artifactId>*</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>org.codehaus.janino</groupId>
+      <groupId>janino</groupId>
       <artifactId>janino</artifactId>
       <version>${janino.version}</version>
       <exclusions>

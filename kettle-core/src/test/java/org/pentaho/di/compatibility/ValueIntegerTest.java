@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -27,26 +27,17 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.pentaho.di.junit.rules.RestorePDIEnvironment;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+import junit.framework.TestCase;
 
 /**
  * Test class for the basic functionality of ValueInteger.
  *
  * @author Sven Boden
  */
-public class ValueIntegerTest {
-  @ClassRule public static RestorePDIEnvironment env = new RestorePDIEnvironment();
-
+public class ValueIntegerTest extends TestCase {
   /**
    * Constructor test 1.
    */
-  @Test
   public void testConstructor1() {
     ValueInteger vs = new ValueInteger();
 
@@ -74,15 +65,14 @@ public class ValueIntegerTest {
   /**
    * Test the getters of ValueInteger
    */
-  @Test
   public void testGetters() {
     ValueInteger vs1 = new ValueInteger( -4 );
     ValueInteger vs2 = new ValueInteger( 0 );
     ValueInteger vs3 = new ValueInteger( 3 );
 
-    assertTrue( vs1.getBoolean() );
-    assertFalse( vs2.getBoolean() );
-    assertTrue( vs3.getBoolean() );
+    assertEquals( true, vs1.getBoolean() );
+    assertEquals( false, vs2.getBoolean() );
+    assertEquals( true, vs3.getBoolean() );
 
     assertEquals( "-4", vs1.getString() );
     assertEquals( "0", vs2.getString() );
@@ -112,7 +102,6 @@ public class ValueIntegerTest {
   /**
    * Test the setters of ValueInteger
    */
-  @Test
   public void testSetters() {
     ValueInteger vs = new ValueInteger( 0 );
 

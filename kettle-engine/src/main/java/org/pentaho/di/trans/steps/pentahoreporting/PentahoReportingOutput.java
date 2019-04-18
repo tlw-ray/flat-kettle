@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -25,6 +25,7 @@ package org.pentaho.di.trans.steps.pentahoreporting;
 import java.awt.GraphicsEnvironment;
 import java.io.OutputStream;
 import java.math.BigDecimal;
+import java.net.URL;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
@@ -177,7 +178,8 @@ public class PentahoReportingOutput extends BaseStep implements StepInterface {
     ResourceManager manager = new ResourceManager();
     manager.registerDefaults();
     FileObject fileObject = KettleVFS.getFileObject( sourceFilename );
-    Resource resource = manager.createDirectly( fileObject, MasterReport.class );
+    URL url = new URL( fileObject.getName().getURI() );
+    Resource resource = manager.createDirectly( url, MasterReport.class );
     MasterReport report = (MasterReport) resource.getResource();
 
     return report;

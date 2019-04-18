@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -817,8 +817,9 @@ public class JobEntryMysqlBulkFileDialog extends JobEntryDialog implements JobEn
         database.shareVariablesWith( jobMeta );
         try {
           database.connect();
-          RowMetaInterface row =
-            database.getTableFieldsMeta( wSchemaname.getText(), wTablename.getText() );
+          String schemaTable =
+            databaseMeta.getQuotedSchemaTableCombination( wSchemaname.getText(), wTablename.getText() );
+          RowMetaInterface row = database.getTableFields( schemaTable );
           String[] available = row.getFieldNames();
 
           String[] source = wListColumn.getText().split( "," );

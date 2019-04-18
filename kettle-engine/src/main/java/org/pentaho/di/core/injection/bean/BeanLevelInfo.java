@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -42,8 +42,8 @@ import org.pentaho.di.core.injection.InjectionTypeConverter;
 /**
  * Storage for one step on the bean deep level.
  */
-public class BeanLevelInfo {
-  public enum DIMENSION {
+class BeanLevelInfo {
+  enum DIMENSION {
     NONE, ARRAY, LIST
   };
 
@@ -66,18 +66,6 @@ public class BeanLevelInfo {
 
   public void init( BeanInjectionInfo info ) {
     introspect( info, leafClass, new TreeMap<>() );
-  }
-
-  public Field getField() {
-    return field;
-  }
-
-  public DIMENSION getDim() {
-    return dim;
-  }
-
-  public Class<?> getLeafClass() {
-    return leafClass;
   }
 
   /**

@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -614,7 +614,8 @@ public class UpdateMeta extends BaseStepMeta implements StepMetaInterface {
           error_message = "";
 
           // Check fields in table
-          RowMetaInterface r = db.getTableFieldsMeta( schemaName, tableName );
+          String schemaTable = databaseMeta.getQuotedSchemaTableCombination( schemaName, tableName );
+          RowMetaInterface r = db.getTableFields( schemaTable );
           if ( r != null ) {
             cr =
               new CheckResult( CheckResultInterface.TYPE_RESULT_OK, BaseMessages.getString(

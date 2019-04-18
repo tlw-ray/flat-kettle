@@ -33,7 +33,6 @@ import org.eclipse.swt.layout.FormAttachment;
 import org.eclipse.swt.layout.FormData;
 import org.eclipse.swt.layout.FormLayout;
 import org.eclipse.swt.widgets.Button;
-import org.eclipse.swt.widgets.Control;
 import org.eclipse.swt.widgets.Dialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Event;
@@ -133,7 +132,6 @@ public class EnterStringDialog extends Dialog {
   public String open() {
     Shell parent = getParent();
     Display display = parent.getDisplay();
-    Control lastControl = null;
 
     shell = new Shell( parent, SWT.DIALOG_TRIM | SWT.RESIZE | SWT.APPLICATION_MODAL | SWT.SHEET );
     props.setLook( shell );
@@ -160,12 +158,10 @@ public class EnterStringDialog extends Dialog {
       wStringVar = new TextVar( transMeta, shell, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
       wStringVar.setText( string );
       props.setLook( wStringVar );
-      lastControl = wStringVar;
     } else {
       wString = new Text( shell, SWT.SINGLE | SWT.LEFT | SWT.BORDER );
       wString.setText( string );
       props.setLook( wString );
-      lastControl = wString;
     }
 
     fdString = new FormData();
@@ -195,7 +191,7 @@ public class EnterStringDialog extends Dialog {
     wCancel = new Button( shell, SWT.PUSH );
     wCancel.setText( BaseMessages.getString( PKG, "System.Button.Cancel" ) );
 
-    BaseStepDialog.positionBottomButtons( shell, new Button[] { wOK, wCancel }, margin, lastControl );
+    BaseStepDialog.positionBottomButtons( shell, new Button[] { wOK, wCancel }, margin, wString );
 
     // Add listeners
     lsCancel = new Listener() {

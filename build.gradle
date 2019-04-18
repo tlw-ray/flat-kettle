@@ -19,6 +19,8 @@ subprojects { subproj ->
     sourceCompatibility = 1.8
     targetCompatibility = 1.8
 
+    version = '8.1.0.6-682'
+
     [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
 
     dependencies {

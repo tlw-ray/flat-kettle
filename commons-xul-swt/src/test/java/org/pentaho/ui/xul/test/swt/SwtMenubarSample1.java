@@ -18,8 +18,6 @@
 package org.pentaho.ui.xul.test.swt;
 
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.ActionContributionItem;
-import org.eclipse.jface.action.ContributionItem;
 import org.eclipse.jface.action.MenuManager;
 import org.eclipse.jface.window.ApplicationWindow;
 import org.eclipse.swt.widgets.Display;
@@ -52,10 +50,6 @@ public class SwtMenubarSample1 extends ApplicationWindow {
     Action action3 = new Action( "option3" ) {
     };
     menuBar.add( action3 );
-
-    Action action4 = new Action("option4"){};
-    ActionContributionItem ci = new ActionContributionItem(action4);
-    fileMenu.add(ci);
 
   }
 

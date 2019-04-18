@@ -24,7 +24,6 @@ package org.pentaho.di.trans.steps.file;
 
 import java.util.List;
 
-import com.google.common.base.Preconditions;
 import org.pentaho.di.core.fileinput.FileInputList;
 import org.pentaho.di.core.injection.InjectionDeep;
 import org.pentaho.di.core.variables.VariableSpace;
@@ -125,8 +124,7 @@ public abstract class BaseFileInputMeta<A extends BaseFileInputAdditionalField, 
   public abstract String getEncoding();
 
   public boolean isAcceptingFilenames() {
-    Preconditions.checkNotNull( inputFiles );
-    return inputFiles.acceptingFilenames;
+    return inputFiles == null ? null : inputFiles.acceptingFilenames;
   }
 
   public String getAcceptingStepName() {

@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
-import java.util.Collections;
 
 import org.apache.commons.math.stat.descriptive.rank.Percentile;
 import org.apache.commons.vfs2.FileObject;
@@ -437,13 +436,11 @@ public class GroupBy extends BaseStep implements StepInterface {
           break;
         case GroupByMeta.TYPE_GROUP_MEDIAN:
         case GroupByMeta.TYPE_GROUP_PERCENTILE:
-        case GroupByMeta.TYPE_GROUP_PERCENTILE_NEAREST_RANK:
           if ( !subjMeta.isNull( subj ) ) {
             ( (List<Double>) data.agg[ i ] ).add( subjMeta.getNumber( subj ) );
           }
           break;
         case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION:
-        case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION_SAMPLE:
           if ( !subjMeta.isNull( subj ) ) {
             data.counts[ i ]++;
             double n = data.counts[ i ];
@@ -606,12 +603,10 @@ public class GroupBy extends BaseStep implements StepInterface {
           break;
         case GroupByMeta.TYPE_GROUP_MEDIAN:
         case GroupByMeta.TYPE_GROUP_PERCENTILE:
-        case GroupByMeta.TYPE_GROUP_PERCENTILE_NEAREST_RANK:
           vMeta = new ValueMetaNumber( meta.getAggregateField()[ i ] );
           v = new ArrayList<Double>();
           break;
         case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION:
-        case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION_SAMPLE:
           vMeta = new ValueMetaNumber( meta.getAggregateField()[ i ] );
           break;
         case GroupByMeta.TYPE_GROUP_COUNT_DISTINCT:
@@ -724,19 +719,6 @@ public class GroupBy extends BaseStep implements StepInterface {
           }
           ag = new Percentile().evaluate( values, percentile );
           break;
-        case GroupByMeta.TYPE_GROUP_PERCENTILE_NEAREST_RANK:
-          double percentileValue = 50.0;
-          if ( meta.getAggregateType()[ i ] == GroupByMeta.TYPE_GROUP_PERCENTILE_NEAREST_RANK ) {
-            percentileValue = Double.parseDouble( meta.getValueField()[ i ] );
-          }
-          @SuppressWarnings( "unchecked" )
-          List<Double> latenciesList = (List<Double>) data.agg[ i ];
-          Collections.sort( latenciesList );
-          Double[] latencies = new Double[ latenciesList.size() ];
-          latencies = latenciesList.toArray( latencies );
-          int index = (int) Math.ceil( ( percentileValue / 100 ) * latencies.length );
-          ag = latencies[ index - 1 ];
-          break;
         case GroupByMeta.TYPE_GROUP_COUNT_ANY:
         case GroupByMeta.TYPE_GROUP_COUNT_ALL:
           ag = new Long( data.counts[ i ] );
@@ -747,23 +729,14 @@ public class GroupBy extends BaseStep implements StepInterface {
           break;
         case GroupByMeta.TYPE_GROUP_MAX:
           break;
-        case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION: {
+        case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION:
           if ( ag == null ) {
             // PMD-1037 - when all input data is null ag is null, npe on access ag
             break;
           }
           double sum = (Double) ag / data.counts[ i ];
-          ag = Math.sqrt( sum );
+          ag = Double.valueOf( Math.sqrt( sum ) );
           break;
-        }
-        case GroupByMeta.TYPE_GROUP_STANDARD_DEVIATION_SAMPLE: {
-          if ( ag == null ) {
-            break;
-          }
-          double sum = (Double) ag / ( data.counts[ i ] - 1 );
-          ag = Math.sqrt( sum );
-          break;
-        }
         case GroupByMeta.TYPE_GROUP_CONCAT_COMMA:
         case GroupByMeta.TYPE_GROUP_CONCAT_STRING:
           ag = ( (StringBuilder) ag ).toString();

@@ -3,7 +3,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2019 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -119,6 +119,9 @@ public class ValueMetaBase implements ValueMetaInterface {
 
   public static final String COMPATIBLE_DATE_FORMAT_PATTERN = "yyyy/MM/dd HH:mm:ss.SSS";
 
+  public static final Boolean EMPTY_STRING_AND_NULL_ARE_DIFFERENT = convertStringToBoolean(
+          Const.NVL( System.getProperty( Const.KETTLE_EMPTY_STRING_DIFFERS_FROM_NULL, "N" ), "N" ) );
+
   protected String name;
   protected int length;
   protected int precision;
@@ -147,7 +150,6 @@ public class ValueMetaBase implements ValueMetaInterface {
   protected boolean dateFormatLenient;
   protected boolean lenientStringToNumber;
   protected boolean ignoreTimezone;
-  protected boolean emptyStringAndNullAreDifferent;
 
   protected SimpleDateFormat dateFormat;
   protected boolean dateFormatChanged;
@@ -242,10 +244,9 @@ public class ValueMetaBase implements ValueMetaInterface {
     this.ignoreTimezone =
       convertStringToBoolean( Const.NVL( System.getProperty( Const.KETTLE_COMPATIBILITY_DB_IGNORE_TIMEZONE, "N" ),
         "N" ) );
-    this.emptyStringAndNullAreDifferent = convertStringToBoolean(
-      Const.NVL( System.getProperty( Const.KETTLE_EMPTY_STRING_DIFFERS_FROM_NULL, "N" ), "N" ) );
 
     this.comparator = comparator;
+
     determineSingleByteEncoding();
     setDefaultConversionMask();
   }
@@ -1489,7 +1490,7 @@ public class ValueMetaBase implements ValueMetaInterface {
    */
   protected String convertBinaryStringToString( byte[] binary ) throws KettleValueException {
     //noinspection deprecation
-    return convertBinaryStringToString( binary, emptyStringAndNullAreDifferent );
+    return convertBinaryStringToString( binary, EMPTY_STRING_AND_NULL_ARE_DIFFERENT );
   }
 
   /*
@@ -3563,7 +3564,7 @@ public class ValueMetaBase implements ValueMetaInterface {
   @Override
   public boolean isNull( Object data ) throws KettleValueException {
     //noinspection deprecation
-    return isNull( data, emptyStringAndNullAreDifferent );
+    return isNull( data, EMPTY_STRING_AND_NULL_ARE_DIFFERENT );
   }
 
   /*
@@ -3846,7 +3847,6 @@ public class ValueMetaBase implements ValueMetaInterface {
   @Override
   public Object convertData( ValueMetaInterface meta2, Object data2 ) throws KettleValueException {
     switch ( getType() ) {
-      case TYPE_NONE:
       case TYPE_STRING:
         return meta2.getString( data2 );
       case TYPE_NUMBER:
@@ -4574,16 +4574,6 @@ public class ValueMetaBase implements ValueMetaInterface {
     return originalScale;
   }
 
-  @Override
-  public int getOriginalNullable() {
-    return originalNullable;
-  }
-
-  @Override
-  public boolean getOriginalSigned() {
-    return originalSigned;
-  }
-
   /*
    * Original JDBC RecordSetMetaData
    *
@@ -4996,239 +4986,6 @@ public class ValueMetaBase implements ValueMetaInterface {
       // Nothing more we can do here.
     }
     v.setOriginalSigned( originalSigned );
-  }
-
-  @Override
-  public ValueMetaInterface getMetadataPreview( DatabaseMeta databaseMeta, ResultSet rs )
-    throws KettleDatabaseException {
-
-    try {
-      // Get some info out of the resultset
-      final String name = rs.getString( "COLUMN_NAME" );
-      int originalColumnType = rs.getInt( "DATA_TYPE" );
-      Object dg = rs.getObject( "DECIMAL_DIGITS" );
-      int originalScale = dg == null ? 0 : rs.getInt( "DECIMAL_DIGITS" );
-      int originalPrecision = rs.getInt( "COLUMN_SIZE" );
-      int originalColumnDisplaySize = originalPrecision;
-      String originalColumnTypeName = rs.getString( "TYPE_NAME" );
-      String originalColumnLabel = rs.getString( "REMARKS" );
-      int length = -1;
-      int precision = -1;
-      int valtype = ValueMetaInterface.TYPE_NONE;
-      boolean isClob = false;
-
-      switch ( originalColumnType ) {
-        case java.sql.Types.CHAR:
-        case java.sql.Types.VARCHAR:
-        case java.sql.Types.NVARCHAR:
-        case java.sql.Types.LONGVARCHAR: // Character Large Object
-          valtype = ValueMetaInterface.TYPE_STRING;
-          length = originalColumnDisplaySize;
-          break;
-
-        case java.sql.Types.CLOB:
-        case java.sql.Types.NCLOB:
-          valtype = ValueMetaInterface.TYPE_STRING;
-          length = DatabaseMeta.CLOB_LENGTH;
-          isClob = true;
-          break;
-
-        case java.sql.Types.BIGINT:
-          // SQL BigInt is equivalent to a Java Long
-          // And a Java Long is equivalent to a PDI Integer.
-          valtype = ValueMetaInterface.TYPE_INTEGER;
-          precision = 0; // Max 9.223.372.036.854.775.807
-          length = 15;
-          break;
-
-        case java.sql.Types.INTEGER:
-          valtype = ValueMetaInterface.TYPE_INTEGER;
-          precision = 0; // Max 2.147.483.647
-          length = 9;
-          break;
-
-        case java.sql.Types.SMALLINT:
-          valtype = ValueMetaInterface.TYPE_INTEGER;
-          precision = 0; // Max 32.767
-          length = 4;
-          break;
-
-        case java.sql.Types.TINYINT:
-          valtype = ValueMetaInterface.TYPE_INTEGER;
-          precision = 0; // Max 127
-          length = 2;
-          break;
-
-        case java.sql.Types.DECIMAL:
-        case java.sql.Types.DOUBLE:
-        case java.sql.Types.FLOAT:
-        case java.sql.Types.REAL:
-        case java.sql.Types.NUMERIC:
-          valtype = ValueMetaInterface.TYPE_NUMBER;
-          length = originalPrecision;
-          precision = originalScale;
-          if ( length >= 126 ) {
-            length = -1;
-          }
-          if ( precision >= 126 ) {
-            precision = -1;
-          }
-
-          if ( originalColumnType == java.sql.Types.DOUBLE || originalColumnType == java.sql.Types.FLOAT || originalColumnType == java.sql.Types.REAL ) {
-            if ( precision == 0 ) {
-              precision = -1; // precision is obviously incorrect if the type if
-              // Double/Float/Real
-            }
-
-            // If we're dealing with PostgreSQL and double precision types
-            if ( databaseMeta.getDatabaseInterface() instanceof PostgreSQLDatabaseMeta && originalColumnType == java.sql.Types.DOUBLE
-                && precision >= 16 && length >= 16 ) {
-              precision = -1;
-              length = -1;
-            }
-
-            // MySQL: max resolution is double precision floating point (double)
-            // The (12,31) that is given back is not correct
-            if ( databaseMeta.isMySQLVariant() ) {
-              if ( precision >= length ) {
-                precision = -1;
-                length = -1;
-                // MySQL: Double value is giving length of 22,
-                // that exceeds the maximum length.
-              } else if ( originalColumnType == java.sql.Types.DOUBLE && length > 15 ) {
-                length = -1;
-              }
-            }
-
-            // if the length or precision needs a BIGNUMBER
-            if ( length > 15 || precision > 15 ) {
-              valtype = ValueMetaInterface.TYPE_BIGNUMBER;
-            }
-          } else {
-            if ( precision == 0 ) {
-              if ( length <= 18 && length > 0 ) { // Among others Oracle is affected
-                // here.
-                valtype = ValueMetaInterface.TYPE_INTEGER; // Long can hold up to 18
-                // significant digits
-              } else if ( length > 18 ) {
-                valtype = ValueMetaInterface.TYPE_BIGNUMBER;
-              }
-            } else { // we have a precision: keep NUMBER or change to BIGNUMBER?
-              if ( length > 15 || precision > 15 ) {
-                valtype = ValueMetaInterface.TYPE_BIGNUMBER;
-              }
-            }
-          }
-
-          if ( databaseMeta.getDatabaseInterface() instanceof PostgreSQLDatabaseMeta
-              || databaseMeta.getDatabaseInterface() instanceof GreenplumDatabaseMeta ) {
-            // undefined size => arbitrary precision
-            if ( originalColumnType == java.sql.Types.NUMERIC && length == 0 && precision == 0 ) {
-              valtype = ValueMetaInterface.TYPE_BIGNUMBER;
-              length = -1;
-              precision = -1;
-            }
-          }
-
-          if ( databaseMeta.getDatabaseInterface() instanceof OracleDatabaseMeta ) {
-            if ( precision == 0 && length == 38 ) {
-              valtype = ( (OracleDatabaseMeta) databaseMeta.getDatabaseInterface() )
-                .strictBigNumberInterpretation() ? TYPE_BIGNUMBER : TYPE_INTEGER;
-            }
-            if ( precision <= 0 && length <= 0 ) {
-              // undefined size: BIGNUMBER,
-              // precision on Oracle can be 38, too
-              // big for a Number type
-              valtype = ValueMetaInterface.TYPE_BIGNUMBER;
-              length = -1;
-              precision = -1;
-            }
-          }
-
-          break;
-
-        case java.sql.Types.TIMESTAMP:
-          if ( databaseMeta.supportsTimestampDataType() ) {
-            valtype = ValueMetaInterface.TYPE_TIMESTAMP;
-            length = originalScale;
-          }
-          break;
-
-        case java.sql.Types.DATE:
-          if ( databaseMeta.getDatabaseInterface() instanceof TeradataDatabaseMeta ) {
-            precision = 1;
-          }
-        case java.sql.Types.TIME:
-          valtype = ValueMetaInterface.TYPE_DATE;
-          //
-          if ( databaseMeta.isMySQLVariant() ) {
-            String property = databaseMeta.getConnectionProperties().getProperty( "yearIsDateType" );
-            if ( property != null && property.equalsIgnoreCase( "false" )
-                && "YEAR".equalsIgnoreCase( originalColumnTypeName ) ) {
-              valtype = ValueMetaInterface.TYPE_INTEGER;
-              precision = 0;
-              length = 4;
-              break;
-            }
-          }
-          break;
-
-        case java.sql.Types.BOOLEAN:
-        case java.sql.Types.BIT:
-          valtype = ValueMetaInterface.TYPE_BOOLEAN;
-          break;
-
-        case java.sql.Types.BINARY:
-        case java.sql.Types.BLOB:
-        case java.sql.Types.VARBINARY:
-        case java.sql.Types.LONGVARBINARY:
-          valtype = ValueMetaInterface.TYPE_BINARY;
-
-          if ( databaseMeta.isDisplaySizeTwiceThePrecision()
-              && ( 2 * originalPrecision ) == originalColumnDisplaySize ) {
-            // set the length for "CHAR(X) FOR BIT DATA"
-            length = originalPrecision;
-          } else if ( ( databaseMeta.getDatabaseInterface() instanceof OracleDatabaseMeta )
-              && ( originalColumnType == java.sql.Types.VARBINARY || originalColumnType == java.sql.Types.LONGVARBINARY ) ) {
-            // set the length for Oracle "RAW" or "LONGRAW" data types
-            valtype = ValueMetaInterface.TYPE_STRING;
-            length = originalColumnDisplaySize;
-          } else if ( databaseMeta.isMySQLVariant()
-              && ( originalColumnType == java.sql.Types.VARBINARY || originalColumnType == java.sql.Types.LONGVARBINARY ) ) {
-            // PDI-6677 - don't call 'length = rm.getColumnDisplaySize(index);'
-            length = -1; // keep the length to -1, e.g. for string functions (e.g.
-            // CONCAT see PDI-4812)
-          } else if ( databaseMeta.getDatabaseInterface() instanceof SQLiteDatabaseMeta ) {
-            valtype = ValueMetaInterface.TYPE_STRING;
-          } else {
-            length = -1;
-          }
-          precision = -1;
-          break;
-
-        default:
-          valtype = ValueMetaInterface.TYPE_STRING;
-          precision = originalScale;
-          break;
-      }
-
-      ValueMetaInterface v = ValueMetaFactory.createValueMeta( name, valtype );
-      v.setLength( length );
-      v.setPrecision( precision );
-      v.setLargeTextField( isClob );
-
-      // Grab the comment as a description to the field as well.
-      v.setComments( originalColumnLabel );
-      v.setOriginalColumnType( originalColumnType );
-      v.setOriginalColumnTypeName( originalColumnTypeName );
-      v.setOriginalPrecision( originalPrecision );
-      v.setOriginalScale( originalScale );
-      v.setOriginalSigned( originalSigned );
-
-      return v;
-    } catch ( Exception e ) {
-      throw new KettleDatabaseException( "Error determining value metadata from SQL resultset metadata", e );
-    }
   }
 
   /**

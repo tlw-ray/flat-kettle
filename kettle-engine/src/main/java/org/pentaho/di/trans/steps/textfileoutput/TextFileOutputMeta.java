@@ -123,7 +123,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
 
   /** if this value is larger then 0, the text file is split up into parts of this number of lines */
   @Injection( name = "SPLIT_EVERY" )
-  private String splitEveryRows;
+  private int splitEvery;
 
   /** Flag to indicate the we want to append to the end of an existing file (if it exists) */
   @Injection( name = "APPEND" )
@@ -404,35 +404,11 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
   }
 
   /**
-   * @deprecated use {@link #getSplitEvery(VariableSpace)} or {@link #getSplitEveryRows()}
    * @return Returns the splitEvery.
    */
   @Override
   public int getSplitEvery() {
-    return Const.toInt( splitEveryRows, 0 );
-  }
-
-  /**
-   * @param varSpace for variable substitution
-   * @return At how many rows to split into another file.
-   */
-  @Override
-  public int getSplitEvery( VariableSpace varSpace ) {
-    return Const.toInt( varSpace == null ? splitEveryRows : varSpace.environmentSubstitute( splitEveryRows ), 0 );
-  }
-
-  /**
-   * @return At how many rows to split into a new file.
-   */
-  public String getSplitEveryRows() {
-    return splitEveryRows;
-  }
-
-  /**
-   * @param value At how many rows to split into a new file.
-   */
-  public void setSplitEveryRows( String value ) {
-    splitEveryRows = value;
+    return splitEvery;
   }
 
   /**
@@ -443,12 +419,11 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
   }
 
   /**
-   * @deprecated use {@link #setSplitEveryRows(String)}
    * @param splitEvery
    *          The splitEvery to set.
    */
   public void setSplitEvery( int splitEvery ) {
-    splitEveryRows = Integer.toString( splitEvery );
+    this.splitEvery = splitEvery;
   }
 
   /**
@@ -640,7 +615,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
 
       padded = "Y".equalsIgnoreCase( XMLHandler.getTagValue( stepnode, "file", "pad" ) );
       fastDump = "Y".equalsIgnoreCase( XMLHandler.getTagValue( stepnode, "file", "fast_dump" ) );
-      splitEveryRows = XMLHandler.getTagValue( stepnode, "file", "splitevery" );
+      splitEvery = Const.toInt( XMLHandler.getTagValue( stepnode, "file", "splitevery" ), 0 );
 
       newline = getNewLine( fileFormat );
 
@@ -718,6 +693,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
     padded = false;
     fastDump = false;
     addToResultFilenames = true;
+    splitEvery = 0;
 
     newline = getNewLine( fileFormat );
 
@@ -739,6 +715,46 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
       outputFields[i].setPrecision( -1 );
     }
     fileAppended = false;
+  }
+
+  public String[] getFiles( VariableSpace space ) {
+    int copies = 1;
+    int splits = 1;
+    int parts = 1;
+
+    if ( stepNrInFilename ) {
+      copies = 3;
+    }
+
+    if ( partNrInFilename ) {
+      parts = 3;
+    }
+
+    if ( splitEvery != 0 ) {
+      splits = 3;
+    }
+
+    int nr = copies * parts * splits;
+    if ( nr > 1 ) {
+      nr++;
+    }
+
+    String[] retval = new String[nr];
+
+    int i = 0;
+    for ( int copy = 0; copy < copies; copy++ ) {
+      for ( int part = 0; part < parts; part++ ) {
+        for ( int split = 0; split < splits; split++ ) {
+          retval[i] = buildFilename( space, copy, "P" + part, split, false );
+          i++;
+        }
+      }
+    }
+    if ( i < nr ) {
+      retval[i] = "...";
+    }
+
+    return retval;
   }
 
   public String buildFilename( VariableSpace space, int stepnr, String partnr, int splitnr, boolean ziparchive ) {
@@ -857,7 +873,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
     retval.append( "      " ).append( XMLHandler.addTagValue( "add_to_result_filenames", addToResultFilenames ) );
     retval.append( "      " ).append( XMLHandler.addTagValue( "pad", padded ) );
     retval.append( "      " ).append( XMLHandler.addTagValue( "fast_dump", fastDump ) );
-    retval.append( "      " ).append( XMLHandler.addTagValue( "splitevery", splitEveryRows ) );
+    retval.append( "      " ).append( XMLHandler.addTagValue( "splitevery", splitEvery ) );
   }
 
   @Override
@@ -889,16 +905,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
       doNotOpenNewFileInit = rep.getStepAttributeBoolean( id_step, "do_not_open_new_file_init" );
       extension = rep.getStepAttributeString( id_step, "file_extention" );
       fileAppended = rep.getStepAttributeBoolean( id_step, "file_append" );
-
-      splitEveryRows = rep.getStepAttributeString( id_step, "file_split_rows" );
-      if ( Utils.isEmpty( splitEveryRows ) ) {
-        // test for legacy
-        long splitEvery = rep.getStepAttributeInteger( id_step, "file_split" );
-        if ( splitEvery > 0 ) {
-          splitEveryRows = Long.toString( splitEvery );
-        }
-      }
-
+      splitEvery = (int) rep.getStepAttributeInteger( id_step, "file_split" );
       stepNrInFilename = rep.getStepAttributeBoolean( id_step, "file_add_stepnr" );
       partNrInFilename = rep.getStepAttributeBoolean( id_step, "file_add_partnr" );
       dateInFilename = rep.getStepAttributeBoolean( id_step, "file_add_date" );
@@ -962,7 +969,7 @@ public class TextFileOutputMeta extends BaseFileOutputMeta implements StepMetaIn
       rep.saveStepAttribute( id_transformation, id_step, "do_not_open_new_file_init", doNotOpenNewFileInit );
       rep.saveStepAttribute( id_transformation, id_step, "file_extention", extension );
       rep.saveStepAttribute( id_transformation, id_step, "file_append", fileAppended );
-      rep.saveStepAttribute( id_transformation, id_step, "file_split_rows", splitEveryRows );
+      rep.saveStepAttribute( id_transformation, id_step, "file_split", splitEvery );
       rep.saveStepAttribute( id_transformation, id_step, "file_add_stepnr", stepNrInFilename );
       rep.saveStepAttribute( id_transformation, id_step, "file_add_partnr", partNrInFilename );
       rep.saveStepAttribute( id_transformation, id_step, "file_add_date", dateInFilename );

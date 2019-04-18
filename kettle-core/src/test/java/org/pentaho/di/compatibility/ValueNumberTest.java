@@ -2,7 +2,7 @@
  *
  * Pentaho Data Integration
  *
- * Copyright (C) 2002-2018 by Hitachi Vantara : http://www.pentaho.com
+ * Copyright (C) 2002-2017 by Hitachi Vantara : http://www.pentaho.com
  *
  *******************************************************************************
  *
@@ -28,24 +28,17 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import org.junit.ClassRule;
-import org.junit.Test;
-import org.pentaho.di.junit.rules.RestorePDIEnvironment;
-
-import static org.junit.Assert.assertEquals;
+import junit.framework.TestCase;
 
 /**
  * Test class for the basic functionality of ValueNumber.
  *
  * @author Sven Boden
  */
-public class ValueNumberTest {
-  @ClassRule public static RestorePDIEnvironment env = new RestorePDIEnvironment();
-
+public class ValueNumberTest extends TestCase {
   /**
    * Constructor test 1.
    */
-  @Test
   public void testConstructor1() {
     ValueNumber vs = new ValueNumber();
 
@@ -72,7 +65,6 @@ public class ValueNumberTest {
   /**
    * Test the getters of ValueNumber
    */
-  @Test
   public void testGetters() {
     ValueNumber vs1 = new ValueNumber( -4.0D );
     ValueNumber vs2 = new ValueNumber( 0.0D );
@@ -114,7 +106,6 @@ public class ValueNumberTest {
   /**
    * Test the setters of ValueNumber
    */
-  @Test
   public void testSetters() {
     ValueNumber vs = new ValueNumber( 0.0D );
 
