@@ -16,7 +16,7 @@ dependencies {
             libraries.'pentaho-i18n-webservice-bundle',
             libraries.'angular-i18n',
 
-            libraries.'jackson-jaxrs-json-provider',
+//            libraries.'jackson-jaxrs-json-provider',
     )
     runtime(
             libraries.'jquery',

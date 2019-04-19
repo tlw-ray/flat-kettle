@@ -1,12 +1,12 @@
 dependencies {
     compile (
-            project(':kettle-core'),
-            project(':kettle-engine'),
-            project(':kettle-dbdialog'),
-            project(':pentaho-vfs-browser'),
             project(':commons-xul-swt'),
             project(':commons-xul-core'),
             project(':commons-xul-swing'),
+            project(':pentaho-vfs-browser'),
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-dbdialog'),
             libraries.'pentaho-capability-manager',
             libraries.'jfreechart',
             libraries.'js',

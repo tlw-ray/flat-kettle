@@ -1,12 +1,12 @@
 dependencies {
     compile (
             project(':pentaho-metastore'),
+            project(':reporting-libraries-libfonts'),
             project(':kettle-core'),
             libraries.'mondrian',
             libraries.'pdi-engine-api',
             libraries.'pentaho-registry',
             libraries.'pentaho-platform-api',
-            libraries.'libfonts',
             libraries.'classic-core',
             libraries.'dom4j',
             libraries.'commons-codec',

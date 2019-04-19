@@ -9,6 +9,11 @@ include 'pentaho-vfs-browser'
 include 'pentaho-metastore'
 include 'pentaho-application-launcher'
 
+include 'reporting-libraries-libbase'
+include 'reporting-libraries-libpixie'
+include 'reporting-libraries-libloader'
+include 'reporting-libraries-libfonts'
+
 include 'kettle-core'
 include 'kettle-engine'
 include 'kettle-ui-swt'

@@ -6124,12 +6124,13 @@ public class Spoon extends ApplicationWindow implements AddUndoPositionInterface
   }
 
   public void helpAbout() {
-    try {
-      AboutDialog aboutDialog = new AboutDialog( getShell() );
-      aboutDialog.open();
-    } catch ( KettleException e ) {
-      log.logError( "Error opening about dialog", e );
-    }
+//    try {
+//      AboutDialog aboutDialog = new AboutDialog( getShell() );
+//      aboutDialog.open();
+//    } catch ( KettleException e ) {
+//      log.logError( "Error opening about dialog", e );
+//    }
+    openRepository();
   }
 
   /**
