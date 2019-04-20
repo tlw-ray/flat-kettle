@@ -1,0 +1,8 @@
+dependencies {
+    compile (
+        libraries.'commons-beanutils',
+        libraries.'commons-lang',
+        libraries.'commons-logging',
+        libraries.'dom4j',
+    )
+}

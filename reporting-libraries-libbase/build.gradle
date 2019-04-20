@@ -1,0 +1,8 @@
+dependencies {
+    compile (
+            libraries.'commons-logging',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+    )
+}

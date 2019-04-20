@@ -1,0 +1,32 @@
+apply from: 'dependency.gradle'
+
+allprojects{
+    repositories {
+        mavenLocal()
+        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
+        maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "http://nexus.pentaho.org/content/groups/omni/"}
+    }
+}
+
+subprojects { subproj ->
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'maven'
+
+    group = 'com.winning.dtc.kettle'
+
+    sourceCompatibility = 1.8
+    targetCompatibility = 1.8
+
+    version = '8.1.0.6-682'
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    dependencies {
+        testCompile(
+            libraries.'junit',
+            libraries.'mockito-all',
+        )
+    }
+}

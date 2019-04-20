@@ -1,0 +1,34 @@
+dependencies {
+    compile (
+            project(':kettle-engine'),
+            project(':kettle-core'),
+            project(':kettle-ui-swt'),
+            project(':pentaho-metastore'),
+            project(':pentaho-vfs-browser'),
+            libraries.'osgi',
+            libraries.'pax-web-spi',
+
+            libraries.'javax.ws.rs-api',
+            libraries.'javax.servlet-api',
+            libraries.'json-simple',
+            libraries.'pentaho-platform-extensions',
+            libraries.'pentaho-i18n-bundle',
+            libraries.'pentaho-i18n-webservice-bundle',
+            libraries.'angular-i18n',
+
+//            libraries.'jackson-jaxrs-json-provider',
+    )
+    runtime(
+            libraries.'jquery',
+            libraries.'angular',
+            libraries.'angular-route',
+            libraries.'angular-sanitize',
+            libraries.'angular-translate',
+            libraries.'angular-animate',
+    )
+    testCompile (
+            project(':pentaho-vfs-browser'),
+            libraries.'commons-vfs2',
+            libraries.'commands',
+    )
+}

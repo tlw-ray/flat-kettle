@@ -1,0 +1,7 @@
+dependencies {
+    compile(
+            libraries.'commons-codec',
+            libraries.'commons-io',
+            libraries.'guava',
+    )
+}
