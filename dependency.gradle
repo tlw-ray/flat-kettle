@@ -1,5 +1,4 @@
 ext.versions = [
-        // <simple-jndi.version>1.0.0</simple-jndi.version>
         activation: '1.1',
         akka: '2.3.3',
         annogen: '0.1.0',
@@ -40,7 +39,7 @@ ext.versions = [
         commons_digester: '1.8',
         commons_discovery: '0.2',
         commons_fileload: '1.3.2',
-        commons_io: '2.1',//2.2
+        commons_io: '2.4',//2.2, 2.1
         commons_jxpath: '1.2',
         commons_lang: '2.6',
         commons_lang3: '3.0',
@@ -51,6 +50,7 @@ ext.versions = [
         commons_validator: '1.3.1',
         commons_vfs2: '2.2',
         contiperf: '2.2.0',
+        cxf: '3.0.13',
         derby: '10.2.1.6',//10.5.3.0_1
         dom4j: '2.1.1',
         drools: '6.4.0.Final',
@@ -70,7 +70,7 @@ ext.versions = [
         gdata_client_meta: '1.0',
         gdata_client: '1.41.4',
         gdata_core: '1.41.4',
-        georss_rome: '0.9.resolver8',
+        georss_rome: '0.9.8',//0.9.resolver8
         geronimo_stax_api: '1.0.1',
         grizzly: '1.9.45',
         groovy: '2.4.8',
@@ -94,10 +94,11 @@ ext.versions = [
         jackson: '2.7.9',
         jai: '1.1.2',
         jakarta_regexp: '1.2',
-        janino: '3.0.8',
+        janino2: '2.5.16',//3.0.8中ParseException等类被移除导致编译无法通过，改为2.5.16. 详情见: http://janino-compiler.github.io/janino/changelog.html
+        janino3: '3.0.8',//使用janino3会导致kettle-engine项目编译失败
         javax_inject: '1',
         javax_mail: '1.4.7',
-        javax_servlet_api: '3.0.1',
+        javax_servlet_api: '3.0.1', //TODO 有重复 servlet3_api
         javax_websocket_api: '1.1',
         javax_ws_rs_api:'2.0',//1.1.1
         javassist: '3.20.0-GA',
@@ -153,7 +154,6 @@ ext.versions = [
         mimepull: '1.9.3',
         mina:'2.0.0-M6',
         monetdb: '2.8',
-        monetdb_jdbc: '2.8',
         mstor: '0.9.13',
         mve12: '2.0.10',
         mysql: '5.1.47',
@@ -164,11 +164,15 @@ ext.versions = [
         olap4j: '1.2.0',
         openerp: '0.10.0',//1.1.0
         org_apache_felix_utils: '1.8.0',
-        org_apache_felix_http: '2.3.0',
+        org_apache_felix_http: '2.3.2',//2.3.0
         org_apache_felix_fileinstall: '3.4.2',
+        org_eclipse_core_commands: '3.9.0.v20170530-1048',
+        org_eclipse_equinox_common: '3.9.0.v20170207-1454',
+        org_eclipse_equinox_bidi: '1.1.0.v20160728-1031',
         oro: '2.0.8',
-        osgi: '4.3.1',//5.0.0
+        osgi: '5.0.0',//4.3.1
         paho: '1.2.0',
+        pax_web_extender_whiteboard: '3.1.4',
         persistence_api: '1.0',
         plugin_checkstyle: '2.17',
         plugin_enforcer: '1.4.1',
@@ -205,7 +209,7 @@ ext.versions = [
         spring_binding: '2.4.4.RELEASE',
         spring_ldap_core: '2.1.0.RELEASE',
         spring_mock: '2.0.8',
-        spring_secureity_core_test: '2.0.5.RELEASE',
+        spring_security: '3.2.9.RELEASE',//2.0.5.RELEASE
         sqleonardo: '2009.03.rc1',
         sqlite: '3.7.2',
         stax: '1.2.0',//1.0-2, 1.0
@@ -248,7 +252,7 @@ ext.versions = [
         jaxen: '1.1.6',
         jmock: '2.5.1',
         junit : '4.12',//4.11
-        mockito_all: '1.10.19',
+        mockito_all: '1.10.19', //1.9.5
         mockrunner_servlet: '0.3.7',//0.3.1
         powermock: '1.7.3',//1.6.3
         testng: '6.5.2',
@@ -257,9 +261,10 @@ ext.versions = [
         aries_blueprint_api: '1.0.1',
         aries_blueprint_core: '1.4.2',
         aries_util: '1.1.0',
-        equinox: '3.3.0-v20070426',
+//        equinox: '3.3.0-v20070426',//3.3.0-I20070605-0010
         exam: '4.1.0',
         felix: '4.4.1',//4.2.1
+        felix_fileinstall: '3.4.2',
         karaf: '3.0.3',
         logback: '0.9.29',
         pax_url_aether: '1.4.0',
@@ -273,7 +278,7 @@ ext.jsVersions = [
         dojo: '1.9.2',
         jquery: '2.2.1',
         js_project_list: 'requirejs,requirejs-text,angular,require-css,angular-i18n',
-        requirejs_text: '2.0.10',
+        requirejs: '2.1.19', //2.0.10
         require_css: '0.1.8',
 ]
 ext.libraries = [
@@ -295,14 +300,14 @@ ext.libraries = [
         "batik-transcoder": "org.apache.xmlgraphics:batik-transcoder:${versions.batik}",
         "batik-util": "org.apache.xmlgraphics:batik-util:${versions.batik}",
         "batik-xml": "org.apache.xmlgraphics:batik-xml:${versions.batik}",
-        "cglib-nodep": "cglib:cglib-nodep:${versions.cglib_nodep}",
+        "cglib-nodep": "cglib:cglib-nodep:${versions.cglib}",
         "commons-beanutils": "commons-beanutils:commons-beanutils:${versions.commons_beanutils}",
         "commons-cli": "commons-cli:commons-cli:${versions.commons_cli}",
         "commons-codec": "commons-codec:commons-codec:${versions.commons_codec}",
         "commons-collections": "commons-collections:commons-collections:${versions.commons_collections}",
         "commons-collections4": "org.apache.commons:commons-collections4:${versions.commons_collections4}",
         "commons-compress": "org.apache.commons:commons-compress:${versions.commons_compress}",
-        "commons-compiler": "org.codehaus.janino:commons-compiler:${versions.janino}",
+        "commons-compiler": "org.codehaus.janino:commons-compiler:${versions.janino3}",
         "commons-dbcp": "commons-dbcp:commons-dbcp:${versions.commons_dbcp}",
         "commons-io": "commons-io:commons-io:${versions.commons_io}",
         "commons-lang": "commons-lang:commons-lang:${versions.commons_lang}",
@@ -334,13 +339,14 @@ ext.libraries = [
         "jackson-core": "com.fasterxml.jackson.core:jackson-core:${versions.jackson}",
         "jackson-databind": "com.fasterxml.jackson.core:jackson-databind:${versions.jackson}",
         "jackson-jaxrs-json-provider": "com.fastxml.jackson.jaxrs:jackson-jaxrs-json-provider:${versions.jackson}",
-        "janino": "org.codehaus.janino:janino:${versions.janino}",
+        "janino2": "org.codehaus.janino:janino:${versions.janino2}",
+        "janino3": "org.codehaus.janino:janino:${versions.janino3}",
         "javadbf": "javadbf:javadbf:${versions.javadbf}",
         "javassist": "org.javassist:javassist:${versions.javassist}",
         "javax.servlet-api": "javax.servlet:javax.servlet-api:${versions.javax_servlet_api}",
         "javax.websocket-api": "javax.websocket:javax.websocket-api:${versions.javax_websocket_api}",
         "javax.ws.rs-api": "javax.ws.rs:javax.ws.rs-api:${versions.javax_ws_rs_api}",
-        "jaxrpc-api": "javax.xml:jaxrpc-api:${versions.jaxrpc_api}",
+        "jaxrpc-api": "javax.xml:jaxrpc-api:${versions.jaxrpc}",
         "jcifs": "org.samba.jcifs:jcifs:${versions.jcifs}",
         "jcommon": "jfree:jcommon:${versions.jcommon}",
         "jersey-apache-client4": "com.sun.jersey.contribs:jersey-apache-client4:${versions.jersey}",
@@ -360,7 +366,7 @@ ext.libraries = [
         "log4jdbc": "com.googlecode.log4jdbc:log4jdbc:${versions.log4jdbc}",
         "mail": "javax.mail:mail:${versions.mail}",
         "mondrian": "pentaho:mondrian:${versions.pentaho}",
-        "monetdb-jdbc": "monetdb:monetdb-jdbc:${versions.monetdb_jdbc}",
+        "monetdb-jdbc": "monetdb:monetdb-jdbc:${versions.monetdb}",
         "mstor": "org.mnode.mstor:mstor:${versions.mstor}",
         "mysql": "mysql:mysql-connector-java:${versions.mysql}",
         "nekohtml": "net.sourceforge.nekohtml:nekohtml:${versions.nekohtml}",
@@ -368,6 +374,8 @@ ext.libraries = [
         "ognl": "ognl:ognl:${versions.ognl}",
         "olap4j": "org.olap4j:olap4j:${versions.olap4j}",
         "olap4j-xmla": "org.olap4j:olap4j-xmla:${versions.olap4j}",
+        "org.apache.felix.framework": "org.apache.felix:org.apache.felix.framework:${versions.felix}",
+        "org.apache.karaf.bundle.core": "org.apache.karaf.bundle:org.apache.karaf.bundle.core:${versions.karaf}",
         "oro": "oro:oro:${versions.oro}",
         "osgi": "org.osgi:org.osgi.core:${versions.osgi}",
         "poi": "org.apache.poi:poi:${versions.poi}",
@@ -388,6 +396,8 @@ ext.libraries = [
         "snappy-java": "org.xerial.snappy:snappy-java:${versions.snappy_java}",
         "snmp4j": "org.snmp4j:snmp4j:${versions.snmp4j}",
         "snakeyaml": "org.yaml:snakeyaml:${versions.snakeyaml}",
+        "spring-beans": "org.springframework:spring-beans:${versions.spring}",
+        "spring-security-core": "org.springframework.security:spring-security-core:${versions.spring_security}",
         "syslog4j": "org.syslog4j:syslog4j:${versions.syslog4j}",
         "trilead-ssh2": "trilead-ssh2:trilead-ssh2:${versions.trilead_ssh2}",
         "wsdl4j": "wsdl4j:wsdl4j:${versions.wsdl4j}",
@@ -397,8 +407,8 @@ ext.libraries = [
         "xmlbeans": "org.apache.xmlbeans:xmlbeans:${versions.xmlbeans}",
         "xmlgraphics-commons": "org.apache.xmlgraphics:xmlgraphics-commons:${versions.batik}",
 
-        "equinox-common": "org.eclipse.equinox:common:${versions.jface}",
-        "commands": "org.eclipse.core:commands:${versions.jface}",
+        "equinox-common": "org.eclipse.equinox:common:${versions.org_eclipse_equinox_common}",
+        "commands": "org.eclipse.core:commands:${versions.org_eclipse_core_commands}",
         "jface": "org.eclipse.jface:org.eclipse.jface:${versions.jface}",
         "jetty-plus": "org.eclipse.jetty:jetty-plus:${versions.jetty}",
         "jetty-security": "org.eclipse.jetty:jetty-security:${versions.jetty}",
@@ -412,19 +422,23 @@ ext.libraries = [
         "js": "rhino:js:${versions.js}",
 
         "classic-core": "org.pentaho.reporting.engine:classic-core:${versions.pentaho}",
-        "pentaho-capability-manager": "pentaho:pentaho-capability-manager:${versions.pentaho}",
         "kettle-core": "pentaho-kettle:kettle-core:${versions.pentaho}",
         "kettle-engine": "pentaho-kettle:kettle-engine:${versions.pentaho}",
         "kettle-dbdialog": "pentaho-kettle:kettle-dbdialog:${versions.pentaho}",
         "kettle-vfs-browser": "pentaho:pentaho-vfs-browser:${versions.pentaho}",
         "kettle-ui-swt": "pentaho-kettle:kettle-ui-swt:${versions.pentaho}",
-        "libfonts": "org.pentaho.reporting.library:libfonts:${versions.pentaho}",
-        "pentaho-platform-extensions":"pentaho:pentaho-platform-extensions:${versions.pentaho}",
+//        "libfonts": "org.pentaho.reporting.library:libfonts:${versions.pentaho}",
         "pdi-engine-api": "org.pentaho:pdi-engine-api:${versions.pentaho}",
+        "pentaho-actionsequence-dom": "org.pentaho:actionsequence-dom:${versions.pentaho}",
+        "pentaho-capability-manager": "pentaho:pentaho-capability-manager:${versions.pentaho}",
+        "pentaho-commons-database-model": "org.pentaho:commons-database-model:${versions.pentaho}",
+        "pentaho-connections": "pentaho:pentaho-connections:${versions.pentaho}",
+        "pentaho-platform-extensions":"pentaho:pentaho-platform-extensions:${versions.pentaho}",
         "pentaho-i18n-bundle": "pentaho:pentaho-i18n-bundle:${versions.pentaho}",
         "pentaho-i18n-webservice-bundle": "pentaho:pentaho-i18n-webservice-bundle:${versions.pentaho}",
         "pentaho-osgi-utils-api": "pentaho:pentaho-osgi-utils-api:${versions.pentaho}",
         "pentaho-platform-api": "pentaho:pentaho-platform-api:${versions.pentaho}",
+        "pentaho-platform-core": "pentaho:pentaho-platform-core:${versions.pentaho}",
         "pentaho-registry": "org.pentaho:pentaho-registry:${versions.pentaho}",
         "pentaho-service-coordinator": "pentaho:pentaho-service-coordinator:${versions.pentaho}",
 
@@ -442,7 +456,7 @@ ext.libraries = [
         "logback-classic": "ch.qos.logback:logback-classic:${versions.logback}",
         "tinybundles": "org.ops4j.pax.tinybundles:tinybundles:${versions.tinybundles}",
         "org.apache.aries.blueprint.api": "org.apache.aries.blueprint:org.apache.aries.blueprint.api:${versions.aries_blueprint_api}",
-        "org.apache.karfka.features": "org.apache.karaf.features:org.apache.karaf.features.core:${versions.karaf}",
+        "org.apache.karaf.features.core": "org.apache.karaf.features:org.apache.karaf.features.core:${versions.karaf}",
 
         //JavaScript
         "jquery": "org.webjars:jquery:${jsVersions.jquery}",
@@ -454,7 +468,7 @@ ext.libraries = [
         "angular-animate": "org.webjars.bower:angular-animate:${jsVersions.angular}",
 
         //TEST
-        "h2": "com.h2database:${versions.h2}",
+        "h2": "com.h2database:h2:${versions.h2}",
         "mockito-all" : "org.mockito:mockito-all:${versions.mockito_all}",
         "java-hamcrest" : "org.hamcrest:java-hamcrest:${versions.java_hamcrest}",
         "junit" : "junit:junit:${versions.junit}",

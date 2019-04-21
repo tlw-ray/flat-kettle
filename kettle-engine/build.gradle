@@ -24,8 +24,8 @@ dependencies {
             libraries.'georss-rome',
             libraries.'infobright-core',
             libraries.'ini4j',
-            libraries.'commons-compiler',
-            libraries.'janino',
+//            libraries.'commons-compiler',
+            libraries.'janino2',
             libraries.'javadbf',
             libraries.'jcommon',
             libraries.'json-simple',
@@ -89,5 +89,6 @@ dependencies {
             libraries.'powermock-api-mockito',
             libraries.'spring-test',
             libraries.'xmlunit',
+            libraries.'h2',
     )
 }

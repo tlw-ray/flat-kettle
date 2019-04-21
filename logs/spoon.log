@@ -1,8 +1,84 @@
-Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
-Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
-Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
-Graphics2D from BufferedImage lacks BUFFERED_IMAGE hint
-2019/04/17 13:50:39 - RepositoriesMeta - Reading repositories XML file: C:\Users\fxhtb\.kettle\repositories.xml
-2019/04/17 13:50:54 - Spoon - Connected to metastore : pdi-repository, added to delegating metastore
-2019/04/17 13:53:13 - Spoon - Spoon  已经结束.
-stopping
+org.pentaho.di.core.exception.KettlePluginException: 
+Class not found
+org.pentaho.di.osgi.registryExtension.OSGIPluginRegistryExtension
+
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:492)
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:339)
+	at org.pentaho.di.core.plugins.PluginRegistry.init(PluginRegistry.java:546)
+	at org.pentaho.di.core.plugins.PluginRegistry.init(PluginRegistry.java:527)
+	at org.pentaho.di.core.KettleClientEnvironment.init(KettleClientEnvironment.java:117)
+	at org.pentaho.di.core.KettleClientEnvironment.init(KettleClientEnvironment.java:80)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:133)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:100)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:81)
+	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:634)
+	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:626)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.ClassNotFoundException: org.pentaho.di.osgi.registryExtension.OSGIPluginRegistryExtension
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:482)
+	... 15 more
+org.pentaho.di.core.exception.KettlePluginException: 
+Class not found
+org.pentaho.di.osgi.registryExtension.OSGIPluginRegistryExtension
+
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:492)
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:339)
+	at org.pentaho.di.core.plugins.PluginRegistry.init(PluginRegistry.java:546)
+	at org.pentaho.di.core.plugins.PluginRegistry.init(PluginRegistry.java:527)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:145)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:100)
+	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:81)
+	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:634)
+	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:626)
+	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+	at java.util.concurrent.FutureTask.run(FutureTask.java)
+	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+	at java.lang.Thread.run(Thread.java:748)
+Caused by: java.lang.ClassNotFoundException: org.pentaho.di.osgi.registryExtension.OSGIPluginRegistryExtension
+	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+	at java.lang.Class.forName0(Native Method)
+	at java.lang.Class.forName(Class.java:264)
+	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:482)
+	... 13 more
+2019/04/21 18:24:37 - General - ERROR (version Unknown, build 0 from 2019/04/21 18:14:39.879 by hdp) : Unexpected error loading class for plugin PDI-OSGI-Bridge Listener
+2019/04/21 18:24:37 - General - ERROR (version Unknown, build 0 from 2019/04/21 18:14:39.879 by hdp) : org.pentaho.di.core.exception.KettlePluginException: 
+2019/04/21 18:24:37 - General - Class not found
+2019/04/21 18:24:37 - General - org.pentaho.di.osgi.KettleLifeCycleAdapter
+2019/04/21 18:24:37 - General - 
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:492)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.lifecycle.LifecycleSupport.loadPlugins(LifecycleSupport.java:93)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.lifecycle.KettleLifecycleSupport.<init>(KettleLifecycleSupport.java:55)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.KettleEnvironment.initLifecycleListeners(KettleEnvironment.java:179)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:153)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:100)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.KettleEnvironment.init(KettleEnvironment.java:81)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:634)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.ui.spoon.Spoon$1.call(Spoon.java:626)
+2019/04/21 18:24:37 - General - 	at java.util.concurrent.FutureTask.run$$$capture(FutureTask.java:266)
+2019/04/21 18:24:37 - General - 	at java.util.concurrent.FutureTask.run(FutureTask.java)
+2019/04/21 18:24:37 - General - 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1142)
+2019/04/21 18:24:37 - General - 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:617)
+2019/04/21 18:24:37 - General - 	at java.lang.Thread.run(Thread.java:748)
+2019/04/21 18:24:37 - General - Caused by: java.lang.ClassNotFoundException: org.pentaho.di.osgi.KettleLifeCycleAdapter
+2019/04/21 18:24:37 - General - 	at java.net.URLClassLoader.findClass(URLClassLoader.java:381)
+2019/04/21 18:24:37 - General - 	at java.lang.ClassLoader.loadClass(ClassLoader.java:424)
+2019/04/21 18:24:37 - General - 	at sun.misc.Launcher$AppClassLoader.loadClass(Launcher.java:335)
+2019/04/21 18:24:37 - General - 	at java.lang.ClassLoader.loadClass(ClassLoader.java:357)
+2019/04/21 18:24:37 - General - 	at java.lang.Class.forName0(Native Method)
+2019/04/21 18:24:37 - General - 	at java.lang.Class.forName(Class.java:264)
+2019/04/21 18:24:37 - General - 	at org.pentaho.di.core.plugins.PluginRegistry.loadClass(PluginRegistry.java:482)
+2019/04/21 18:24:37 - General - 	... 13 more
