@@ -267,7 +267,7 @@ ext.versions = [
         felix_fileinstall: '3.4.2',
         karaf: '3.0.3',
         logback: '0.9.29',
-        pax_url_aether: '1.4.0',
+        pax_url_aether: '1.6.0',
         snakeyaml: '1.13',
         tinybundles: '2.0.0',
 ]
