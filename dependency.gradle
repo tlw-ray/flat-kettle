@@ -1,5 +1,5 @@
 ext.versions = [
-        // <simple-jndi.version>1.0.0</simple-jndi.version>
+        // pentaho-platform-extensions<simple-jndi.version>1.0.0</simple-jndi.version>
         activation: '1.1',
         akka: '2.3.3',
         antlr_complete: '3.5.2',
