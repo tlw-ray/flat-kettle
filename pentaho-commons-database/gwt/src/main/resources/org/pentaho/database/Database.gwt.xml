@@ -1,0 +1,8 @@
+<module>
+  <inherits name="org.pentaho.database.DatabaseModel"/>
+  <source path="">
+        <exclude name ="**/util/DatabaseUtil.java"/>
+        <exclude name ="**/DatabaseConnectionService.java"/>
+        <exclude name ="**/DatabaseDialectService.java"/>        
+  </source>
+</module>

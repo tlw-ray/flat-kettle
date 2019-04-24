@@ -1,0 +1,21 @@
+<module> <!-- rename-to="DatabaseDialog"> -->
+  <inherits name='com.google.gwt.user.User'/>
+  <!--  what is this? inherits name='com.googlecode.gwtx.Java'/ -->
+  <!-- inherits name='com.google.gwt.xml.XML'/ -->
+  <inherits name="org.pentaho.gwt.widgets.Widgets"/>
+  <inherits name="org.pentaho.gwt.widgets.login.Login"/> 
+  <inherits name="org.pentaho.ui.xul.Gwt"/>
+  <inherits name="org.pentaho.database.Database"/>
+  <inherits name="com.google.web.bindery.autobean.AutoBean"/> 
+  <source path="">
+        <include name ="**/gwt/**"/>
+        <include name ="**/event/**"/>
+        <include name ="**/services/**"/>
+        <exclude name="**/FragmentHandler.java"/>
+        <exclude name="**/GwtDatabaseConnectionServlet.java"/>
+  </source>
+  <stylesheet src="databaseEditorDialog.css"/>
+  <public path="resources"/>
+  <!--  entry-point class="org.pentaho.ui.database.gwt.GwtDatabaseDialogEntryPoint"/ -->
+  <!-- servlet path="/databaseConnectionService" class="org.pentaho.ui.database.gwt.GwtDatabaseConnectionServlet" / -->
+</module>
