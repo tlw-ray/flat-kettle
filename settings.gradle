@@ -16,10 +16,14 @@ include 'reporting-libraries-libfonts'
 
 include 'kettle-core'
 include 'kettle-engine'
-include 'kettle-ui-swt'
 include 'kettle-dbdialog'
+include 'kettle-ui-swt'
 
+//OSGI部分
+include 'pentaho-capability-manager'
+include 'pentaho-platform-api'
+include 'pentaho-osgi-utils-api'
 include 'pdi-osgi-bridge-core'
 include 'pdi-osgi-bridge-activator'
-
-include 'pdi-plugins-repositories'
+//include 'pentaho-platform-extensions'
+include 'pdi-plugins-repositories-core'

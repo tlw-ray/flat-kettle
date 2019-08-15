@@ -443,6 +443,7 @@ public class PluginRegistry {
    */
   @SuppressWarnings( "unchecked" )
   public <T> T loadClass( PluginInterface plugin, Class<T> pluginClass ) throws KettlePluginException {
+    System.out.println("TLW: PluginRegistry load plugin: " + pluginClass);
     if ( plugin == null ) {
       throw new KettlePluginException( BaseMessages.getString(
           PKG, "PluginRegistry.RuntimeError.NoValidStepOrPlugin.PLUGINREGISTRY001" ) );

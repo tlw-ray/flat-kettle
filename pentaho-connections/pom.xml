@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho</groupId>
+    <artifactId>pentaho-ce-jar-parent-pom</artifactId>
+    <version>8.1.0.6-682</version>
+  </parent>
+  <groupId>pentaho</groupId>
+  <artifactId>pentaho-connections</artifactId>
+  <version>8.1.0.6-682</version>
+  <name>Pentaho Commons Connections</name>
+  <description>The Pentaho Connections API defines a common set of interfaces for dealing with connections and result sets.</description>
+  <url>http://www.pentaho.com</url>
+  <scm>
+    <connection>scm:git:git@github.com:pentaho/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:pentaho/${project.artifactId}.git</developerConnection>
+    <url>scm:git:git@github.com:pentaho/${project.artifactId}.git</url>
+  </scm>
+  <properties>
+    <commons-collections.version>3.2.2</commons-collections.version>
+    <mockito-all.version>1.9.5</mockito-all.version>
+    <junit.version>4.4</junit.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>commons-collections</groupId>
+      <artifactId>commons-collections</artifactId>
+      <version>${commons-collections.version}</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>*</artifactId>
+          <groupId>*</groupId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+    <dependency>
+      <groupId>org.dom4j</groupId>
+      <artifactId>dom4j</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>${mockito-all.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <!-- required by org.dom4j -->
+    <dependency>
+      <groupId>jaxen</groupId>
+      <artifactId>jaxen</artifactId>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build />
+
+
+  <repositories>
+    <repository>
+      <id>pentaho-public</id>
+      <name>Pentaho Public</name>
+      <url>http://nexus.pentaho.org/content/groups/omni/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>interval:15</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+</project>

@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':commons-xul-core'),
+            libraries.'commons-logging',
+            libraries.'commons-lang',
+            libraries.'dom4j',
+            libraries.'spring-security-core',
+            libraries.'spring-beans',
+            libraries.'slf4j-api',
+            libraries.'pentaho-connections',
+            libraries.'pentaho-actionsequence-dom',
+            libraries.'pentaho-commons-database-model',
+            libraries.'pentaho-service-coordinator',
+    )
+}
