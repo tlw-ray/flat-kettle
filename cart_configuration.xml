@@ -1,0 +1,30 @@
+<slave_config>
+  <slaveserver>
+    <name>Slave170</name>
+    <hostname>0.0.0.0</hostname>
+    <port>8686</port>
+  </slaveserver>
+ 
+  <!--
+  <masters>
+    <slaveserver>
+      <name>master1</name>
+      <hostname>localhost</hostname>
+      <port>9080</port>
+      <webAppName>pentaho-di</webAppName>
+      <username>admin</username>
+      <password>password</password>
+      <master>Y</master>
+    </slaveserver>
+  </masters>
+  <report_to_masters>Y</report_to_masters>
+  -->
+  <max_log_lines>10000</max_log_lines>
+  <max_log_timeout_minutes>1440</max_log_timeout_minutes>
+  <object_timeout_minutes>1440</object_timeout_minutes>
+  <repository>
+    <name>W.in60</name>
+    <username>tlw</username>
+    <password>tlw</password>
+  </repository>
+</slave_config>
