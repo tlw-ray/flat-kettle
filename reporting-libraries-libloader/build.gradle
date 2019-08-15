@@ -19,6 +19,7 @@ dependencies {
             libraries.'batik-constants',
             libraries.'batik-i18n',
             libraries.'commons-logging',
+            libraries.'ehcache-core',
     )
     testCompile (
             libraries.'hamcrest-core',

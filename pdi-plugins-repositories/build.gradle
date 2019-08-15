@@ -29,6 +29,6 @@ dependencies {
     testCompile (
             project(':pentaho-vfs-browser'),
             libraries.'commons-vfs2',
-            libraries.'commands',
+//            libraries.'commands',
     )
 }
