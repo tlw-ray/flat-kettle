@@ -72,7 +72,7 @@ ext.versions = [
         jackess: '1.2.6',
         jackson: '2.7.9',
         jai_core: '1.1.2',
-        janino: '3.0.8',
+        janino: '2.7.6', //'3.0.8',
         javax_inject: '1',
         javax_mail: '1.4.7',
         javax_servlet_api: '3.0.1',
@@ -202,6 +202,7 @@ ext.versions = [
         pax_url_aether: '1.4.0',
         snakeyaml: '1.13',
         tinybundles: '2.0.0',
+        jtds: '1.3.1',
 ]
 ext.jsVersions = [
         angular: '1.5.8',
@@ -289,6 +290,7 @@ ext.libraries = [
         "jsch": "com.jcraft:jsch:${versions.jsch}",
         "json-simple": "com.googlecode.json-simple:json-simple:${versions.json_simple}",
         "jsonpath": "jsonpath:jsonpath:${versions.jsonpath}",
+        "jtds": "net.sourceforge.jtds:jtds:${versions.jtds}",
         "jxl": "jexcelapi:jxl:${versions.jxl}",
         "jzlib": "com.jcraft:jzlib:${versions.jzlib}",
         "jug-lgpl": "jug-lgpl:jug-lgpl:${versions.jug}",
