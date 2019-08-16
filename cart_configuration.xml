@@ -24,7 +24,7 @@
   <object_timeout_minutes>1440</object_timeout_minutes>
   <repository>
     <name>W.in60</name>
-    <username>tlw</username>
-    <password>tlw</password>
+    <username>carte</username>
+    <password>carte</password>
   </repository>
 </slave_config>

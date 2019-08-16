@@ -30,7 +30,6 @@ dependencies {
             libraries.'jackson-core',
             libraries.'jackson-annotations',
             libraries.'jackson-databind',
-            libraries.'janino',
             libraries.'janino2',
             libraries.'javadbf',
             libraries.'javax.servlet-api',
