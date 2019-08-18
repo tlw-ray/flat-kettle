@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libloader'),
+            libraries.'mail',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+    )
+}

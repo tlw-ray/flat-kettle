@@ -1,7 +1,7 @@
 dependencies {
     compile (
-            project(':pentaho-kettle:kettle-engine'),
-            project(':pentaho-kettle:ui'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
             project(':pentaho-osgi-utils-api'),
 //            project(':pentaho-platform-core'),
             libraries.'slf4j-api',

@@ -1,0 +1,12 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libpixie'),
+            project(':reporting-libraries-libloader'),
+            libraries.'itext',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'mockito-all',
+    )
+}

@@ -1,0 +1,16 @@
+dependencies {
+    compile (
+            project(':commons-xul-core'),
+            project(':pentaho-connections'),
+            project(':pentaho-actionsequence-dom'),
+            project(':pentaho-commons-database:model'),
+            libraries.'commons-lang',
+            libraries.'commons-codec',
+            libraries.'dom4j',
+            libraries.'spring-security-core',
+            libraries.'slf4j-api',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

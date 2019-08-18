@@ -1,7 +1,7 @@
 dependencies {
     compile (
-            project(':pentaho-reporting:libraries:libbase'),
-            project(':pentaho-reporting:libraries:libloader'),
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libloader'),
             libraries.'css-sac',
     )
     testCompile (

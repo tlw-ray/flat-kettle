@@ -94,7 +94,7 @@ ext.versions = [
         jai: '1.1.2',
         jakarta_regexp: '1.2',
         janino2: '2.5.16',//2.7.8缺少几个异常类//2.5.16内部似乎含有jython下载太慢，3.0.8中ParseException等类被移除导致编译无法通过，改为2.5.16. 详情见: http://janino-compiler.github.io/janino/changelog.html
-        janino3: '3.0.8',//使用janino3会导致pentaho-kettle:kettle-engine项目编译失败
+        janino3: '3.0.8',//使用janino3会导致kettle-engine项目编译失败
         javax_inject: '1',
         javax_mail: '1.4.7',
         javax_servlet_api: '3.0.1', //TODO 有重复 servlet3_api
@@ -458,23 +458,11 @@ ext.libraries = [
 
         "js": "rhino:js:${versions.js}",
 
-//        "classic-core": "org.pentaho.reporting.engine:classic-core:${versions.pentaho}",
-//        "kettle-core": "pentaho-kettle:kettle-core:${versions.pentaho}",
-//        "kettle-engine": "pentaho-kettle:kettle-engine:${versions.pentaho}",
-//        "kettle-dbdialog": "pentaho-kettle:kettle-dbdialog:${versions.pentaho}",
-//        "kettle-vfs-browser": "pentaho:pentaho-vfs-browser:${versions.pentaho}",
-//        "kettle-ui-swt": "pentaho-kettle:kettle-ui-swt:${versions.pentaho}",
-//        "libfonts": "org.pentaho.reporting.library:libfonts:${versions.pentaho}",
-//        "pdi-engine-api": "org.pentaho:pdi-engine-api:${versions.pentaho}",
-//        "pentaho-actionsequence-dom": "org.pentaho:actionsequence-dom:${versions.pentaho}",
-//        "pentaho-capability-manager": "pentaho:pentaho-capability-manager:${versions.pentaho}",
         "pentaho-commons-database-model": "org.pentaho:commons-database-model:${versions.pentaho}",
-//        "pentaho-connections": "pentaho:pentaho-connections:${versions.pentaho}",
         "pentaho-platform-extensions":"pentaho:pentaho-platform-extensions:${versions.pentaho}",
         "pentaho-i18n-bundle": "pentaho:pentaho-i18n-bundle:${versions.pentaho}",
         "pentaho-i18n-webservice-bundle": "pentaho:pentaho-i18n-webservice-bundle:${versions.pentaho}",
         "pentaho-osgi-utils-api": "pentaho:pentaho-osgi-utils-api:${versions.pentaho}",
-//        "pentaho-platform-api": "pentaho:pentaho-platform-api:${versions.pentaho}",
         "pentaho-platform-core": "pentaho:pentaho-platform-core:${versions.pentaho}",
         "pentaho-registry": "org.pentaho:pentaho-registry:${versions.pentaho}",
         "pentaho-service-coordinator": "pentaho:pentaho-service-coordinator:${versions.pentaho}",

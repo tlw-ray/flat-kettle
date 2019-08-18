@@ -1,8 +1,8 @@
 dependencies {
     compile (
             project(':pentaho-connections'),
-            project(':pentaho-kettle:kettle-engine'),
-            project(':pentaho-kettle:kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-core'),
             project(':pentaho-cwm-master'),
             libraries.'joda-time',
             libraries.'commons-lang',
