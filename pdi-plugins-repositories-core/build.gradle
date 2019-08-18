@@ -1,8 +1,8 @@
 dependencies {
     compile (
-            project(':kettle-engine'),
-            project(':kettle-core'),
-            project(':kettle-ui-swt'),
+            project(':pentaho-kettle:kettle-engine'),
+            project(':pentaho-kettle:kettle-core'),
+            project(':pentaho-kettle:ui'),
             project(':pentaho-metastore'),
             project(':pentaho-vfs-browser'),
             libraries.'osgi',

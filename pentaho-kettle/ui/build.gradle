@@ -1,0 +1,26 @@
+dependencies {
+    compile (
+            project(':pentaho-commons-xul:swt'),
+            project(':pentaho-commons-xul:core'),
+            project(':pentaho-commons-xul:swing'),
+            project(':pentaho-vfs-browser'),
+            project(':pentaho-kettle:kettle-core'),
+            project(':pentaho-kettle:kettle-engine'),
+            project(':pentaho-kettle:dbdialog'),
+            project(':pentaho-capability-manager'),
+//            project(':pdi-osgi-bridge-core'),
+//            project(':pdi-osgi-bridge-activator'),
+            libraries.'jfreechart',
+            libraries.'js',
+            libraries.'jaxen',
+            libraries.'swt',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-junit4',
+            project(path: ':pentaho-kettle:kettle-engine', configuration: 'tests'),
+    )
+}

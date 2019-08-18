@@ -1,67 +1,65 @@
 rootProject.name = 'flat-kettle'
 
-include 'commons-xul-core'
-include 'commons-xul-swt'
-include 'commons-xul-swing'
+include 'pentaho-commons-xul:core'
+include 'pentaho-commons-xul:swt'
+include 'pentaho-commons-xul:swing'
 
 include 'pentaho-vfs-browser'
 
 include 'pentaho-metastore'
 include 'pentaho-application-launcher'
 
-include 'kettle-core'
+include 'pentaho-kettle:kettle-core'
 include 'pentaho-registry'
 include 'pentaho-connections'
 include 'pentaho-actionsequence-dom'
 include 'pentaho-commons-database:model'
-include 'pentaho-platform-api'
 
 //Report require base
 include 'pentaho-simple-jndi-1.0.1-R'
 
 //Report
-include 'reporting-libraries-libbase'
-include 'reporting-libraries-libpixie'
-include 'reporting-libraries-libloader'
-include 'reporting-libraries-libfonts'
-include 'reporting-libraries-libloader'
-include 'reporting-libraries-flute'
-include 'reporting-libraries-libcss'
-include 'reporting-libraries-librepository'
-include 'reporting-libraries-libxml'
-include 'reporting-libraries-libdocbundle'
-include 'reporting-libraries-libformat'
-include 'reporting-libraries-libserializer'
-include 'reporting-libraries-libswing'
-include 'reporting-libraries-libsparkline'
-include 'reporting-libraries-libformula'
-include 'reporting-libraries-libformula-ui'
-include 'reporting-engine-classic-core'
+include 'pentaho-reporting:libraries:libbase'
+include 'pentaho-reporting:libraries:libpixie'
+include 'pentaho-reporting:libraries:libloader'
+include 'pentaho-reporting:libraries:libfonts'
+include 'pentaho-reporting:libraries:libloader'
+include 'pentaho-reporting:libraries:flute'
+include 'pentaho-reporting:libraries:libcss'
+include 'pentaho-reporting:libraries:librepository'
+include 'pentaho-reporting:libraries:libxml'
+include 'pentaho-reporting:libraries:libdocbundle'
+include 'pentaho-reporting:libraries:libformat'
+include 'pentaho-reporting:libraries:libserializer'
+include 'pentaho-reporting:libraries:libswing'
+include 'pentaho-reporting:libraries:libsparkline'
+include 'pentaho-reporting:libraries:libformula'
+include 'pentaho-reporting:libraries:libformula-ui'
+include 'pentaho-reporting:engine:core' //classic-core
 
-//include 'kettle-engine-ext:api'
-//include 'kettle-engine'
-
-//include 'kettle-dbdialog'
-
-
-////接口部分
-//include 'pentaho-platform-api'
-
-
-////组件部分
-//include 'kettle-ui-swt'
+//接口部分
+include 'pentaho-platform:api'
 
 //OSGI部分
-//include 'pentaho-capability-manager'
-//include 'pentaho-osgi-utils-api'
-//include 'pentaho-versionchecker'
-//pentaho-cwm-1.5.4
+include 'pentaho-capability-manager'
+
+//组件部分
+include 'pentaho-osgi-utils-api'
+include 'pentaho-versionchecker'
+include 'pentaho-cwm-master'
+include 'pentaho-osgi-bundles:pentaho-service-coordinator'
+
+include 'pentaho-kettle:kettle-engine-ext:kee-api'
+include 'pentaho-kettle:kettle-engine'
+//include 'pentaho-kettle:dbdialog'
+//include 'pentaho-kettle:ui'
 //include 'pentaho-metadata'
-//include 'pentaho-platform-core'
-//include 'pentaho-platform-extensions'
+//include 'pentaho-platform:core'
+//include 'pentaho-platform:extensions'
 //include 'pdi-osgi-bridge-core'
 //include 'pdi-osgi-bridge-activator'
 //include 'pentaho-osgi-utils-api'
+
 
 //插件部分
 //include 'pentaho-platform-extensions'

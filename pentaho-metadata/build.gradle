@@ -1,8 +1,9 @@
 dependencies {
     compile (
             project(':pentaho-connections'),
-            project(':kettle-engine'),
-            project(':kettle-core'),
+            project(':pentaho-kettle:kettle-engine'),
+            project(':pentaho-kettle:kettle-core'),
+            project(':pentaho-cwm-master'),
             libraries.'joda-time',
             libraries.'commons-lang',
             libraries.'commons-io',
@@ -37,9 +38,3 @@ dependencies {
 //      <artifactId>libbase</artifactId>
 //<version>${pentaho-reporting.version}</version>
 //    </dependency>
-//        <dependency>
-//        <groupId>org.hsqldb</groupId>
-//      <artifactId>hsqldb</artifactId>
-//<version>2.3.2</version>
-//      <scope>test</scope>
-//        </dependency>

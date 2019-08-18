@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':pentaho-commons-xul:core'),
+            libraries.'dom4j',
+    )
+    testCompile (
+            libraries.'commons-collections',
+            libraries.'jaxen',
+    )
+}

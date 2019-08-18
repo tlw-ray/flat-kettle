@@ -1,9 +1,0 @@
-dependencies {
-    compile (
-            project(':reporting-libraries-libbase'),
-            libraries.'commons-logging',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-    )
-}

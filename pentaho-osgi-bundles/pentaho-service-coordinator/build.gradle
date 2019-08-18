@@ -1,0 +1,24 @@
+dependencies {
+    compile (
+//            project(':pentaho-reporting:libraries:libbase'),
+//            project(':pentaho-reporting:libraries:libloader'),
+            libraries.'javax.inject',
+            libraries.'commons-lang',
+            libraries.'slf4j-api',
+            libraries.'spring-beans',
+            libraries.'spring-core',
+            libraries.'org.apache.felix.framework',
+            libraries.'pax-exam-container-karaf',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+            libraries.'mockito-all',
+            libraries.'pax-exam-junit4',
+            libraries.'pax-exam-extender-service',
+            libraries.'pax-exam-link-mvn',
+            libraries.'pax-url-aether',
+            libraries.'pax-exam-cdi',
+            libraries.'tinybundles',
+    )
+}

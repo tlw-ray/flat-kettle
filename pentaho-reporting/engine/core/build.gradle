@@ -1,0 +1,56 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+            project(':pentaho-reporting:libraries:libdocbundle'),
+            project(':pentaho-reporting:libraries:libfonts'),
+            project(':pentaho-reporting:libraries:libformat'),
+            project(':pentaho-reporting:libraries:libformula'),
+            project(':pentaho-reporting:libraries:libloader'),
+            project(':pentaho-reporting:libraries:librepository'),
+            project(':pentaho-reporting:libraries:libserializer'),
+            project(':pentaho-reporting:libraries:libxml'),
+            project(':pentaho-reporting:libraries:libswing'),
+            project(':pentaho-reporting:libraries:flute'),
+            project(':pentaho-commons-database:model'),
+            project(':pentaho-simple-jndi-1.0.1-R'),
+            libraries.'antlr-complete',
+            libraries.'asm',
+//            libraries.'bcprov-jdk14',
+//            libraries.'bcmail-jdk14',
+//            libraries.'bctsp-jdk14',
+            libraries.'bsf',
+            libraries.'bsh',
+            libraries.'commons-collections4',
+            libraries.'commons-codec',
+            libraries.'commons-logging',
+            libraries.'ehcache-core',
+            libraries.'groovy-all',
+            libraries.'itext-rtf',
+            libraries.'js',
+            libraries.'poi-ooxml-schemas',
+            libraries.'poi-ooxml',
+            libraries.'poi',
+            libraries.'rsyntaxtextarea',
+            libraries.'xmlbeans',
+            libraries.'httpclient',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'junit',
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-testng',
+            libraries.'hamcrest-all',
+            libraries.'hsql',
+            libraries.'slf4j-api',
+            libraries.'xmlunit',
+            libraries.'contiperf',
+            libraries.'commons-lang3',
+    )
+}
+//        <dependency>
+//        <groupId>org.pentaho.reporting.library</groupId>
+//      <artifactId>libformula</artifactId>
+//<classifier>tests</classifier>
+//      <scope>test</scope>
+//        </dependency>

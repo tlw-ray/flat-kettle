@@ -1,0 +1,12 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+            project(':pentaho-reporting:libraries:libpixie'),
+            project(':pentaho-reporting:libraries:libloader'),
+            libraries.'itext',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'mockito-all',
+    )
+}

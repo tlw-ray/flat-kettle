@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+            project(':pentaho-reporting:libraries:libloader'),
+            libraries.'mail',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+    )
+}

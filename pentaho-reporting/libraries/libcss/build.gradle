@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:flute'),
+            project(':pentaho-reporting:libraries:libfonts'),
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+    )
+}

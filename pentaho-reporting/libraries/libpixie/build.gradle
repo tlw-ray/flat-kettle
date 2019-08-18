@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+            libraries.'commons-logging',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+    )
+}

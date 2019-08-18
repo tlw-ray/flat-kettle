@@ -1,7 +1,7 @@
 dependencies {
     compile (
-        project(':kettle-core'),
-        project(':kettle-engine'),
+        project(':pentaho-kettle:kettle-core'),
+        project(':pentaho-kettle:kettle-engine'),
         project(':pdi-osgi-bridge-core'),
         libraries.'pentaho-capability-manager',
         libraries.'org.apache.aries.blueprint.core',

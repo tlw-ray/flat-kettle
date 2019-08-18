@@ -1,0 +1,28 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+            project(':pentaho-reporting:libraries:libpixie'),
+            libraries.'batik-bridge',
+            libraries.'batik-css',
+            libraries.'batik-dom',
+            libraries.'batik-gvt',
+            libraries.'batik-svg-dom',
+            libraries.'batik-transcoder',
+            libraries.'batik-codec',
+            libraries.'batik-util',
+            libraries.'batik-ext',
+            libraries.'batik-xml',
+            libraries.'batik-anim',
+            libraries.'batik-parser',
+            libraries.'batik-script',
+            libraries.'batik-awt-util',
+            libraries.'batik-constants',
+            libraries.'batik-i18n',
+            libraries.'commons-logging',
+            libraries.'ehcache-core',
+//            libraries.'janino2',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+    )
+}

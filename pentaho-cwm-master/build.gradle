@@ -1,0 +1,13 @@
+dependencies {
+    compile (
+            libraries.'netbeans-jmi',
+            libraries.'netbeans-jmiutils',
+            libraries.'netbeans-mdrapi',
+            libraries.'netbeans-mof',
+            libraries.'netbeans-openide-util',
+            libraries.'netbeans-nbmdr',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':pentaho-reporting:libraries:libbase'),
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+            libraries.'mockito-all',
+    )
+}

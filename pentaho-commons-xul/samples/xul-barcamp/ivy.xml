@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ This library is free software; you can redistribute it and/or
+  ~ modify it under the terms of the GNU Lesser General Public
+  ~ License as published by the Free Software Foundation; either
+  ~ version 2.1 of the License, or (at your option) any later version.
+  ~
+  ~ This library is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+  ~ Lesser General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU Lesser General Public
+  ~ License along with this library; if not, write to the Free Software
+  ~ Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+  ~
+  ~ Copyright 2009 - 2017 Hitachi Vantara.  All rights reserved.
+  -->
+
+<ivy-module version="2.0" xmlns:m="http://ant.apache.org/ivy/maven">
+  <info organisation="pentaho" module="${ivy.artifact.id}" revision="${project.revision}"/>
+  <configurations>
+    <conf name="default"/>
+    <conf name="test" visibility="private"/>
+    <conf name="runtime"/>
+    <conf name="codegen" visibility="private"/>
+    <conf name="codegen-mac" visibility="private" extends="codegen"/>
+    <conf name="codegen-win" visibility="private" extends="codegen"/>
+    <conf name="codegen-linux" visibility="private" extends="codegen"/>
+  </configurations>
+  <dependencies defaultconf="default->default">
+
+    <dependency org="com.google.gwt" name="gwt-servlet" rev="2.0.3" conf="default->default"/>
+    <!-- codegen dependencies -->
+    <dependency org="org.zenica" name="gwt-datepicker" rev="r30" conf="codegen->default"/>
+    <!-- it doesn't matter what platform of gwt-dev we use here. GWT compile only cares about the API part of the jar -->
+    <dependency org="com.google.gwt" name="gwt-dev" rev="2.0.3" conf="codegen->default"/>
+    <dependency org="com.google.gwt" name="gwt-user" rev="2.0.3" conf="codegen->default"/>
+
+    <dependency org="com.google.gwt" name="gwt-incubator" rev="2.0.1" conf="codegen->default"/>
+    <dependency org="com.allen_sauer" name="gwt-dnd" rev="3.0.1" conf="codegen->default"/>
+    <dependency org="com.google.code.gwtx" name="gwtx" rev="1.5.2" conf="codegen->default"/>
+
+    <dependency org="org.pentaho" name="commons-gwt-widgets" rev="${commons-gwt.version}"
+                conf="codegen->default"
+                changing="true">
+      <artifact name="commons-gwt-widgets"/>
+      <artifact name="commons-gwt-widgets" type="source" ext="jar" m:classifier="sources"/>
+    </dependency>
+
+    <dependency org="pentaho" name="pentaho-xul-core" rev="${pentaho-xul.version}"
+                conf="codegen->default"
+                changing="true">
+      <artifact name="pentaho-xul-core"/>
+      <artifact name="pentaho-xul-core" type="source" ext="jar" m:classifier="sources"/>
+    </dependency>
+
+    <dependency org="pentaho" name="pentaho-xul-gwt" rev="${pentaho-xul.version}"
+                conf="codegen->default"
+                changing="true">
+      <artifact name="pentaho-xul-gwt"/>
+      <artifact name="pentaho-xul-gwt" type="source" ext="jar" m:classifier="sources"/>
+    </dependency>
+
+    <dependency org="pentaho" name="pentaho-xul-swing" rev="${pentaho-xul.version}"
+                conf="default->default"/>
+
+
+    <dependency org="pentaho" name="pentaho-xul-swing" rev="TRUNK-SNAPSHOT" conf="default->default"/>
+    <dependency org="pentaho" name="pentaho-xul-swt" rev="TRUNK-SNAPSHOT" conf="default->default"/>
+
+
+  </dependencies>
+</ivy-module>
