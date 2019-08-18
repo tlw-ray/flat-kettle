@@ -7,5 +7,6 @@ dependencies {
     )
     testCompile (
             libraries.'hamcrest-core',
+            libraries.'mockito-all',
     )
 }

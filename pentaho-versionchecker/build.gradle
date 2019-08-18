@@ -1,0 +1,17 @@
+dependencies {
+    compile (
+            libraries.'commons-codec',
+            libraries.'httpclient',
+            libraries.'commons-logging',
+            libraries.'jug-lgpl',
+            libraries.'httpcore',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'junit',
+            libraries.'system-rules',
+    )
+}
+

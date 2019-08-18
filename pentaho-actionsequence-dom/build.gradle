@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+            libraries.'dom4j',
+            libraries.'commons-collections',
+            libraries.'commons-logging',
+            libraries.'guava',
+            project(':pentaho-connections'),
+    )
+}

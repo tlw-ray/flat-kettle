@@ -1,0 +1,12 @@
+dependencies {
+    compile (
+            libraries.'commons-lang',
+            libraries.'encoder',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'junit'
+    )
+}

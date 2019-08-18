@@ -1,15 +1,16 @@
 dependencies {
     compile (
             project(':commons-xul-core'),
-            libraries.'commons-logging',
+            project(':pentaho-connections'),
+            project(':pentaho-actionsequence-dom'),
+            project(':pentaho-commons-database:model'),
             libraries.'commons-lang',
+            libraries.'commons-codec',
             libraries.'dom4j',
             libraries.'spring-security-core',
-            libraries.'spring-beans',
             libraries.'slf4j-api',
-            libraries.'pentaho-connections',
-            libraries.'pentaho-actionsequence-dom',
-            libraries.'pentaho-commons-database-model',
-            libraries.'pentaho-service-coordinator',
+    )
+    testCompile (
+            libraries.'mockito-all',
     )
 }

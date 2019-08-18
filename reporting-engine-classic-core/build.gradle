@@ -1,0 +1,57 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libdocbundle'),
+            project(':reporting-libraries-libfonts'),
+            project(':reporting-libraries-libformat'),
+            project(':reporting-libraries-libformula'),
+            project(':reporting-libraries-libloader'),
+            project(':reporting-libraries-librepository'),
+            project(':reporting-libraries-libserializer'),
+            project(':reporting-libraries-libxml'),
+            project(':reporting-libraries-libswing'),
+            project(':reporting-libraries-flute'),
+            project(':pentaho-commons-database:model'),
+            project(':pentaho-simple-jndi-1.0.1-R'),
+            libraries.'antlr-complete',
+            libraries.'asm',
+//            libraries.'bcprov-jdk14',
+//            libraries.'bcmail-jdk14',
+//            libraries.'bctsp-jdk14',
+            libraries.'bsf',
+            libraries.'bsh',
+            libraries.'commons-collections4',
+            libraries.'commons-codec',
+            libraries.'commons-logging',
+            libraries.'ehcache-core',
+            libraries.'groovy-all',
+            libraries.'itext-rtf',
+            libraries.'js',
+            libraries.'poi-ooxml-schemas',
+            libraries.'poi-ooxml',
+            libraries.'poi',
+            libraries.'rsyntaxtextarea',
+            libraries.'xmlbeans',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'junit',
+            libraries.'mockito-core',
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-testng',
+            libraries.'hamcrest-all',
+            libraries.'hsql',
+            libraries.'slf4j-api',
+            libraries.'xmlunit',
+            libraries.'contiperf',
+            libraries.'commons-lang3',
+            libraries.'httpclient',
+    )
+}
+//        <dependency>
+//        <groupId>org.pentaho.reporting.library</groupId>
+//      <artifactId>libformula</artifactId>
+//<classifier>tests</classifier>
+//      <scope>test</scope>
+//        </dependency>

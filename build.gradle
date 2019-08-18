@@ -3,8 +3,8 @@ apply from: 'dependency.gradle'
 allprojects{
     repositories {
         mavenLocal()
-        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
+        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
         maven { url "http://nexus.pentaho.org/content/groups/omni/"}
     }
 }
@@ -26,7 +26,20 @@ subprojects { subproj ->
     dependencies {
         testCompile(
             libraries.'junit',
-            libraries.'mockito-all',
+//            libraries.'mockito-all',
         )
+    }
+
+    task testJar(type: Jar, dependsOn: testClasses) {
+        baseName = "test-${project.archivesBaseName}"
+        from sourceSets.test.output
+    }
+
+    configurations {
+        tests
+    }
+
+    artifacts {
+        tests testJar
     }
 }

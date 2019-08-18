@@ -9,4 +9,7 @@ dependencies {
         libraries.'oro',
         libraries.'swt',
     )
+    testCompile (
+            libraries.'mockito-all',
+    )
 }

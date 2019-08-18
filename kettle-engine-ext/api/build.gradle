@@ -1,0 +1,13 @@
+dependencies {
+    compile (
+            libraries.'javax.websocket-api',
+            libraries.'guava',
+            libraries.'commons-codec',
+            libraries.'reactive-streams'
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//    )
+}

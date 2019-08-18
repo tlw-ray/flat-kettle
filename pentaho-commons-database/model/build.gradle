@@ -1,0 +1,16 @@
+dependencies {
+    compile (
+            libraries.'commons-logging',
+//            libraries.'commons-lang',
+//            libraries.'encoder',
+//            libraries.'commons-codec',
+//            libraries.'reactive-streams'
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'java-hamcrest',
+    )
+}

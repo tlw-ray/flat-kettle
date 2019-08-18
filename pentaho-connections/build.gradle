@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+            libraries.'dom4j',
+            libraries.'commons-collections',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

@@ -5,8 +5,8 @@ dependencies {
             project(':kettle-engine'),
             project(':kettle-ui-swt'),
             project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libfonts'),
-            project(':reporting-libraries-libloader'),
+//            project(':reporting-libraries-libfonts'),
+//            project(':reporting-libraries-libloader'),
             project(':pentaho-platform-api'),
 
             libraries.'commons-codec',

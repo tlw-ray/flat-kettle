@@ -8,11 +8,12 @@ dependencies {
             project(':kettle-engine'),
             project(':kettle-dbdialog'),
             project(':pentaho-capability-manager'),
-            project(':pdi-osgi-bridge-core'),
-            project(':pdi-osgi-bridge-activator'),
+//            project(':pdi-osgi-bridge-core'),
+//            project(':pdi-osgi-bridge-activator'),
             libraries.'jfreechart',
             libraries.'js',
             libraries.'jaxen',
+            libraries.'swt',
     )
 //    provided (
 //
@@ -20,5 +21,6 @@ dependencies {
     testCompile (
             libraries.'powermock-api-mockito',
             libraries.'powermock-module-junit4',
+            project(path: ':kettle-engine', configuration: 'tests'),
     )
 }

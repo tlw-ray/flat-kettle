@@ -1,0 +1,78 @@
+dependencies {
+    compile (
+            project(':pentaho-platform-api'),
+            project(':pentaho-connections'),
+//            project(':pentaho-metadata'),
+            project(':pentaho-actionsequence-dom'),
+//
+//
+//            pentaho-versionchecker
+//            commons-xul-core
+//            kettle-engine
+//            kettle-core
+//            pentaho-cwm
+            libraries.'antlr-complete',
+            libraries.'asm',
+//            libraries.'asm-attrs',
+            libraries.'batik-awt-util',
+            libraries.'batik-dom',
+            libraries.'batik-svggen',
+            libraries.'cglib-nodep',
+            libraries.'commons-beanutils',
+            libraries.'commons-codec',
+            libraries.'commons-collections',
+            libraries.'commons-dbcp',
+            libraries.'commons-pool',
+            libraries.'commons-io',
+            libraries.'commons-lang',
+            libraries.'commons-logging',
+            libraries.'ehcache-core',
+//            libraries.'esapi',
+            libraries.'guava',
+            libraries.'hibernate-core',
+            libraries.'hibernate-commons-annotations',
+            libraries.'hibernate-jpa-2.0-api',
+            libraries.'httpclient',
+            libraries.'httpcore',
+            libraries.'mail',
+            libraries.'jaxen',
+            libraries.'jcommon',
+            libraries.'jfreechart',
+//            libraries.'jmi',
+            libraries.'js',
+            libraries.'jta',
+            libraries.'mdrapi',
+            libraries.'org.apache.felix.main',
+            libraries.'spring-core',
+            libraries.'spring-context',
+            libraries.'spring-tx',
+            libraries.'spring-jdbc',
+            libraries.'spring-aop',
+            libraries.'spring-expression',
+            libraries.'spring-security-core',
+            libraries.'spring-security-acl',
+            libraries.'spring-security-ldap',
+            libraries.'spring-ldap-core',
+            libraries.'slf4j-api',
+            libraries.'slf4j-log4j12',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'junit',
+            libraries.'hamcrest-core',
+            libraries.'hamcrest-library',
+            libraries.'bean-matchers',
+            libraries.'jmock-junit4',
+            libraries.'jmock-legacy',
+            libraries.'log4j',
+            libraries.'spring-mock',
+            libraries.'jettison',
+            libraries.'mockito-all',
+            libraries.'mockito-core',
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+            libraries.'jmockit',
+    )
+}

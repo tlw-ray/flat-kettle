@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-flute'),
+            project(':reporting-libraries-libfonts'),
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+    )
+}

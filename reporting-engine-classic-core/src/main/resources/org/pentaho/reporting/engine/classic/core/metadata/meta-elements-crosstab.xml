@@ -1,0 +1,430 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<meta-data xmlns="http://reporting.pentaho.org/namespaces/engine/classic/metadata/1.0">
+
+  <element name="crosstab-title-header" expert="false" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabTitleHeaderType"
+           type-classification="header" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="root-level-band-attributes"/>
+    <attribute-group-ref ref="band-attributes"/>
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-title-header"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+    <style-group-ref ref="bands"/>
+  </element>
+
+  <element name="crosstab-header" expert="false" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabHeaderType"
+           type-classification="header" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="root-level-band-attributes"/>
+    <attribute-group-ref ref="band-attributes"/>
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-header"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+    <style-group-ref ref="bands"/>
+  </element>
+
+
+  <element name="crosstab-summary-header" expert="false" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabSummaryHeaderType"
+           type-classification="header" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="root-level-band-attributes"/>
+    <attribute-group-ref ref="band-attributes"/>
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-summary-header"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+    <style-group-ref ref="bands"/>
+  </element>
+
+  <element name="crosstab" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabGroupType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="root-level-band-attributes"/>
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab"/>
+    <attribute-group-ref ref="sorting-order"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="normalization-mode"
+               mandatory="false"
+               expert="true"
+               hidden="false"
+               preferred="false"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabNormalizationMode"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabNormalizationModePropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="detail-mode"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabDetailMode"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabDetailModePropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="print-detail-header"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="print-column-title-header"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="padding-fields"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="[Ljava.lang.String;"
+               value-role="Field"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-other-group" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-other-group"/>
+    <attribute-group-ref ref="sorting-order"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="field"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Field"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-other-group-body" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabOtherGroupBodyType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-other-group-body"/>
+
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-row-group" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabRowGroupType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-row-group"/>
+    <attribute-group-ref ref="sorting-order"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="header-position"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Integer"
+               value-role="Value"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="header-mode"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabHeaderMode"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabHeaderModePropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="summary-position"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabSummaryPosition"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabSummaryPositionPropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="print-summary"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Field"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="field"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Field"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="pagination-control"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-row-group-body" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabRowGroupBodyType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-row-group-body"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-column-group" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabColumnGroupType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-column-group"/>
+    <attribute-group-ref ref="sorting-order"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="header-mode"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabHeaderMode"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabHeaderModePropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="summary-position"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="org.pentaho.reporting.engine.classic.core.CrosstabSummaryPosition"
+               value-role="Value"
+               propertyEditor="org.pentaho.reporting.engine.classic.core.metadata.propertyeditors.CrosstabSummaryPositionPropertyEditor"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="print-summary"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.Boolean"
+               value-role="Field"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/core"
+               name="field"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Field"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-column-group-body" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabColumnGroupBodyType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-column-group-body"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-cell-body" expert="true" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellBodyType"
+           type-classification="control" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-cell-body"/>
+    <attribute-group-ref ref="sorting-order"/>
+
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+  </element>
+
+  <element name="crosstab-cell" expert="false" hidden="true" preferred="false" container="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.bands.CrosstabCellType"
+           type-classification="section" maturity-level="Community"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="root-level-band-attributes"/>
+    <attribute-group-ref ref="band-attributes"/>
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="crosstab-cell"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="row-field"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Field"/>
+
+    <attribute namespace="http://reporting.pentaho.org/namespaces/engine/attributes/crosstab"
+               name="column-field"
+               mandatory="false"
+               expert="false"
+               hidden="false"
+               preferred="true"
+               design-time-value="true"
+               computed="false"
+               value-type="java.lang.String"
+               value-role="Field"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="layout"/>
+    <style-group-ref ref="bands"/>
+  </element>
+
+  <element name="crosstab-report" maturity-level="Community" hidden="false" preferred="true"
+           bundle-name="org.pentaho.reporting.engine.classic.core.metadata.messages"
+           implementation="org.pentaho.reporting.engine.classic.core.filter.types.CrosstabElementType"
+           type-classification="subreport"
+           namespace="http://reporting.pentaho.org/namespaces/engine/classic/bundle/layout/1.0">
+
+    <attribute-group-ref ref="common-attributes"/>
+    <attribute-group-ref ref="interactivity"/>
+    <attribute-group-ref ref="report-attributes"/>
+    <attribute-group-ref ref="sub-report-attributes"/>
+    <attribute-group-ref ref="crosstab-report"/>
+
+    <style-group-ref ref="borders"/>
+    <style-group-ref ref="common"/>
+    <style-group-ref ref="text"/>
+    <style-group-ref ref="bands"/>
+    <style-group-ref ref="layout"/>
+  </element>
+</meta-data>

@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            libraries.'commons-lang',
+            libraries.'commons-dbcp',
+    )
+    testCompile (
+            libraries.'junit',
+            libraries.'mockito-all',
+    )
+}

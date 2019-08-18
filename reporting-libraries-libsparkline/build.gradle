@@ -1,0 +1,6 @@
+dependencies {
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'junit',
+    )
+}

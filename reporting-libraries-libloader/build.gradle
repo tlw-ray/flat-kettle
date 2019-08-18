@@ -20,7 +20,7 @@ dependencies {
             libraries.'batik-i18n',
             libraries.'commons-logging',
             libraries.'ehcache-core',
-            libraries.'janino2',
+//            libraries.'janino2',
     )
     testCompile (
             libraries.'hamcrest-core',
