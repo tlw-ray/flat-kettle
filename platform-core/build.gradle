@@ -4,7 +4,7 @@ dependencies {
             project(':pentaho-connections'),
             project(':pentaho-metadata'),
             project(':pentaho-actionsequence-dom'),
-            project(':pentaho-osgi-bundles:pentaho-service-coordinator'),
+            project(':osgi-bundles-service-coordinator'),
             project(':pentaho-versionchecker'),
             libraries.'antlr-complete',
             libraries.'asm',
