@@ -41,7 +41,7 @@ dependencies {
             libraries.'powermock-api-mockito',
             libraries.'powermock-module-testng',
             libraries.'hamcrest-all',
-            libraries.'hsql',
+            libraries.'hsqldb',
             libraries.'slf4j-api',
             libraries.'xmlunit',
             libraries.'contiperf',

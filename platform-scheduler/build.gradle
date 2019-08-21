@@ -1,0 +1,24 @@
+dependencies {
+    compile (
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':pentaho-versionchecker'),
+            libraries.'log4j',
+            libraries.'quartz',
+            libraries.'webservices-api',
+            libraries.'webservices-rt',
+    )
+    testCompile (
+            project(path: ':platform-core', configuration: 'tests'),
+            libraries.'mockito-all',
+            libraries.'mockito-core',
+            libraries.'jmock-legacy',
+            libraries.'jmock-junit4',
+            libraries.'junit',
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-junit4',
+            libraries.'spring-core',
+            libraries.'spring-test',
+            libraries.'spring-web',
+    )
+}

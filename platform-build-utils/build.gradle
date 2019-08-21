@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+        libraries.'commons-collections',
+        libraries.'commons-io',
+        libraries.'commons-logging',
+        libraries.'commons-net',
+        libraries.'commons-vfs2',
+        libraries.'mail',
+        libraries.'oro',
+        libraries.'swt',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

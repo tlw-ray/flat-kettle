@@ -1,0 +1,146 @@
+dependencies {
+    compile (
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':platform-repository'),
+            project(':platform-extensions'),
+            project(':commons-gwt-widgets'),
+            project(':commons-xul-core'),
+            project(':commons-xul-gwt-impl'),
+            project(':common-ui'),
+            project(':commons-gwt-widgets'),
+            libraries.'gwt-servlet',
+            libraries.'gwt-user',
+            libraries.'gwt-dev',
+            libraries.'gwt-codeserver',
+            libraries.'GWT-FX',
+            libraries.'gwtx',
+            libraries.'gwt-incubator',
+            libraries.'gwt-dnd',
+            libraries.'json',
+            libraries.'validation-api',
+            libraries.'json-simple',
+            libraries.'bsh',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'junit',
+    )
+}
+
+//<dependency>
+//        <groupId>pentaho</groupId>
+//      <artifactId>common-ui</artifactId>
+//        <version>${common-ui.version}</version>
+//      <type>zip</type>
+//<exclusions>
+//        <exclusion>
+//        <artifactId>*</artifactId>
+//          <groupId>*</groupId>
+//        </exclusion>
+//      </exclusions>
+//</dependency>
+//<dependency>
+//        <groupId>GWT-FX</groupId>
+//      <artifactId>GWT-FX</artifactId>
+//        <version>${gwt-fx.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>com.google.code.gwtx</groupId>
+//      <artifactId>gwtx</artifactId>
+//        <version>${gwtx.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>com.google.gwt</groupId>
+//      <artifactId>gwt-incubator</artifactId>
+//        <version>${gwt-incubator.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>com.allen_sauer</groupId>
+//      <artifactId>gwt-dnd</artifactId>
+//        <version>${gwt-dnd.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>org.json</groupId>
+//      <artifactId>json</artifactId>
+//        <version>${org.json.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>javax.validation</groupId>
+//      <artifactId>validation-api</artifactId>
+//        <version>${validation-api.version}</version>
+//      <exclusions>
+//        <exclusion>
+//          <artifactId>*</artifactId>
+//<groupId>*</groupId>
+//        </exclusion>
+//        </exclusions>
+//    </dependency>
+//<dependency>
+//        <groupId>javax.validation</groupId>
+//      <artifactId>validation-api</artifactId>
+//        <version>${validation-api.version}</version>
+//      <classifier>sources</classifier>
+//<exclusions>
+//        <exclusion>
+//        <artifactId>*</artifactId>
+//          <groupId>*</groupId>
+//        </exclusion>
+//      </exclusions>
+//</dependency>
+//    <dependency>
+//      <groupId>junit</groupId>
+//        <artifactId>junit</artifactId>
+//      <version>${junit.version}</version>
+//</dependency>
+//    <dependency>
+//      <groupId>org.mockito</groupId>
+//        <artifactId>mockito-all</artifactId>
+//      <version>${mockito.version}</version>
+//</dependency>
+//    <dependency>
+//      <groupId>com.googlecode.json-simple</groupId>
+//        <artifactId>json-simple</artifactId>
+//      <version>${json-simple.version}</version>
+//<exclusions>
+//        <exclusion>
+//        <artifactId>*</artifactId>
+//          <groupId>*</groupId>
+//        </exclusion>
+//      </exclusions>
+//</dependency>
+//    <dependency>
+//      <groupId>org.beanshell</groupId>
+//        <artifactId>bsh</artifactId>
+//      <version>${bsh.version}</version>
+//</dependency>

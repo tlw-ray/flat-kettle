@@ -61,6 +61,7 @@ include 'osgi-bundles-service-coordinator'
 //Platform
 include 'platform-core'
 include 'platform-repository'
+include 'platform-scheduler'
 //include 'platform-extensions'
 
 //include 'pdi-osgi-bridge-core'

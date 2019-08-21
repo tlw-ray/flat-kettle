@@ -20,7 +20,7 @@ dependencies {
     )
     testCompile (
             libraries.'mockito-all',
-            libraries.'hsql',
+            libraries.'hsqldb',
     )
 }
 //        <dependency>

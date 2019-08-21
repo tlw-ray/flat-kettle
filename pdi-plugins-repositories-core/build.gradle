@@ -5,7 +5,7 @@ dependencies {
             project(':kettle-ui-swt'),
             project(':pentaho-metastore'),
             project(':pentaho-vfs-browser'),
-            libraries.'osgi',
+            libraries.'org.osgi.core',
             libraries.'pax-web-spi',
 
             libraries.'javax.ws.rs-api',

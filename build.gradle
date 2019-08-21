@@ -30,6 +30,7 @@ subprojects { subproj ->
         )
     }
 
+    //将测试部分导出为jar, 有的测试会依赖其他包的测试
     task testJar(type: Jar, dependsOn: testClasses) {
         baseName = "test-${project.archivesBaseName}"
         from sourceSets.test.output

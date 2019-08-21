@@ -112,6 +112,16 @@
             <artifactId>spring-security-acl</artifactId>
             <version>4.2.9.RELEASE</version>
         </dependency>
+        <dependency>
+            <groupId>pentaho</groupId>
+            <artifactId>pentaho-concurrent</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.pentaho</groupId>
+            <artifactId>pentaho-vfs</artifactId>
+            <version>1.0</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
