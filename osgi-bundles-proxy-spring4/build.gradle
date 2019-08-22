@@ -1,11 +1,14 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            project.(':platform-api'),
+            project.(':platform-core'),
+            project.(':platform-repository'),
+            project.(':platform-extensions'),
+            libraries.'commons-lang',
+            libraries.'slf4j-api',
+            libraries.'org.apache.felix.framework',
+            libraries.'spring-security-core',
+            libraries.'spring-security-config',
+            libraries.'spring-core',
     )
 }

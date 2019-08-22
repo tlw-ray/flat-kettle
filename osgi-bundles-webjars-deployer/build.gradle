@@ -1,11 +1,8 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'closure-compiler',
+            libraries.'org.apache.felix.fileinstall',
+            libraries.'pentaho-requirejs-utils',
+            libraries.'pax-url-mvn',
     )
 }

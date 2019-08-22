@@ -1,11 +1,5 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'commons-vfs2',
     )
 }

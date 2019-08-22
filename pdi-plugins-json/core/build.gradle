@@ -1,0 +1,36 @@
+dependencies {
+    compile (
+            project(':kettle-engine'),
+            project.(':kettle-core'),
+            project.(':kettle-ui-swt'),
+            project.(':pentaho-platform-core'),
+            project.(':pentaho-platform-api'),
+            project.(':pentaho-metaverse-api'),
+            libraries.'metastore',
+            libraries.'commons-vfs2',
+            libraries.'commons-io',
+            libraries.'commons-lang',
+            libraries.'json-simple',
+            libraries.'jackson-databind',
+            libraries.'poi',
+            libraries.'json-path',
+            libraries.'json-smart',
+            libraries.'org.eclipse.swt.gtk.linux.x86_64',
+            libraries.'javax.servlet-api',
+            libraries.'guava',
+            libraries.'encoder',
+            libraries.'jsch',
+            libraries.'slf4j-api',
+            libraries.'slf4j-log4j12',
+            libraries.'blueprints-core',
+    )
+    testCompile (
+//            libraries.'org.apache.aries.util',
+//            libraries.'pax-exam-container-karaf',
+            libraries.'pax-exam-junit4',
+//            libraries.'pax-exam-link-mvn',
+//            libraries.'pax-url-aether',
+//            libraries.'logback-core',
+//            libraries.'logback-classic',
+    )
+}

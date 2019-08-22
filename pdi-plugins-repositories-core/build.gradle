@@ -5,30 +5,27 @@ dependencies {
             project(':kettle-ui-swt'),
             project(':pentaho-metastore'),
             project(':pentaho-vfs-browser'),
-            libraries.'org.osgi.core',
-            libraries.'pax-web-spi',
+            project(':pentaho-platform-extensions'),
+            project(':pentaho-i18n-bundle'),
+            project(':pentaho-i18n-webservice-bundle'),
 
-            libraries.'javax.ws.rs-api',
-            libraries.'javax.servlet-api',
-            libraries.'json-simple',
-            libraries.'pentaho-platform-extensions',
-            libraries.'pentaho-i18n-bundle',
-            libraries.'pentaho-i18n-webservice-bundle',
-            libraries.'angular-i18n',
-
-//            libraries.'jackson-jaxrs-json-provider',
-    )
-    runtime(
+            libraries.'jackson-jaxrs-json-provider',
             libraries.'jquery',
             libraries.'angular',
             libraries.'angular-route',
             libraries.'angular-sanitize',
             libraries.'angular-translate',
             libraries.'angular-animate',
-    )
-    testCompile (
-            project(':pentaho-vfs-browser'),
+            libraries.'metastore',
+            libraries.'javax.ws.rs-api',
+            libraries.'javax.servlet-api',
+            libraries.'org.osgi.core',
+            libraries.'org.osgi.compendium',
+            libraries.'pax-web-spi',
+            libraries.'org.apache.karaf.kar.core',
+            libraries.'json-simple',
+            libraries.'angular-i18n',
             libraries.'commons-vfs2',
-//            libraries.'commands',
+            libraries.'org.eclipse.core.commands',
     )
 }

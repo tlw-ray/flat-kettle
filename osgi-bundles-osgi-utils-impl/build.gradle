@@ -1,11 +1,22 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':pentaho-osgi-utils-api'),
+            project(':pentaho-capability-manager'),
+            project(':pentaho-service-coordinator'),
+            libraries.'org.osgi.core',
+            libraries.'org.osgi.compendium',
+            libraries.'slf4j-api',
+            libraries.'org.apache.aries.blueprint.api',
+            libraries.'org.apache.aries.proxy.api',
+            libraries.'mina-core',
+            libraries.'commons-lang',
+            libraries.'org.apache.karaf.features.core',
+            libraries.'org.apache.karaf.bundle.core',
+            libraries.'slf4j-log4j12',
     )
     testCompile (
-            libraries.'hamcrest-core',
             libraries.'junit',
     )
 }

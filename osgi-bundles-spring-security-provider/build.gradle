@@ -1,11 +1,10 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'commons-lang',
+            libraries.'slf4j-api',
+            libraries.'slf4j-api',
+            libraries.'spring-beans',
+            libraries.'spring-security-core',
+            libraries.'pentaho-osgi-utils-api',
     )
 }

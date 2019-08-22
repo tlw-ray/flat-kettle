@@ -1,8 +1,16 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
+            project.(':pentaho-notification-bundle'),
+            libraries.'org.apache.felix.framework',
+            libraries.'jackson-core',
+            libraries.'jackson-databind',
+            libraries.'cxf-rt-frontend-jaxrs',
+            libraries.'cxf-rt-frontend-jaxws',
+            libraries.'cxf-rt-transports-http',
+            libraries.'cxf-rt-transports-http-jetty',
+//            libraries.'org.apache.servicemix.specs.jsr339-api-m10',
+            libraries.'requirejs',
+            libraries.'angularjs',
     )
     testCompile (
             libraries.'hamcrest-core',

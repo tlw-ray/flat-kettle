@@ -1,11 +1,9 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'org.osgi.core',
+            libraries.'org.apache.felix.framework',
+            libraries.'slf4j-api',
+            libraries.'commons-io',
+            libraries.'guava',
     )
 }

@@ -26,7 +26,7 @@ subprojects { subproj ->
     dependencies {
         testCompile(
             libraries.'junit',
-//            libraries.'mockito-all',
+            libraries.'mockito-all',
         )
     }
 

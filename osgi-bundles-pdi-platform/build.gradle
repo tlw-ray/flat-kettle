@@ -1,11 +1,20 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':platform-extensions'),
+            project(':platform-repository'),
+            project(':platform-api'),
+            libraries.'org.osgi.compendium',
+            libraries.'org.osgi.core',
+            libraries.'javax.servlet-api',
+            libraries.'cxf-rt-frontend-jaxrs',
+            libraries.'pax-web-spi',
+            libraries.'javax.servlet-api',
+            libraries.'mondrian',
     )
     testCompile (
-            libraries.'hamcrest-core',
+            libraries.'hamcrest-all',
             libraries.'junit',
     )
 }

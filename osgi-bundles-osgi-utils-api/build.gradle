@@ -1,11 +1,9 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
+            libraries.'org.apache.felix.framework',
+            libraries.'org.apache.karaf.bundle.core',
     )
     testCompile (
-            libraries.'hamcrest-core',
             libraries.'junit',
     )
 }

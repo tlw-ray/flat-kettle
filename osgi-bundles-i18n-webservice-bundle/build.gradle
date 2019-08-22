@@ -1,11 +1,13 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
-    )
-    testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            project(':pentaho-i18n-bundle'),
+            libraries.'org.apache.felix.framework',
+            libraries.'json-simple',
+            libraries.'cxf-rt-frontend-jaxrs',
+            libraries.'cxf-rt-frontend-jaxws',
+            libraries.'cxf-rt-transports-http',
+            libraries.'cxf-rt-transports-http-jetty',
+            libraries.'pax-web-extender-whiteboard',
+            libraries.'org.apache.felix.http.api',
     )
 }

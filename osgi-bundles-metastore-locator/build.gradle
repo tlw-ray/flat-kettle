@@ -1,11 +1,8 @@
 dependencies {
     compile (
-            project(':reporting-libraries-libbase'),
-            project(':reporting-libraries-libloader'),
-            libraries.'css-sac',
+            libraries.'guava',
     )
     testCompile (
-            libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'hamcrest-all',
     )
 }
