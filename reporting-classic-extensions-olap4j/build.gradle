@@ -1,0 +1,17 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            libraries.'olap4j',
+            libraries.'mondrian',
+            libraries.'hsqldb',
+            libraries.'slf4j-api',
+            libraries.'simple-jndi',
+            libraries.'commons-lang3',
+            libraries.'eigenbase-xom',
+            libraries.'commons-dbcp',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'hamcrest-all',
+    )
+}

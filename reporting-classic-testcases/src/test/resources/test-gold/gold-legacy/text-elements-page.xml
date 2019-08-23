@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout-output xmlns="http://reporting.pentaho.org/namespaces/output/layout-output/pageable/1.0">
+  <physical-page page-x="0" page-y="0" page-width="612" page-height="792" margin-top="72" margin-left="72" margin-bottom="72" margin-right="72">
+    <page-area name="Logical-Page-Watermark-Area" x="0.0" y="0.0" width="468.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Watermark-Area">
+      <block name="Watermark-Section" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="468.0" height="648.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="watermark"/>
+        </canvas>
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Header-Area" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Header-Area">
+      <block name="Header-1" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="0.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </page-area>
+    <block name="Logical-Page-Content-Area" type="BlockRenderBox" x="0.0" y="0.0" width="468.0" height="147.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="master-report"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:name="Sample Report 1"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:compatibility-level="3.8.0"/>
+      <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/internal" autoGenNs:query="default"/>
+      <block name="Section-0" type="SectionRenderBox" x="0.0" y="0.0" width="468.0" height="42.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <canvas type="CanvasRenderBox" x="0.0" y="0.0" width="468.0" height="42.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+          <p type="ParagraphRenderBox" x="0.0" y="0.0" width="468.0" height="24.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Text Elements Gallery"/>
+            <line type="ParagraphPoolBox" x="135.71" y="0.0" width="196.58" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="135.71" y="0.0" width="38.86" height="20.0">Text</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="180.11" y="0.0" width="83.32" height="20.0">Elements</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="268.97" y="0.0" width="63.32" height="20.0">Gallery</text>
+            </line>
+          </p>
+          <p type="ParagraphRenderBox" x="0.0" y="30.0" width="468.0" height="12.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="This report chains several subreports together to demonstrate all textelements that are available in the reporting engine.&#x000a;&#x000a;Please refer to the report-header in the subreports to see how these elements are defined."/>
+            <line type="ParagraphPoolBox" x="0.0" y="30.0" width="1868.6" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <text x="0.0" y="30.0" width="37.76" height="20.0">This</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="43.3" y="30.0" width="52.22" height="20.0">report</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="101.06" y="30.0" width="57.8" height="20.0">chains</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="164.4" y="30.0" width="64.46" height="20.0">several</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="234.4" y="30.0" width="94.46" height="20.0">subreports</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="334.4" y="30.0" width="73.34" height="20.0">together</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="413.28" y="30.0" width="16.66" height="20.0">to</text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="435.48" y="30.0" width="111.12" height="20.0">demonstrate</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="552.14" y="30.0" width="20.0" height="20.0">all</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="577.68" y="30.0" width="113.32" height="20.0">textelements</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="696.54" y="30.0" width="33.32" height="20.0">that</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="735.4" y="30.0" width="28.9" height="20.0">are</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="769.84" y="30.0" width="78.92" height="20.0">available</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="854.3" y="30.0" width="15.56" height="20.0">in</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="875.4" y="30.0" width="27.78" height="20.0">the</text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="908.72" y="30.0" width="78.9" height="20.0">reporting</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="993.16" y="30.0" width="65.58" height="20.0">engine.</text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="1064.28" y="30.0" width="0.0" height="20.0"></text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="1069.82" y="30.0" width="61.12" height="20.0">Please</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1136.48" y="30.0" width="41.1" height="20.0">refer</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1183.12" y="30.0" width="16.66" height="20.0">to</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1205.32" y="30.0" width="27.78" height="20.0">the</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1238.64" y="30.0" width="121.14" height="20.0">report-header</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1365.32" y="30.0" width="15.56" height="20.0">in</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1386.42" y="30.0" width="27.78" height="20.0">the</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1419.74" y="30.0" width="94.46" height="20.0">subreports</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1519.74" y="30.0" width="16.66" height="20.0">to</text>
+              <spacer width="5.54" height="0.0" preserve="false"/>
+              <text x="1541.94" y="30.0" width="32.24" height="20.0">see</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1579.72" y="30.0" width="36.68" height="20.0">how</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1621.94" y="30.0" width="48.9" height="20.0">these</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1676.38" y="30.0" width="81.12" height="20.0">elements</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1763.04" y="30.0" width="28.9" height="20.0">are</text>
+              <spacer width="5.54" height="0.0" preserve="true"/>
+              <text x="1797.48" y="30.0" width="71.12" height="20.0">defined.</text>
+            </line>
+          </p>
+        </canvas>
+      </block>
+      <block name="Banded-SubReport-Section: name=" type="BlockRenderBox" x="0.0" y="42.0" width="468.0" height="105.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="sub-report"/>
+        <block name="Section-0" type="SectionRenderBox" x="0.0" y="42.0" width="468.0" height="105.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <canvas type="CanvasRenderBox" x="0.0" y="42.0" width="468.0" height="105.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="report-header"/>
+            <p type="ParagraphRenderBox" x="0.0" y="42.0" width="468.0" height="24.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Label"/>
+              <line type="ParagraphPoolBox" x="209.54" y="42.0" width="48.92" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="209.54" y="42.0" width="48.92" height="20.0">Label</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="0.0" y="72.0" width="468.0" height="12.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A label represents static text. Labels do not change during the report processing."/>
+              <line type="ParagraphPoolBox" x="0.0" y="72.0" width="713.24" height="20.0" color="black" font-face="Serif" font-size="20" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="72.0" width="13.32" height="20.0">A</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="18.86" y="72.0" width="42.24" height="20.0">label</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="66.64" y="72.0" width="94.46" height="20.0">represents</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="166.64" y="72.0" width="46.64" height="20.0">static</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="218.82" y="72.0" width="37.74" height="20.0">text.</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="262.1" y="72.0" width="58.92" height="20.0">Labels</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="326.56" y="72.0" width="22.24" height="20.0">do</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="354.34" y="72.0" width="27.78" height="20.0">not</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="387.66" y="72.0" width="65.6" height="20.0">change</text>
+                <spacer width="5.54" height="0.0" preserve="false"/>
+                <text x="458.8" y="72.0" width="55.58" height="20.0">during</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="519.92" y="72.0" width="27.78" height="20.0">the</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="553.24" y="72.0" width="52.22" height="20.0">report</text>
+                <spacer width="5.54" height="0.0" preserve="true"/>
+                <text x="611.0" y="72.0" width="102.24" height="20.0">processing.</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="0.0" y="92.0" width="400.0" height="15.0" color="black" font-face="Serif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="A simple Lable"/>
+              <line type="ParagraphPoolBox" x="0.0" y="92.0" width="78.66" height="12.0" color="black" font-face="Serif" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="92.0" width="7.992" height="12.0">A</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="11.316" y="92.0" width="34.668" height="12.0">simple</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="49.308" y="92.0" width="29.352" height="12.0">Lable</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="0.0" y="112.0" width="400.0" height="15.0" color="black" font-face="monospaced" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value="Like all text fields, labels can have their own font."/>
+              <line type="ParagraphPoolBox" x="0.0" y="112.0" width="259.92" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="112.0" width="22.008" height="12.0">Like</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="25.332" y="112.0" width="12.0" height="12.0">all</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="40.656" y="112.0" width="19.32" height="12.0">text</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="63.3" y="112.0" width="31.32" height="12.0">fields,</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="97.944" y="112.0" width="31.344" height="12.0">labels</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="132.612" y="112.0" width="19.344" height="12.0">can</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="155.28" y="112.0" width="26.016" height="12.0">have</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="184.62" y="112.0" width="23.328" height="12.0">their</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="211.272" y="112.0" width="22.008" height="12.0">own</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="236.604" y="112.0" width="23.316" height="12.0">font.</text>
+              </line>
+            </p>
+            <p type="ParagraphRenderBox" x="0.0" y="132.0" width="400.0" height="15.0" color="black" font-face="monospaced" font-size="12" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="label"/>
+              <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:value=".. and/or font style."/>
+              <line type="ParagraphPoolBox" x="0.0" y="132.0" width="98.604" height="12.0" color="black" font-face="monospaced" font-size="12" font-style-bold="true" font-style-italics="true" font-style-underline="false" font-style-strikethrough="false">
+                <text x="0.0" y="132.0" width="6.648" height="12.0">..</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="9.972" y="132.0" width="34.008" height="12.0">and/or</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="47.304" y="132.0" width="19.992" height="12.0">font</text>
+                <spacer width="3.324" height="0.0" preserve="true"/>
+                <text x="70.62" y="132.0" width="27.984" height="12.0">style.</text>
+              </line>
+            </p>
+          </canvas>
+        </block>
+        <block name="::group-0" type="BlockRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+          <block type="BlockRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+            <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+          </block>
+        </block>
+        <block name="Section-0" type="SectionRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <block type="ProgressMarkerRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          </block>
+        </block>
+      </block>
+      <block name="::group-0" type="BlockRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="relational-group"/>
+        <block type="BlockRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+          <attribute xmlns:autoGenNs="http://reporting.pentaho.org/namespaces/engine/attributes/core" autoGenNs:element-type="group-data-body"/>
+        </block>
+      </block>
+      <block name="Section-0" type="SectionRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="147.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </block>
+    <page-area name="Logical-Repeat-Footer-Area" x="0.0" y="648.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Repeat-Footer-Area">
+      <block name="Repeat-Footer-3" type="SectionRenderBox" x="0.0" y="648.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+      </block>
+    </page-area>
+    <page-area name="Logical-Page-Footer-Area" x="0.0" y="648.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false" type="Logical-Page-Footer-Area">
+      <block name="Footer-2" type="SectionRenderBox" x="0.0" y="648.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        <block type="ProgressMarkerRenderBox" x="0.0" y="648.0" width="468.0" height="0.0" color="black" font-face="Serif" font-size="10" font-style-bold="false" font-style-italics="false" font-style-underline="false" font-style-strikethrough="false">
+        </block>
+      </block>
+    </page-area>
+  </physical-page>
+</layout-output>

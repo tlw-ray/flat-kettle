@@ -1,0 +1,18 @@
+dependencies {
+    compile (
+            project(':reporting-classic-extensions'),
+            project(':reporting-classic-extensions-scripting'),
+            project(':reporting-classic-extensions-sampledata'),
+            project(':reporting-classic-extensions-reportdesigner-parser'),
+            project(':reporting-legacy-charts'),
+            project(':reporting-wizard-core'),
+            libraries.'slf4j-log4j12',
+            libraries.'commons-compress',
+            libraries.'jsch',
+            libraries.'jcifs',
+            libraries.'guava',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+    )
+}

@@ -1,0 +1,21 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            project(':reporting-classic-extensions-xpath'),
+            project(':reporting-classic-extensions-mondrian'),
+            project(':reporting-classic-extensions-pmd'),
+            project(':reporting-legacy-charts'),
+            libraries.'commons-compress',
+            libraries.'jcifs',
+            libraries.'jsch',
+            libraries.'hsqldb',
+            libraries.'slf4j-api',
+            libraries.'simple-jndi',
+            libraries.'guava',
+    )
+    testCompile (
+            project(path: ':platform-core', configuration: 'tests'),
+            libraries.'xmlunit',
+            libraries.'hamcrest-core',
+    )
+}

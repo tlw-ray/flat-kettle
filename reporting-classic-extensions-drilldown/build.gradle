@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            project(':reporting-libraries-libformula'),
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            project(path: ':reporting-libraries-libformula', configuration: 'tests'),
+            libraries.'hamcrest-core',
+    )
+}

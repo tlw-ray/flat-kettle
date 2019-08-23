@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+    )
+    testCompile (
+            project(path: ':platform-core', configuration: 'tests'),
+            libraries.'hamcrest-core',
+    )
+}

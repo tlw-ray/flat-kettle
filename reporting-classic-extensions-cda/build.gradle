@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            libraries.'httpclient',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'hamcrest-core',
+    )
+}

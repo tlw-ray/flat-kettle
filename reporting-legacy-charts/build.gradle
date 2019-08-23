@@ -1,0 +1,8 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            libraries.'libswing',
+            libraries.'jfreechart',
+            libraries.'jcommon',
+    )
+}

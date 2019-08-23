@@ -1,0 +1,27 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            project(':reporting-classic-extensions'),
+            project(':reporting-classic-extensions-scripting'),
+            project(':reporting-classic-extensions-reportdesigner-parser'),
+            project(':reporting-classic-extensions-drill-down'),
+            project(':reporting-classic-extensions-olap4j'),
+            project(':reporting-classic-extensions-kettle'),
+            project(':reporting-classic-extensions-toc'),
+            project(':reporting-wizard-core'),
+            project(':reporting-classic-demo'),
+            project(':reporting-classic-core'),
+            libraries.'commons-compress',
+            libraries.'jcifs',
+            libraries.'jsch',
+            libraries.'hsqldb',
+            libraries.'slf4j-api',
+            libraries.'simple-jndi',
+            libraries.'guava',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'xmlunit',
+            libraries.'hamcrest-all',
+    )
+}

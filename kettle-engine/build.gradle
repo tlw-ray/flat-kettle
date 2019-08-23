@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            project(':reporting-engine-core'),
+            project(':reporting-classic-core'),
             project(':kettle-engine-ext-api'),
             project(':platform-api'),
             project(':kettle-core'),

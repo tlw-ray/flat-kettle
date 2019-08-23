@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            libraries.'js',
+            libraries.'hsqldb',
+            libraries.'slf4j-api',
+            libraries.'simple-jndi',
+            libraries.'xercesImpl',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'xmlunit',
+            libraries.'hamcrest-all',
+    )
+}

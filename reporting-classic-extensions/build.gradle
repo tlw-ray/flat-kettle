@@ -1,0 +1,22 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            project(':reporting-libraries-libsparkline'),
+            libraries.'barbecue',
+            libraries.'barcode4j',
+            libraries.'avalon-framework',
+            libraries.'commons-pool',
+            libraries.'commons-dbcp',
+            libraries.'mail',
+            libraries.'hsqldb',
+            libraries.'slf4j-api',
+            libraries.'simple-jndi',
+            libraries.'commons-lang3',
+            libraries.'xercesImpl',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'xmlunit',
+            libraries.'hamcrest-all',
+    )
+}

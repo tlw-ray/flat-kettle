@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':reporting-classic-core'),
+            libraries.'hsqldb',
+            libraries.'commons-lang3',
+    )
+    testCompile (
+            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'hamcrest-core',
+    )
+}
