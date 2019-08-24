@@ -86,10 +86,10 @@ dependencies {
     testCompile (
             project(path: ':kettle-core', configuration: 'tests'),
             project(path: ':pentaho-metastore', configuration: 'tests'),
-            libraries.'java-hamcrest',
-            libraries.'mockito-all',
+            libraries.'hamcrest-core',
             libraries.'powermock-module-junit4',
             libraries.'powermock-api-mockito',
+            libraries.'mockito-all',
             libraries.'xmlunit',
             libraries.'h2',
             libraries.'oro',

@@ -3,4 +3,7 @@ dependencies {
             libraries.'commons-lang',
             libraries.'slf4j-api',
     )
+    testCompile (
+            libraries.'mockito-all',
+    )
 }

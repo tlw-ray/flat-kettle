@@ -3,7 +3,7 @@ dependencies {
             project(':reporting-classic-core'),
             project(':reporting-classic-extensions'),
             project(':reporting-classic-extensions-reportdesigner-parser'),
-            project(':reporting-classic-extensions-drill-down'),
+            project(':reporting-classic-extensions-drilldown'),
             project(':reporting-classic-extensions-olap4j'),
             project(':reporting-classic-extensions-mondrian'),
             project(':reporting-classic-extensions-kettle'),

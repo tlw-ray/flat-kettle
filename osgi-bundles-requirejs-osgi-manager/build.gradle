@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            project(':pentaho-requirejs-utils'),
+            project(':osgi-bundles-webjars-deployer'),
             libraries.'json-simple',
             libraries.'java-semver',
             libraries.'cxf-rt-frontend-jaxrs',

@@ -1,5 +1,6 @@
 dependencies {
     compile (
             libraries.'commons-vfs2',
+            libraries.'commons-io',
     )
 }

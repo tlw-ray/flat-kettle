@@ -3,7 +3,7 @@ dependencies {
             project(':reporting-classic-core'),
             project(':reporting-classic-extensions-xpath'),
             project(':reporting-classic-extensions-mondrian'),
-            project(':reporting-classic-extensions-pmd'),
+            project(':reporting-classic-extensions-pentaho-metadata'),
             project(':reporting-legacy-charts'),
             libraries.'commons-compress',
             libraries.'jcifs',

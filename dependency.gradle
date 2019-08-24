@@ -35,7 +35,6 @@ ext.versions = [
         commons_digester: '1.8',
         commons_discovery: '0.4',
         commons_dbcp: '1.4',
-        commons_digester: '1.8',
         commons_discovery: '0.2',
         commons_fileload: '1.3.2',
         commons_io: '2.4',//2.2, 2.1
@@ -78,7 +77,6 @@ ext.versions = [
         guava: '17.0',
         gwt: '2.5.1',
         h2: '1.2.131',
-        hamcrest: '1.3',
         hibernate: '3.6.10.Final',//3.6.9.Final
         hibernate_commons: '3.2.0.Final',
         hibernate_ehcache: '3.6.0.Final',
@@ -171,6 +169,7 @@ ext.versions = [
         org_apache_felix_utils: '1.8.0',
         org_apache_felix_http: '2.3.2',//2.3.0
         org_apache_felix_fileinstall: '3.4.2',
+        org_apache_felix_http_api: "2.3.2",
         org_eclipse_core_commands: '3.9.0.v20170530-1048',
         org_eclipse_equinox_common: '3.9.0.v20170207-1454',
         org_eclipse_equinox_bidi: '1.1.0.v20160728-1031',
@@ -208,7 +207,6 @@ ext.versions = [
         simple_jndi: '1.0.2',//1.0.0
         sjsxp: '1.0',
         slf4j: '1.7.7',
-        snakeyaml: '1.7',
         snappy_java: '1.1.0',
         snmp4j: '1.9.3d',
         soap: '2.3',
@@ -216,6 +214,7 @@ ext.versions = [
         spring_binding: '2.4.4.RELEASE',
         spring_ldap_core: '2.1.0.RELEASE',
         spring_mock: '2.0.8',
+        spring_osgi_extender: '1.2.1',
 //        spring_security: '3.2.9.RELEASE',//2.0.5.RELEASE
         sqleonardo: '2009.03.rc1',
         sqlite: '3.7.2',
@@ -261,7 +260,7 @@ ext.versions = [
         jmock: '2.5.1',
         junit : '4.12',//4.11
         mockito_all: '1.10.19', //1.9.5
-        mockito_core: '2.8.9',
+        mockito_core: '2.28.2',
         mockrunner_servlet: '0.3.7',//0.3.1
         powermock: '1.7.3',//1.6.3
         testng: '6.5.2',
@@ -273,11 +272,10 @@ ext.versions = [
 //        equinox: '3.3.0-v20070426',//3.3.0-I20070605-0010
         exam: '4.1.0',
         felix: '4.4.1',//4.2.1
-        felix_fileinstall: '3.4.2',
         karaf: '3.0.3',
         logback: '0.9.29',
         pax_url_aether: '1.6.0',
-        snakeyaml: '1.13',
+        snakeyaml: '1.13', //'1.7',
         tinybundles: '2.0.0',
         jtds: '1.3.1',
 ]
@@ -329,6 +327,7 @@ ext.libraries = [
         "batik-transcoder": "org.apache.xmlgraphics:batik-transcoder:${versions.batik}",
         "batik-util": "org.apache.xmlgraphics:batik-util:${versions.batik}",
         "batik-xml": "org.apache.xmlgraphics:batik-xml:${versions.batik}",
+        "bcel": "bcel:bcel:${versions.bcel}",
         "bcmail-jdk14": "org.bouncycastle:bcmail-jdk14:${versions.bouncycastle}",
         "bcprov-jdk14": "org.bouncycastle:bcprov-jdk14:${versions.bouncycastle}",
         "bctsp-jdk14": "org.bouncycastle:bctsp-jdk14:${versions.bouncycastle}",
@@ -349,6 +348,7 @@ ext.libraries = [
         "commons-compress": "org.apache.commons:commons-compress:${versions.commons_compress}",
         "commons-compiler": "org.codehaus.janino:commons-compiler:${versions.janino3}",
         "commons-dbcp": "commons-dbcp:commons-dbcp:${versions.commons_dbcp}",
+        "commons-digester": "commons-digester:commons-digester:${versions.commons_digester}",
         "commons-io": "commons-io:commons-io:${versions.commons_io}",
         "commons-lang": "commons-lang:commons-lang:${versions.commons_lang}",
         "commons-lang3": "org.apache.commons:commons-lang3:${versions.commons_lang3}",
@@ -370,6 +370,7 @@ ext.libraries = [
         "drools-core": "org.drools:drools-core:${versions.drools}",
         "edtftpj": "com.enterprisedt:edtftpj:${versions.edtftpj}",
         "ehcache-core": "net.sf.ehcache:ehcache-core:${versions.ehcache}",
+        "eigenbase-xom": "eigenbase:eigenbase-xom:1.3.4",
         "encoder": "org.owasp.encoder:encoder:${versions.owasp_encoder}",
         "feed4j": "feed4j:feed4j:${versions.feed4j}",
         "fontbox": "org.fontbox:fontbox:${versions.fontbox}",
@@ -474,13 +475,6 @@ ext.libraries = [
         "ognl": "ognl:ognl:${versions.ognl}",
         "olap4j": "org.olap4j:olap4j:${versions.olap4j}",
         "olap4j-xmla": "org.olap4j:olap4j-xmla:${versions.olap4j}",
-        "org.apache.felix.framework": "org.apache.felix:org.apache.felix.framework:${versions.felix}",
-        "org.apache.karaf.bundle.core": "org.apache.karaf.bundle:org.apache.karaf.bundle.core:${versions.karaf}",
-        "org.apache.karaf.main": "org.apache.karaf:org.apache.karaf.main:${versions.karaf}",
-        "org.apache.karaf.jaas.boot": "org.apache.karaf.jaas:org.apache.karaf.jaas.boot:${versions.karaf}",
-        "org.apache.karaf.jaas.modules": "org.apache.karaf.jaas:org.apache.karaf.jaas.modules:${versions.karaf}",
-        "org.osgi.core": "org.osgi:org.osgi.core:${versions.osgi}",
-        "org.osgi.compendium": "org.osgi:org.osgi.compendium:${versions.osgi}",
         "oro": "oro:oro:${versions.oro}",
         "persistence-api": "javax.persistence:persistence-api:${versions.persistence_api}",
         "poi": "org.apache.poi:poi:${versions.poi}",
@@ -517,6 +511,7 @@ ext.libraries = [
         "spring-jdbc":"org.springframework:spring-jdbc:${versions.spring}",
         "spring-ldap-core":"org.springframework.ldap:spring-ldap-core:${versions.spring_ldap_core}",
         "spring-orm":"org.springframework:spring-orm:${versions.spring}",
+        "spring-osgi-extender": "org.springframework.osgi:spring-osgi-extender:${versions.spring_osgi_extender}",
         "spring-security-config":"org.springframework.security:spring-security-config:${versions.spring}",
         "spring-security-core":"org.springframework.security:spring-security-core:${versions.spring}",
         "spring-security-acl":"org.springframework.security:spring-security-acl:${versions.spring}",
@@ -542,6 +537,7 @@ ext.libraries = [
         "xml-apis": "xml-apis:xml-apis-ext:${versions.xml_apis}",
         "xmlbeans": "org.apache.xmlbeans:xmlbeans:${versions.xmlbeans}",
         "xmlgraphics-commons": "org.apache.xmlgraphics:xmlgraphics-commons:${versions.batik}",
+        "xmlrpc-client": "org.apache.xmlrpc:xmlrpc-client:3.1.3",
         "XmlSchema": "org.apache.ws.commons.schema:XmlSchema:${versions.XmlSchema}",
         "xstream": "com.thoughtworks.xstream:xstream:${versions.xstream}",
 
@@ -575,13 +571,24 @@ ext.libraries = [
         "netbeans-nbmdr": "org.netbeans:nbmdr:${versions.netbeans_custom}",
 
         //OSGI
+        "org.apache.karaf.bundle.core": "org.apache.karaf.bundle:org.apache.karaf.bundle.core:${versions.karaf}",
+        "org.apache.karaf.main": "org.apache.karaf:org.apache.karaf.main:${versions.karaf}",
+        "org.apache.karaf.jaas.boot": "org.apache.karaf.jaas:org.apache.karaf.jaas.boot:${versions.karaf}",
+        "org.apache.karaf.jaas.modules": "org.apache.karaf.jaas:org.apache.karaf.jaas.modules:${versions.karaf}",
+        "org.apache.karaf.features.core": "org.apache.karaf.features:org.apache.karaf.features.core:${versions.karaf}",
+        "org.apache.karaf.util": "org.apache.karaf:org.apache.karaf.util:${versions.karaf}",
+        "org.apache.felix.fileinstall":"org.apache.felix:org.apache.felix.fileinstall:${versions.org_apache_felix_fileinstall}",
         "org.apache.felix.framework":"org.apache.felix:org.apache.felix.framework:${versions.felix}",
+        "org.apache.felix.http.api": "org.apache.felix:org.apache.felix.http.api:${versions.org_apache_felix_http_api}",
         "org.apache.felix.http.base": "org.apache.felix:org.apache.felix.http.base:${versions.felix}",
         "org.apache.felix.http.proxy": "org.apache.felix:org.apache.felix.http.proxy:${versions.felix}",
         "org.apache.felix.main": "org.apache.felix:org.apache.felix.main:${versions.felix}",
         "org.apache.felix.utils": "org.apache.felix:org.apache.felix.utils:${versions.felix}",
         "org.apache.aries.blueprint.core": "org.apache.aries.blueprint:org.apache.aries.blueprint.core:${versions.aries_blueprint_core}",
         "org.apache.aries.util": "org.apache.aries:org.apache.aries.util:${versions.aries_util}",
+        "org.apache.servicemix.specs.jsr339-api-m10": "org.apache.servicemix.specs:org.apache.servicemix.specs.jsr339-api-m10:2.9.0",
+        "org.osgi.core": "org.osgi:org.osgi.core:${versions.osgi}",
+        "org.osgi.compendium": "org.osgi:org.osgi.compendium:${versions.osgi}",
         "pax-exam-cdi": "org.ops4j.pax.exam:pax-exam-cdi:${versions.exam}",
         "pax-exam-container-karaf": "org.ops4j.pax.exam:pax-exam-container-karaf:${versions.exam}",
         "pax-exam-junit4": "org.ops4j.pax.exam:pax-exam-junit4:${versions.exam}",
@@ -594,16 +601,17 @@ ext.libraries = [
         "logback-classic": "ch.qos.logback:logback-classic:${versions.logback}",
         "tinybundles": "org.ops4j.pax.tinybundles:tinybundles:${versions.tinybundles}",
         "org.apache.aries.blueprint.api": "org.apache.aries.blueprint:org.apache.aries.blueprint.api:${versions.aries_blueprint_api}",
-        "org.apache.karaf.features.core": "org.apache.karaf.features:org.apache.karaf.features.core:${versions.karaf}",
 
         //JavaScript
-        "jquery": "org.webjars:jquery:${jsVersions.jquery}",
         "angular": "org.webjars.bower:angular:${jsVersions.angular}",
+        "angularjs": "org.webjars:angularjs:${jsVersions.angular}",
         "angular-i18n": "org.webjars.bower:angular-i18n:${jsVersions.angular}",
         "angular-route": "org.webjars.bower:angular:${jsVersions.angular}",
         "angular-sanitize": "org.webjars.bower:angular-sanitize:${jsVersions.angular}",
         "angular-translate": "org.webjars.bower:angular-translate:${jsVersions.angular_translate}",
         "angular-animate": "org.webjars.bower:angular-animate:${jsVersions.angular}",
+        "jquery": "org.webjars:jquery:${jsVersions.jquery}",
+        "requirejs": "org.webjars:requirejs:${jsVersions.requirejs}",
 
         //TEST
         "bean-matchers": "com.google.code.bean-matchers:bean-matchers:${versions.bean_matchers}",
@@ -622,10 +630,11 @@ ext.libraries = [
         "jettison": "org.codehaus.jettison:jettison:${versions.jettison}",
         "jersey-test-framework-core": "com.sun.jersey.jersey-test-framework:jersey-test-framework-core:${versions.jersey}",
         "jmockit": "org.jmockit:jmockit:${versions.jmockit}",
-        "powermock-module-junit4" : "org.powermock:powermock-module-junit4:${versions.powermock}",
         "powermock-api-mockito" : "org.powermock:powermock-api-mockito:${versions.powermock}",
         "powermock-core" : "org.powermock:powermock-core:${versions.powermock}",
+        "powermock-module-junit4" : "org.powermock:powermock-module-junit4:${versions.powermock}",
         "powermock-module-testng": "org.powermock:powermock-module-testng:${versions.powermock}",
+        "powermock-reflect": "org.powermock:powermock-reflect:${versions.powermock}",
         "spring-mock": "org.springframework:spring-mock:${versions.spring_mock}",
         "spring-test" : "org.springframework:spring-test:${versions.spring}",
         "system-rules": "com.github.stefanbirkner:system-rules:${versions.system_rules}",

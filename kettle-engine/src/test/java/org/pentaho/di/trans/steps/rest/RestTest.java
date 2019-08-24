@@ -30,13 +30,13 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.RowMetaInterface;
-import org.pentaho.di.core.util.Assert;
 import org.pentaho.di.trans.Trans;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.StepDataInterface;
 import org.pentaho.di.trans.step.StepMeta;
 import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.powermock.reflect.Whitebox;
 
 import javax.ws.rs.core.MultivaluedMap;
 
@@ -50,7 +50,6 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.internal.util.reflection.Whitebox.setInternalState;
 import static org.powermock.api.mockito.PowerMockito.mockStatic;
 
 @RunWith( PowerMockRunner.class )
@@ -112,8 +111,8 @@ public class RestTest {
     doCallRealMethod().when( rest ).callRest( any() );
     doCallRealMethod().when( rest ).searchForHeaders( any() );
 
-    setInternalState( rest, "meta", meta );
-    setInternalState( rest, "data", data );
+    Whitebox.setInternalState( rest, "meta", meta );
+    Whitebox.setInternalState( rest, "data", data );
 
     Object[] output = rest.callRest( new Object[] { 0 } );
 

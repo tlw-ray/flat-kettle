@@ -6,4 +6,7 @@ dependencies {
             libraries.'commons-io',
             libraries.'guava',
     )
+    testCompile (
+            libraries.'mockito-all',
+    )
 }

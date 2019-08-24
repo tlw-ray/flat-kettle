@@ -2,8 +2,9 @@ dependencies {
     compile (
             project(':reporting-classic-core'),
             libraries.'xmlrpc-client',
-            libraries.'openerp-java-api',
-            libraries.'openerp-java-report-helper',
+            //无法找到依赖项
+//            libraries.'openerp-java-api',
+//            libraries.'openerp-java-report-helper',
             libraries.'hsqldb',
             libraries.'slf4j-api',
             libraries.'simple-jndi',
@@ -12,5 +13,6 @@ dependencies {
             project(path: ':reporting-classic-core', configuration: 'tests'),
             libraries.'hamcrest-core',
             libraries.'xmlunit',
+            libraries.'mockito-all',
     )
 }

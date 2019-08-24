@@ -2,7 +2,7 @@ dependencies {
     compile (
             project(':reporting-classic-core'),
             libraries.'mondrian',
-            libraries.'eigenbase-xom',
+//            libraries.'eigenbase-xom',
             libraries.'commons-io',
             libraries.'commons-dbcp',
             libraries.'hsqldb',
@@ -12,5 +12,6 @@ dependencies {
     )
     testCompile (
             project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'mockito-all',
     )
 }

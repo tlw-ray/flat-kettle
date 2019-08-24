@@ -13,5 +13,6 @@ dependencies {
     testCompile (
             project(path: ':reporting-classic-core', configuration: 'tests'),
             libraries.'hamcrest-all',
+            libraries.'mockito-all',
     )
 }

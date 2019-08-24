@@ -11,5 +11,6 @@ dependencies {
             project(path: ':reporting-classic-core', configuration: 'tests'),
             libraries.'xmlunit',
             libraries.'hamcrest-all',
+            libraries.'mockito-all',
     )
 }

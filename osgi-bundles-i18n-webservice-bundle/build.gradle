@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            project(':pentaho-i18n-bundle'),
+            project(':osgi-bundles-i18n-bundle'),
             libraries.'org.apache.felix.framework',
             libraries.'json-simple',
             libraries.'cxf-rt-frontend-jaxrs',
@@ -9,5 +9,8 @@ dependencies {
             libraries.'cxf-rt-transports-http-jetty',
             libraries.'pax-web-extender-whiteboard',
             libraries.'org.apache.felix.http.api',
+    )
+    testCompile (
+            libraries.'mockito-all',
     )
 }

@@ -11,4 +11,7 @@ dependencies {
             libraries.'cxf-rt-transports-http',
             libraries.'cxf-rt-transports-http-jetty',
     )
+    testCompile (
+            libraries.'mockito-core',
+    )
 }

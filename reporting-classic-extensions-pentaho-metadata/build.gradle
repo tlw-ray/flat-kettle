@@ -1,8 +1,8 @@
 dependencies {
     compile (
             project(':reporting-classic-core'),
-            project(':reporting-pentaho-metadata'),
-            project(':reporting-kettle-engine'),
+            project(':pentaho-metadata'),
+            project(':kettle-engine'),
             libraries.'log4j',
             libraries.'commons-compress',
             libraries.'jcifs',

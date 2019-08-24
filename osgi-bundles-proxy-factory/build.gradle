@@ -1,8 +1,8 @@
 dependencies {
     compile (
-            project(':pentaho-platform-api'),
-            project(':pentaho-platform-core'),
-            project(':pentaho-osgi-utils-api'),
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':osgi-bundles-osgi-utils-api'),
             libraries.'snakeyaml',
             libraries.'commons-lang',
             libraries.'slf4j-api',

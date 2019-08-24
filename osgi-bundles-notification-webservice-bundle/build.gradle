@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            project.(':pentaho-notification-bundle'),
+            project.(':osgi-bundles-notification-bundle'),
             libraries.'org.apache.felix.framework',
             libraries.'jackson-core',
             libraries.'jackson-databind',
@@ -8,7 +8,7 @@ dependencies {
             libraries.'cxf-rt-frontend-jaxws',
             libraries.'cxf-rt-transports-http',
             libraries.'cxf-rt-transports-http-jetty',
-//            libraries.'org.apache.servicemix.specs.jsr339-api-m10',
+            libraries.'org.apache.servicemix.specs.jsr339-api-m10',
             libraries.'requirejs',
             libraries.'angularjs',
     )
