@@ -8,4 +8,7 @@ dependencies {
             libraries.'logback-classic',
             libraries.'slf4j-api',
     )
+    testCompile(
+            libraries.'mockito-all',
+    )
 }

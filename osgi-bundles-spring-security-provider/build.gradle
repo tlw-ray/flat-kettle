@@ -1,10 +1,13 @@
 dependencies {
     compile (
+            project(':osgi-bundles-osgi-utils-api'),
+//            project(':osgi-bundles-osgi-')
             libraries.'commons-lang',
-            libraries.'slf4j-api',
             libraries.'slf4j-api',
             libraries.'spring-beans',
             libraries.'spring-security-core',
-            libraries.'pentaho-osgi-utils-api',
+    )
+    testCompile(
+            libraries.'mockito-all',
     )
 }

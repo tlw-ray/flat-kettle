@@ -134,7 +134,7 @@ public class KarafFeatureWatcherImplTest {
     // Runtime Features
     Configuration pentahoFeaturesConfig = mock( Configuration.class );
     Hashtable<String, String> dictionaryRuntimeFeatures = new Hashtable<String, String>();
-    when( pentahoFeaturesConfig.getProperties() ).thenReturn( dictionaryRuntimeFeatures );
+//    when( pentahoFeaturesConfig.getProperties() ).thenReturn( dictionaryRuntimeFeatures );
     when( configurationAdmin.getConfiguration( PENTAHO_FEATURES_CONDIGURATION_NAME ) ).thenReturn(
         pentahoFeaturesConfig );
 
@@ -175,7 +175,7 @@ public class KarafFeatureWatcherImplTest {
     Configuration karafFeaturesConfig = mock( Configuration.class );
     Hashtable<String, String> dictionaryBootFeatures = new Hashtable<String, String>();
     dictionaryBootFeatures.put( BOOT_FEATURES_PROPERTY_NAME, StringUtils.join( bootFeatures, FEATURES_DELIMITER ) );
-    when( karafFeaturesConfig.getProperties() ).thenReturn( dictionaryBootFeatures );
+//    when( karafFeaturesConfig.getProperties() ).thenReturn( dictionaryBootFeatures );
     when( configurationAdmin.getConfiguration( KARAF_FEATURES_CONDIGURATION_NAME ) ).thenReturn( karafFeaturesConfig );
 
     // Test with active bundles only

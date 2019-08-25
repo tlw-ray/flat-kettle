@@ -1,0 +1,17 @@
+dependencies {
+    compile (
+            project(':kettle-engine'),
+            project(':pentaho-metadata'),
+            project(':kettle-ui-swt'),
+            libraries.'commons-codec',
+            libraries.'commons-lang',
+            libraries.'swt',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'easymock',
+            libraries.'mockito-all',
+    )
+}

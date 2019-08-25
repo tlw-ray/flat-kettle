@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Open Flash Chart for Java (ofc4j) Demo Gallery</title>
+<script type="text/javascript" src="js/swfobject.js"></script>
+<script type="text/javascript" src="js/prototype.js"></script>
+<script type="text/javascript">
+    function embed(chart) {
+        var charturi = "chart/" + chart;
+    swfobject.embedSWF(
+      "open-flash-chart-2alpha8.swf", "chart",
+      "500", "281", "9.0.0", "expressInstall.swf",
+      {"data-file": charturi} );
+    new Ajax.Updater('source', charturi + "?source", {method: "GET"});
+    new Ajax.Updater('result', charturi + "?pretty", {method: "GET"});
+    }
+
+</script>
+</head>
+<body onLoad="embed($('cs').value);">
+    <select id="cs" onchange="embed(this.value);" style="width: 400;">
+       <option value="simpleChart">Simple Line Chart</option>
+       <option value="manylines">Many Lines</option>
+       <option value="line_dot">Line Dot</option>
+       <option value="line_hollow">Line Hollow</option>
+       <option value="complexLabels">X Axis Labels 3</option>
+       <option value="areaHollow">Hollow Area Chart</option>
+       <option value="piechart">Pie Chart</option>
+       <option value="barchart">Simple Bar Chart</option>
+       <option value="barchart_glass">Simple Glass Bar Chart</option>
+       <option value="barchart_3d">3D Bar Chart</option>
+       <option value="barchart_filled">Filled Bar Chart</option>
+       <option value="barchart_sketch">Sketch Bar Chart</option>
+       <option value="hbar">Horizontal Bar Chart</option>
+       <option value="scatter">Scatter Chart</option>
+       <option value="stackedbarchart">Stacked Bar Chart</option>
+       <option value="adv/barchart">Bar Chart (Advanced)</option>
+       <option value="adv/floatingbars">Floating Bars (Advanced)</option>
+       <option value="adv/barchart_sketch_adv">Sketch Bar Chart (Advanced)</option>
+       <option value="adv/dot_lines">Dot Lines (Advanced)</option>
+    </select>&nbsp;<a href="javascript:embed($('cs').value)">Reload</a>
+    <table>
+        <th>
+            <tr>
+                <td align="center"><strong>Open Flash Chart</strong></td>
+                <td align="center"><strong>Source Code</strong></td>
+            </tr>
+        </th>
+        <tr>
+            <td valign="top">
+                <div id="chart"></div><br/>
+                <pre id="result"></pre>
+            </td>
+            <td valign="top" style="padding-left: 1em;">
+                <pre id="source"></pre>
+            </td>
+        </tr>
+    </table>
+    <br/>
+    <br/>
+</body>
+</html>
+

@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            project.(':osgi-bundles-notification-bundle'),
+            project(':osgi-bundles-notification-bundle'),
             libraries.'org.apache.felix.framework',
             libraries.'jackson-core',
             libraries.'jackson-databind',
@@ -14,6 +14,6 @@ dependencies {
     )
     testCompile (
             libraries.'hamcrest-core',
-            libraries.'junit',
+            libraries.'mockito-all',
     )
 }

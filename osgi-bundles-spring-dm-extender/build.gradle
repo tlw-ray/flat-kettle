@@ -2,8 +2,11 @@ dependencies {
     compile (
             libraries.'spring-beans',
             libraries.'spring-core',
-//            libraries.'spring-osgi-extender',
+            libraries.'spring-osgi-extender',
             libraries.'org.osgi.core',
             libraries.'slf4j-api',
+    )
+    testCompile(
+            libraries.'mockito-all',
     )
 }

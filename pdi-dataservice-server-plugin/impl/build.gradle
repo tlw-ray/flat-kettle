@@ -1,0 +1,33 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':kettle-engine'),
+            project(':pentaho-modeler'),
+            project(':pentaho-metaverse-api'),
+            project(':pentaho-kettle-repository-locator-api'),
+            project(':pentaho-metastore-locator-api'),
+            project(':pentaho-mongodb-plugin'),
+            project(':pentaho-cache-manager-api'),
+            project(':pdi-dataservice-client-plugin'),
+            project(':pdi-dataservice-client-plugin-api'),
+            project(':pdi-engine-api'),
+            libraries.'servlet-api',
+            libraries.'metastore',
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'json-simple',
+            libraries.'guava',
+            libraries.'mongo-java-driver',
+            libraries.'jsr305',
+            libraries.'xercesImpl',
+            libraries.'commons-io',
+            libraries.'rxjava',
+            libraries.'guava-cache-provider',
+    )
+    testCompile(
+            libraries.'java-hamcrest',
+            libraries.'mockito-all',
+    )
+}

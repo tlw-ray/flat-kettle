@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:pen="http://www.pentaho.com/xml/schemas/pentaho-blueprint"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xsi:schemaLocation="
+            http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+            http://www.pentaho.com/xml/schemas/pentaho-blueprint http://www.pentaho.com/xml/schemas/pentaho-blueprint.xsd
+            ">
+    <cm:property-placeholder persistent-id="org.pentaho.di.trans.dataservice" update-strategy="reload">
+        <cm:default-properties>
+            <!--log level values are defined in the kettle enum org.pentaho.di.core.logging.LogLevel-->
+            <!--override this property at runtime in the file etc-spoon/org.pentaho.di.trans.dataservice.cfg-->
+            <cm:property name="transient.service.loglevel" value="BASIC"/>
+        </cm:default-properties>
+    </cm:property-placeholder>
+
+
+    <bean id="executor" scope="singleton" class="java.util.concurrent.Executors" factory-method="newCachedThreadPool"/>
+    <service id="executorService" ref="executor"
+             interface="java.util.concurrent.ExecutorService">
+    </service>
+
+    <bean id="uiFactory" class="org.pentaho.di.trans.dataservice.ui.UIFactory" scope="singleton"/>
+
+    <bean id="logChannel" class="org.pentaho.di.core.logging.LogChannel">
+        <argument value="Data Services"/>
+    </bean>
+
+    <bean id="context" class="org.pentaho.di.trans.dataservice.DataServiceContext" scope="singleton">
+        <argument ref="pushDownFactories"/>
+        <argument ref="autoOptimizationServices"/>
+        <argument ref="cacheManager"/>
+        <argument ref="uiFactory"/>
+        <argument ref="logChannel"/>
+    </bean>
+
+    <service id="dataServiceContext" ref="context" interface="org.pentaho.di.trans.dataservice.Context"></service>
+
+    <reference id="lineageClient" interface="org.pentaho.metaverse.api.ILineageClient"/>
+    <reference id="cacheManager" interface="org.pentaho.caching.api.PentahoCacheManager"/>
+
+    <reference-list id="pushDownFactories" interface="org.pentaho.di.trans.dataservice.optimization.PushDownFactory"
+                    availability="optional"/>
+
+    <reference-list id="stepValidations" interface="org.pentaho.di.trans.dataservice.validation.StepValidation"
+                    availability="optional"/>
+
+    <reference-list id="autoOptimizationServices"
+                    interface="org.pentaho.di.trans.dataservice.optimization.AutoOptimizationService"
+                    availability="optional"/>
+
+    <reference id="repositoryLocator"
+               interface="org.pentaho.osgi.kettle.repository.locator.api.KettleRepositoryLocator"
+               availability="optional"/>
+
+    <reference id="metastoreLocator"
+               interface="org.pentaho.osgi.metastore.locator.api.MetastoreLocator"
+               availability="optional"/>
+
+
+    <bean id="dataServiceClient" class="org.pentaho.di.trans.dataservice.clients.DataServiceClient">
+        <argument ref="queryServiceDelegate"/>
+        <argument ref="dataServiceResolverDelegate"/>
+        <argument ref="executor"/>
+        <property name="logChannel" ref="logChannel"/>
+    </bean>
+
+    <!-- Local Client Service -->
+    <service ref="dataServiceClient" id="dataServiceClientService"
+             interface="org.pentaho.di.trans.dataservice.client.api.IDataServiceClientService"/>
+    <!-- /Local Client Service -->
+
+    <bean id="dataServiceResolverDelegate" class="org.pentaho.di.trans.dataservice.resolvers.DataServiceResolverDelegate">
+        <argument>
+            <list>
+                <bean class="org.pentaho.di.trans.dataservice.resolvers.TransientResolver">
+                    <argument ref="repositoryLocator"/>
+                    <argument ref="context"/>
+                    <argument ref="serviceCacheFactory"/>
+                    <argument value="${transient.service.loglevel}"/>
+                </bean>
+                <bean class="org.pentaho.di.trans.dataservice.resolvers.MetaStoreResolver">
+                    <argument ref="repositoryLocator"/>
+                    <argument ref="context"/>
+                </bean>
+            </list>
+        </argument>
+    </bean>
+
+    <bean id="queryServiceDelegate" class="org.pentaho.di.trans.dataservice.clients.QueryServiceDelegate">
+        <argument>
+            <list>
+                <bean class="org.pentaho.di.trans.dataservice.clients.CommandQueryService">
+                    <argument ref="context"/>
+                </bean>
+                <bean class="org.pentaho.di.trans.dataservice.clients.AnnotationsQueryService">
+                    <argument ref="metastoreLocator"/>
+                    <argument ref="dataServiceResolverDelegate"/>
+                </bean>
+                <bean class="org.pentaho.di.trans.dataservice.clients.DualQueryService" />
+                <bean class="org.pentaho.di.trans.dataservice.clients.ExecutorQueryService">
+                    <argument ref="metastoreLocator"/>
+                    <argument ref="dataServiceResolverDelegate"/>
+                </bean>
+            </list>
+        </argument>
+    </bean>
+
+    <!-- Parameter Generation Optimization -->
+    <bean id="paramGenFactory" scope="singleton"
+          class="org.pentaho.di.trans.dataservice.optimization.paramgen.ParameterGenerationFactory">
+        <argument ref="parameterGenerationServices"/>
+        <property name="lineageClient" ref="lineageClient"/>
+    </bean>
+
+    <reference-list id="parameterGenerationServices"
+                    interface="org.pentaho.di.trans.dataservice.optimization.paramgen.ParameterGenerationServiceFactory"
+                    availability="optional"/>
+
+    <service id="parameterGenerationService" ref="paramGenFactory"
+             interface="org.pentaho.di.trans.dataservice.optimization.PushDownFactory">
+    </service>
+
+    <service id="tableInputParamGen"
+             interface="org.pentaho.di.trans.dataservice.optimization.paramgen.ParameterGenerationServiceFactory">
+        <bean class="org.pentaho.di.trans.dataservice.optimization.paramgen.TableInputParameterGenerationFactory"/>
+    </service>
+
+    <service id="mongoInputParamGen"
+             interface="org.pentaho.di.trans.dataservice.optimization.paramgen.ParameterGenerationServiceFactory">
+        <bean class="org.pentaho.di.trans.dataservice.optimization.paramgen.MongodbInputParameterGenerationFactory"/>
+    </service>
+
+    <service id="autoParamGenService" interface="org.pentaho.di.trans.dataservice.optimization.AutoOptimizationService">
+        <bean factory-ref="paramGenFactory" factory-method="createAutoOptimizationService"/>
+    </service>
+
+    <service id="mongoDbBasicVal" interface="org.pentaho.di.trans.dataservice.validation.StepValidation">
+        <bean class="org.pentaho.di.trans.dataservice.validation.MongoDbBasicValidation"/>
+    </service>
+
+    <service id="tableInputVal" interface="org.pentaho.di.trans.dataservice.validation.StepValidation">
+        <bean class="org.pentaho.di.trans.dataservice.validation.TableInputValidation"/>
+    </service>
+
+    <service id="dataServiceStepVal" interface="org.pentaho.di.trans.dataservice.validation.StepValidation">
+        <bean class="org.pentaho.di.trans.dataservice.validation.DataServiceStepValidation">
+            <argument ref="lineageClient"/>
+            <argument ref="paramGenFactory"/>
+        </bean>
+    </service>
+    <!-- /Parameter Generation Optimization -->
+
+    <!-- Service Cache Optimization -->
+    <bean id="serviceCacheFactory" scope="singleton"
+          class="org.pentaho.di.trans.dataservice.optimization.cache.ServiceCacheFactory">
+        <argument ref="cacheManager"/>
+        <argument ref="executor"/>
+    </bean>
+    <service id="serviceCacheOptimization" ref="serviceCacheFactory"
+             interface="org.pentaho.di.trans.dataservice.optimization.PushDownFactory">
+        <service-properties>
+            <entry key="type" value="cache"/>
+        </service-properties>
+    </service>
+
+    <bean id="clearCacheServlet" class="org.pentaho.di.trans.dataservice.optimization.cache.ResetCacheServlet"
+          scope="singleton">
+        <argument ref="serviceCacheFactory"/>
+        <pen:di-plugin type="org.pentaho.di.core.plugins.CartePluginType"/>
+    </bean>
+    <service id="serviceCacheService"
+             interface="org.pentaho.di.trans.dataservice.optimization.cache.CacheService">
+        <bean class="org.pentaho.di.trans.dataservice.optimization.cache.ServiceCacheService">
+            <argument ref="cacheManager"/>
+        </bean>
+    </service>
+    <!-- /Service Cache Optimization -->
+
+    <bean id="dataServiceMetaFactoryBean" class="org.pentaho.di.trans.dataservice.DataServiceMetaFactory" scope="singleton">
+        <property name="cacheFactory" ref="serviceCacheFactory"/>
+    </bean>
+    <service id="dataServiceMetaFactory" interface="org.pentaho.di.trans.dataservice.IDataServiceMetaFactory" ref="dataServiceMetaFactoryBean"/>
+
+    <!-- Parameter Push down Optimization -->
+    <service id="paramPushDownOptimization" interface="org.pentaho.di.trans.dataservice.optimization.PushDownFactory">
+        <bean class="org.pentaho.di.trans.dataservice.optimization.pushdown.ParameterPushdownFactory"/>
+    </service>
+    <!-- /Parameter Push down Optimization -->
+    <bean id="referenceSynchronizer" class="org.pentaho.di.trans.dataservice.serialization.DataServiceReferenceSynchronizer">
+        <argument ref="context"/>
+    </bean>
+</blueprint>

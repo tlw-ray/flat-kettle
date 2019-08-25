@@ -1,14 +1,17 @@
 dependencies {
     compile (
-            project.(':platform-api'),
-            project.(':platform-core'),
-            project.(':platform-api'),
-            project.(':platform-extensions'),
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':platform-api'),
+            project(':platform-extensions'),
             libraries.'org.osgi.compendium',
             libraries.'org.osgi.core',
             libraries.'javax.servlet-api',
             libraries.'cxf-rt-frontend-jaxrs',
             libraries.'pax-web-spi',
             libraries.'javax.servlet-api',
+    )
+    testCompile(
+            libraries.'mockito-all',
     )
 }

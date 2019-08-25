@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>org.pentaho</groupId>
+    <artifactId>pentaho-ce-jar-parent-pom</artifactId>
+    <version>8.1.0.6-682</version>
+  </parent>
+  <groupId>org.pentaho</groupId>
+  <artifactId>json</artifactId>
+  <version>8.1.0.6-682</version>
+  <name>Pentaho Commons JSON</name>
+  <licenses>
+    <license>
+      <name>The JSON License</name>
+      <url>http://json.org/license.html</url>
+      <distribution>repo</distribution>
+      <comments></comments>
+    </license>
+  </licenses>
+  <scm>
+    <developerConnection>scm:git:git@github.com:pentaho/pentaho-commons-json.git</developerConnection>
+  </scm>
+  <properties>
+    <junit.version>4.4</junit.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+
+
+  <repositories>
+    <repository>
+      <id>pentaho-public</id>
+      <name>Pentaho Public</name>
+      <url>http://nexus.pentaho.org/content/groups/omni/</url>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>daily</updatePolicy>
+      </releases>
+      <snapshots>
+        <enabled>true</enabled>
+        <updatePolicy>interval:15</updatePolicy>
+      </snapshots>
+    </repository>
+  </repositories>
+
+</project>

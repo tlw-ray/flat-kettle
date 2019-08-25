@@ -1,0 +1,24 @@
+<overlay
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:pen="http://www.pentaho.org/2008/xul"
+>
+    <tabs id="opt_tabs">
+        <tab label="Parameter Pushdown"/>
+    </tabs>
+    <tabpanels id="opt_panels">
+        <tabpanel orient="vertical" padding="10">
+            <label control="param_definitions" value="Definitions:"/>
+            <tree flex="1" id="param_definitions" editable="true">
+                <treecols>
+                    <treecol label="WHERE Clause Column" editable="true" pen:binding="fieldName"
+                             pen:combobinding="fieldList" type="editablecombobox"/>
+                    <treecol label="Transformation Parameter" editable="true"
+                             pen:binding="parameter"/>
+                    <treecol label="Value Format" editable="true"
+                             pen:binding="format"/>
+                </treecols>
+                <treechildren/>
+            </tree>
+        </tabpanel>
+    </tabpanels>
+</overlay>

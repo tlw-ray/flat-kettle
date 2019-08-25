@@ -1,0 +1,10 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libloader'),
+            project(':reporting-libraries-libxml'),
+    )
+    testCompile (
+        libraries.'hamcrest-core',
+    )
+}

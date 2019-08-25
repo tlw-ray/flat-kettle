@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libloader'),
+            libraries.'css-sac',
+    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'mockito-all',
+    )
+}

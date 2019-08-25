@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>pentaho</groupId>
+    <artifactId>pentaho-modeler-parent</artifactId>
+    <version>8.1.0.6-682</version>
+  </parent>
+  <groupId>pentaho</groupId>
+  <artifactId>pentaho-modeler</artifactId>
+  <version>8.1.0.6-682</version>
+  <name>Pentaho Community Edition Project: ${project.artifactId}</name>
+  <description>Pentaho common modeler project.</description>
+  <url>http://www.pentaho.com</url>
+  <scm>
+    <connection>scm:git:git@github.com:pentaho/${project.artifactId}.git</connection>
+    <developerConnection>scm:git:git@github.com:pentaho/${project.artifactId}.git</developerConnection>
+    <url>scm:git:git@github.com:pentaho/${project.artifactId}.git</url>
+  </scm>
+  <properties>
+    <commons-gwt.version>8.1.0.6-682</commons-gwt.version>
+    <dependency.gwt.revision>2.5.1</dependency.gwt.revision>
+    <dependency.gwt-dnd.revision>3.1.2</dependency.gwt-dnd.revision>
+    <dependency.gwt-incubator.revision>2.1.0</dependency.gwt-incubator.revision>
+    <commons-xul.version>8.1.0.6-682</commons-xul.version>
+  </properties>
+  <dependencies>
+    <dependency>
+      <groupId>commons-codec</groupId>
+      <artifactId>commons-codec</artifactId>
+      <version>1.10</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>gwt-maven-plugin</artifactId>
+        <version>2.5.1</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

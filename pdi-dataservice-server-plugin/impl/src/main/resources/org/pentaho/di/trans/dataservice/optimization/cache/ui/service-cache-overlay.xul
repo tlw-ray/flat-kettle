@@ -1,0 +1,19 @@
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+    <tabs id="opt_tabs">
+        <tab id="service-cache-tab" label="Service Cache" position="1"/>
+    </tabs>
+    <tabpanels id="opt_panels">
+        <tabpanel position="1">
+            <vbox padding="10">
+            <hbox>
+                <checkbox id="service-cache-checkbox" label="Enable Caching"/>
+            </hbox>
+            <label control="service-cache-ttl" value="Cache Duration (seconds):"/>
+            <hbox>
+                <textbox id="service-cache-ttl" width="120" />
+            </hbox>
+            </vbox>
+        </tabpanel>
+    </tabpanels>
+</overlay>
+

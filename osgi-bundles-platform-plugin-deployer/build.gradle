@@ -8,4 +8,7 @@ dependencies {
             libraries.'guava',
             libraries.'json-simple',
     )
+    testCompile(
+            libraries.'mockito-all',
+    )
 }

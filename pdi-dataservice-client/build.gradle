@@ -1,0 +1,17 @@
+dependencies {
+    compile (
+            project(':pentaho-metastore'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':pdi-dataservice-client-api'),
+            libraries.'httpclient',
+            libraries.'guava',
+            libraries.'xercesImpl',
+            libraries.'org.eclipse.core.commands',
+            libraries.'json-simple',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'java-hamcrest',
+    )
+}

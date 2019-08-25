@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':commons-xul-core'),
+            libraries.'gwt-user',
+            libraries.'gwt-dev',
+            libraries.'gwt-incubator',
+            libraries.'gwt-dnd',
+            libraries.'GWT-FX',
+    )
+    testCompile(
+            libraries.'gwtx',
+            libraries.'validation-api',
+            libraries.'gwtmockito',
+    )
+}

@@ -1,14 +1,17 @@
 dependencies {
     compile (
-            project.(':platform-api'),
-            project.(':platform-core'),
-            project.(':platform-repository'),
-            project.(':platform-extensions'),
+            project(':platform-api'),
+            project(':platform-core'),
+            project(':platform-repository'),
+            project(':platform-extensions'),
             libraries.'commons-lang',
             libraries.'slf4j-api',
             libraries.'org.apache.felix.framework',
             libraries.'spring-security-core',
             libraries.'spring-security-config',
             libraries.'spring-core',
+    )
+    testCompile(
+            libraries.'mockito-all',
     )
 }

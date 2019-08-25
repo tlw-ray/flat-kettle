@@ -1,0 +1,18 @@
+dependencies {
+    compile (
+            project(':reporting-libraries-libbase'),
+            project(':reporting-classic-core'),
+            libraries.'commons-logging',
+            libraries.'dom4j',
+            libraries.'commons-lang3',
+            libraries.'castor-core',
+            libraries.'castor-xml',
+            libraries.'castor-codegen',
+            libraries.'castor-xml-schema',
+            libraries.'com.springsource.org.exolab.castor.xml',
+    )
+    testCompile (
+//            project(path: ':reporting-classic-core', configuration: 'tests'),
+            libraries.'hamcrest-core',
+    )
+}

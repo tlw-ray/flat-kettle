@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<overlay xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         xmlns:HTML="http://www.w3.org/Profiles/XHTML-transitional" height="600" width="800"
+         xmlns:pen="http://www.pentaho.org/2008/xul">
+
+  <menupopup id="trans-graph-entry">
+    <menu id="dataservices" label="${DataServicePopupMenu.TITLE}" insertbefore="trans-graph-entry-mapping">
+      <menupopup id="dataservices-popup">
+        <menuitem id="dataservices-new"
+                  label="${DataServicePopupMenu.New.Label}" command="dataServiceStepHandler.newDataService()"/>
+        <menuitem id="dataservices-edit"
+                  label="${DataServicePopupMenu.Edit.Label}" command="dataServiceStepHandler.editDataService()"/>
+        <menuitem id="dataservices-delete"
+                  label="${DataServicePopupMenu.Delete.Label}" command="dataServiceStepHandler.deleteDataService()"/>
+        <menuseparator/>
+        <menuitem id="dataservices-test"
+                  label="${DataServicePopupMenu.Test.Label}" command="dataServiceStepHandler.testDataService()"/>
+        <menuseparator/>
+        <menuitem id="driverdetails"
+                  label="${DataServicePopupMenu.DriverDetails.Label}" command="dataServiceStepHandler.showDriverDetailsDialog()"/>
+      </menupopup>
+    </menu>
+  </menupopup>
+
+</overlay>

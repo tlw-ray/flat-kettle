@@ -1,0 +1,12 @@
+dependencies {
+    compile(
+            libraries.'xstream',
+    )
+    testCompile (
+            libraries.'jetty-server',
+            libraries.'javax.servlet-api',
+            libraries.'jetty-util',
+            libraries.'groovy-all',
+            libraries.'mockito-all',
+    )
+}

@@ -15,6 +15,6 @@ dependencies {
     )
     testCompile (
             libraries.'hamcrest-all',
-            libraries.'junit',
+            libraries.'mockito-all',
     )
 }

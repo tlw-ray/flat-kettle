@@ -3,4 +3,7 @@ dependencies {
             libraries.'reactive-streams',
             libraries.'rxjava',
     )
+    testCompile(
+            libraries.'mockito-all',
+    )
 }

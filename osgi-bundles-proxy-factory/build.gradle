@@ -8,4 +8,7 @@ dependencies {
             libraries.'slf4j-api',
             libraries.'org.apache.felix.framework',
     )
+    testCompile(
+            libraries.'mockito-all',
+    )
 }

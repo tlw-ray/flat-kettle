@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            libraries.'swt',
+            libraries.'jface',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

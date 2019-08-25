@@ -1,8 +1,11 @@
 dependencies {
     compile (
+            project(':osgi-bundles-requirejs-utils'),
             libraries.'closure-compiler',
             libraries.'org.apache.felix.fileinstall',
-            libraries.'pentaho-requirejs-utils',
             libraries.'pax-url-mvn',
+    )
+    testCompile(
+            libraries.'mockito-all',
     )
 }

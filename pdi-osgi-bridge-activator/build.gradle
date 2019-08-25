@@ -18,5 +18,6 @@ dependencies {
     testCompile (
         libraries.'logback-core',
         libraries.'logback-classic',
+        libraries.'mockito-all',
     )
 }

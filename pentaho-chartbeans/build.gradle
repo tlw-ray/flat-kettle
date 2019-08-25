@@ -1,0 +1,17 @@
+dependencies {
+    compile(
+            project(':pentaho-metadata'),
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libcss'),
+            project(':reporting-libraries-libxml'),
+            project(':pentaho-ofc4j-1.1.0'),
+            libraries.'jfreechart',
+            libraries.'commons-collections',
+            libraries.'xstream',
+//            libraries.'pentaho-ofc4j',
+            libraries.'jettison',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

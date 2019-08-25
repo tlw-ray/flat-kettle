@@ -1,6 +1,0 @@
-dependencies {
-    compile (
-        libraries.'org.apache.felix.framework',
-        libraries.'org.apache.karaf.bundle.core',
-    )
-}

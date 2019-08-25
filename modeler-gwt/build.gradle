@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':modeler-core'),
+            project(':commons-xul-gwt'),
+            project(':commons-gwt-widgets'),
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//            libraries.'powermock-api-mockito',
+//            libraries.'powermock-module-junit4',
+//            project(path: ':kettle-engine', configuration: 'tests'),
+//    )
+}

@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+        project(':commons-xul-core'),
+        libraries.'dom4j',
+    )
+    testCompile(
+            libraries.'jaxen',
+    )
+}

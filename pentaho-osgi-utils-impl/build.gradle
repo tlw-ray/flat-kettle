@@ -1,6 +1,0 @@
-dependencies {
-    compile (
-        libraries.'org.osgi.core',
-        libraries.'org.apache.karaf.bundle.core',
-    )
-}

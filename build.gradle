@@ -4,8 +4,9 @@ allprojects{
     repositories {
         mavenLocal()
         maven { url "http://maven.aliyun.com/nexus/content/groups/public/" }
-        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
+//        maven { url "https://raw.githubusercontent.com/tlw-ray/swt-maven-repository/master/docs/"}
         maven { url "http://nexus.pentaho.org/content/groups/omni/"}
+//        maven { url "http://maven.jahia.org/maven2/"} //for com.sun.tools 也可以通过配置CLASSPATH引入tools.jar解决
     }
 }
 
@@ -26,8 +27,6 @@ subprojects { subproj ->
     dependencies {
         testCompile(
             libraries.'junit',
-                //由于mockito-all包含了hamcrest-1.1的内容会导致kettle-engine项目需要依赖hamcrest-1.3一些包失效,而无法编译
-//            libraries.'mockito-all',
         )
     }
 
@@ -35,6 +34,15 @@ subprojects { subproj ->
     task testJar(type: Jar, dependsOn: testClasses) {
         baseName = "test-${project.archivesBaseName}"
         from sourceSets.test.output
+    }
+
+    task mymy{
+        doLast{
+            System.out.println("dependsOn.count = " + dependsOn.size())
+//            dependsOn.each(
+//                    println(it)
+//            )
+        }
     }
 
     configurations {

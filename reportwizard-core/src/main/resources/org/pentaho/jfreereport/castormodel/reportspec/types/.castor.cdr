@@ -1,0 +1,4 @@
+#Mon Jan 29 11:16:17 EST 2018
+--=listing properties --
+org.pentaho.jfreereport.castormodel.reportspec.types.ChartType=org.pentaho.jfreereport.castormodel.reportspec.types.descriptors.ChartTypeDescriptor
+org.pentaho.jfreereport.castormodel.reportspec.types.LegendLocation=org.pentaho.jfreereport.castormodel.reportspec.types.descriptors.LegendLocationDescriptor

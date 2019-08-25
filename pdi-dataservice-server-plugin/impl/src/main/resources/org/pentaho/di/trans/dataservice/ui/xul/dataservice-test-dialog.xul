@@ -1,0 +1,120 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/" type="text/css"?>
+<window id="dataservice-test-window" orient="vertical" height="600" width="800" xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" xmlns:pen="http://www.pentaho.org/2008/xul" onload="dataServiceTestController.init()">
+    <dialog id="dataservice-test-dialog"
+            title="${DataServiceTest.Dialog.Title}"
+            resizable="false"
+            height="700"
+            width="900"
+            appicon="images/data-services.svg"
+            buttons="accept"
+            ondialogaccept="dataServiceTestController.close()"
+            ondialogcancel="dataServiceTestController.close()"
+            buttonalign="end"
+            buttonlabelaccept="${DataServiceTest.Dialog.Close}"
+            padding="10">
+        <groupbox id="streaming-groupbox">
+            <caption label="${DataServiceTest.StreamingParameters.Title}"/>
+            <hbox align="center" >
+                <vbox width="10"/>
+                <vbox flex="1">
+                    <radiogroup>
+                        <radio id="time-based-radio"
+                               label="${DataServiceTest.StreamingParameters.Mode.TimeBased.Label}"/>
+                        <hbox height="10"/>
+                        <radio id="row-based-radio"
+                               label="${DataServiceTest.StreamingParameters.Mode.RowBased.Label}"/>
+                    </radiogroup>
+                </vbox>
+                <separator width="30" orient="vertical" />
+                <vbox flex="1">
+                    <label control="window-size" value="${DataServiceTest.StreamingParameters.Size.Title}" />
+                    <hbox>
+                        <textbox id="window-size" width="60" />
+                        <vbox width="5"/>
+                        <label id="window-size-time-unit"
+                               value="${DataServiceTest.StreamingParameters.TimeUnit.Label}" />
+                        <label id="window-size-row-unit"
+                               value="${DataServiceTest.StreamingParameters.RowUnit.Label}" />
+                    </hbox>
+                </vbox>
+                <vbox flex="1">
+                    <label control="window-every" value="${DataServiceTest.StreamingParameters.Every.Title}" />
+                    <hbox>
+                        <textbox id="window-every" width="60" />
+                        <vbox width="5"/>
+                        <label id="window-every-time-unit"
+                               value="${DataServiceTest.StreamingParameters.TimeUnit.Label}" />
+                        <label id="window-every-row-unit"
+                               value="${DataServiceTest.StreamingParameters.RowUnit.Label}" />
+                    </hbox>
+                </vbox>
+                <vbox flex="1">
+                    <label control="window-limit" value="${DataServiceTest.StreamingParameters.Limit.Title}" />
+                    <hbox>
+                        <textbox id="window-limit" width="60" />
+                        <vbox width="5"/>
+                        <label id="window-limit-time-unit"
+                               value="${DataServiceTest.StreamingParameters.TimeUnit.Label}" />
+                        <label id="window-limit-row-unit"
+                               value="${DataServiceTest.StreamingParameters.RowUnit.Label}" />
+                    </hbox>
+                </vbox>
+                <vbox width="15"/>
+            </hbox>
+            <hbox height="10"/>
+        </groupbox>
+        <label value="SQL:"/>
+        <textbox id='sql-textbox' multiline="true" height="100" value="{default text}"/>
+        <hbox align="right">
+            <spacer flex="1"/>
+            <button id="preview-opt-btn" label="${DataServiceTest.PreviewOptimization.Button}" onclick="dataServiceTestController.previewQueries()" />
+            <button id="exec-sql-btn" label="${DataServiceTest.Execute.Button}" onclick="dataServiceTestController.executeSql()"/>
+        </hbox>
+        <separator height="10" />
+        <hbox align="right" >
+            <vbox>
+                <label value="${DataServiceTest.LogLevel.Label}"/>
+                <menulist id="log-levels" width="150">
+                    <menupopup />
+                </menulist>
+            </vbox>
+            <spacer flex="1"/>
+            <vbox align="right">
+                <label value="${DataServiceTest.MaxRows.Label}"/>
+                <menulist id="maxrows-combo" width="60">
+                    <menupopup accesskey="ctrl-r" command="dataServiceTestController.executeSql()"/>
+                </menulist>
+            </vbox>
+        </hbox>
+        <tabbox flex="1" id="tabbox" selectedIndex="0">
+            <tabs>
+                <tab label="${DataServiceTest.Results.Tab}"/>
+                <tab label="${DataServiceTest.OptimizedQueries.Tab}" />
+                <tab label="${DataServiceTest.ServiceTransLog.Tab}" />
+                <tab label="${DataServiceTest.GenTransLog.Tab}" />
+                <tab label="${DataServiceTest.ServiceTransMetrics.Tab}" />
+                <tab label="${DataServiceTest.GenTransMetrics.Tab}" />
+            </tabs>
+            <tabpanels id="repository-panels-set" flex="1">
+                <tabpanel id="results-tab" flex="1"/>
+                <tabpanel>
+                    <textbox multiline="true" height="370" id="optimization-impact-info"  value=""/>
+                </tabpanel>
+                <tabpanel id="serviceTrans-log-tab" />
+                <tabpanel id="genTrans-log-tab" />
+                <tabpanel id="serviceTrans-metrics-tab" />
+                <tabpanel id="genTrans-metrics-tab" />
+            </tabpanels>
+        </tabbox>
+        <hbox align="right"  height="40">
+            <label  id="error-alert" width="700" />
+            <spacer flex="1"/>
+            <label id="elapsed-time"  />
+            <spacer flex="1"/>
+            <label id="rows-returned" />
+        </hbox>
+        <separator height="5"/>
+    </dialog>
+</window>
+

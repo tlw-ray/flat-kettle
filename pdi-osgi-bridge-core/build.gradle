@@ -31,5 +31,6 @@ dependencies {
 //            libraries.'pax-url-aether',
 //            libraries.'logback-core',
 //            libraries.'logback-classic',
+            libraries.'mockito-all',
     )
 }

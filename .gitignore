@@ -7,3 +7,6 @@ gradle/
 logs/
 *.iml
 system/
+**/*.jar
+**/*.class
+**/*.war

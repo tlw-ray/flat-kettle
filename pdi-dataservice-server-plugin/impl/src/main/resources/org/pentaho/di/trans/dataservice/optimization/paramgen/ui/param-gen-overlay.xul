@@ -1,0 +1,52 @@
+<overlay
+        xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+        xmlns:pen="http://www.pentaho.org/2008/xul"
+        >
+    <tabs id="opt_tabs">
+        <tab label="Query Pushdown"/>
+    </tabs>
+    <tabpanels id="opt_panels">
+        <tabpanel orient="horizontal" padding="10">
+            <vbox width="150">
+                <hbox>
+                    <label value="Parameters:"/>
+                    <spacer flex="1"/>
+
+                    <button id="param_gen_edit" image="ui/images/Edit.svg" disabled="true"
+                            onclick="paramGenCtrl.editParameter()"/>
+                    <button id="param_gen_add" image="ui/images/Add.svg"
+                            onclick="paramGenCtrl.addParameter()"/>
+                    <button id="param_gen_remove" image="ui/images/deleteSmall.svg" disabled="true"
+                            onclick="paramGenCtrl.removeParameter()"/>
+                </hbox>
+                <listbox flex="1" id="param_gen_list"/>
+            </vbox>
+            <vbox width="5"/>
+            <vbox flex="4">
+                <label value="Optimizations can be applied to Table Input and MongoDB Input steps"/>
+                <spacer/>
+                <label control="param_gen_step" value="Step Name:"/>
+                <hbox>
+                    <menulist id="param_gen_step" width="206" disabled="true">
+                        <menupopup/>
+                    </menulist>
+                </hbox>
+                <label control="param_gen_mapping" value="Definitions:"/>
+                <tree flex="1" id="param_gen_mapping" editable="true">
+                    <treecols>
+                        <treecol label="Data Service Field" editable="true"
+                                 pen:binding="sourceFieldName"/>
+                        <treecol label="Step Field" editable="true"
+                                 pen:binding="targetFieldName"/>
+                    </treecols>
+                    <treechildren/>
+                </tree>
+                <hbox>
+                    <checkbox id="param_gen_enabled" label="Disable This Parameter" disabled="true"/>
+                    <spacer flex="1"/>
+                    <button label="Get Optimizations" onclick="paramGenCtrl.runAutoGenerate()"/>
+                </hbox>
+            </vbox>
+        </tabpanel>
+    </tabpanels>
+</overlay>

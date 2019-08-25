@@ -2,9 +2,9 @@ dependencies {
     compile (
             project(':platform-api'),
             project(':platform-core'),
-            project(':pentaho-osgi-utils-api'),
+            project(':osgi-bundles-osgi-utils-api'),
+            project(':osgi-bundles-service-coordinator'),
             project(':pentaho-capability-manager'),
-            project(':pentaho-service-coordinator'),
             libraries.'org.osgi.core',
             libraries.'org.osgi.compendium',
             libraries.'slf4j-api',
@@ -17,6 +17,6 @@ dependencies {
             libraries.'slf4j-log4j12',
     )
     testCompile (
-            libraries.'junit',
+            libraries.'mockito-all',
     )
 }

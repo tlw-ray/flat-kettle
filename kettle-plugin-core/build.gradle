@@ -1,0 +1,14 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            project(path: ':kettle-core', configuration: 'tests'),
+            project(path: ':kettle-engine', configuration: 'tests'),
+            libraries.'test-jetty-servlet',
+    )
+}

@@ -1,0 +1,13 @@
+dependencies {
+    compile (
+            project(':commons-xul-core'),
+            project(':commons-gwt-widgets'),
+            libraries.'gwt-user',
+            libraries.'gwt-dev',
+            libraries.'gwt-incubator',
+            libraries.'gwt-dnd',
+    )
+//    testCompile(
+//            libraries.'jaxen',
+//    )
+}
