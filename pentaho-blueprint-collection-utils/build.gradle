@@ -1,0 +1,8 @@
+dependencies {
+    compile (
+            libraries.'guava',
+    )
+//    testCompile (
+//            libraries.'hamcrest-all',
+//    )
+}

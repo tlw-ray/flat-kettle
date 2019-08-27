@@ -1,0 +1,11 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':pentaho-blueprint-collection-utils'),
+            libraries.'slf4j-api',
+    )
+//    testCompile (
+//            libraries.'hamcrest-all',
+//    )
+}

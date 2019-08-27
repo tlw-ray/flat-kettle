@@ -1,7 +1,8 @@
 dependencies {
     compile (
-            project(':reporting-libraries-flute'),
             project(':reporting-libraries-libfonts'),
+            project(':reporting-libraries-flute'),
+            libraries.'commons-logging',
     )
     testCompile (
             libraries.'hamcrest-core',
