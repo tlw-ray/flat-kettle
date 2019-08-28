@@ -1,0 +1,533 @@
+@startuml
+
+class KettleObject{
+    long id;
+    String name;
+    String description;
+}
+class OdsLogJob {
+	int idJob;
+	String channelId;
+	String jobname;
+	String status;
+	BigDecimal linesRead;
+	BigDecimal linesWritten;
+	BigDecimal linesUpdated;
+	BigDecimal linesInput;
+	BigDecimal linesOutput;
+	BigDecimal linesRejected;
+	BigDecimal errors;
+	Date startdate;
+	Date enddate;
+	Date logdate;
+	Date depdate;
+	Date replaydate;
+	String logField;
+}
+class OdsLogJobChannel {
+	int idBatch;
+	String channelId;
+	Date logDate;
+	String loggingObjectType;
+	String objectName;
+	String objectCopy;
+	String repositoryDirectory;
+	String filename;
+	String objectId;
+	String objectRevision;
+	String parentChannelId;
+	String rootChannelId;
+}
+class OdsLogJobItem {
+	int idBatch;
+	String channelId;
+	Date logDate;
+	String transname;
+	String stepname;
+	BigDecimal linesRead;
+	BigDecimal linesWritten;
+	BigDecimal linesUpdated;
+	BigDecimal linesInput;
+	BigDecimal linesOutput;
+	BigDecimal linesRejected;
+	BigDecimal errors;
+	boolean result;
+	BigDecimal nrResultRows;
+	BigDecimal nrResultFiles;
+	String logField;
+	int copyNr;
+}
+class OdsLogTrans {
+	int idBatch;
+	String channelId;
+	String transname;
+	String status;
+	BigDecimal linesRead;
+	BigDecimal linesWritten;
+	BigDecimal linesUpdated;
+	BigDecimal linesInput;
+	BigDecimal linesOutput;
+	BigDecimal linesRejected;
+	BigDecimal errors;
+	Date startdate;
+	Date enddate;
+	Date logdate;
+	Date depdate;
+	Date replaydate;
+	String logField;
+}
+class OdsLogTransChannel {
+	int idBatch;
+	String channelId;
+	Date logDate;
+	String loggingObjectType;
+	String objectName;
+	String objectCopy;
+	String repositoryDirectory;
+	String filename;
+	String objectId;
+	String objectRevision;
+	String parentChannelId;
+	String rootChannelId;
+}
+class OdsLogTransMetrics {
+	int idBatch;
+	String channelId;
+	Date logDate;
+	Date metricsDate;
+	String metricsCode;
+	String metricsDescription;
+	String metricsSubject;
+	String metricsType;
+	BigDecimal metricsValue;
+}
+class OdsLogTransRun {
+	int idBatch;
+	int seqNr;
+	Date logdate;
+	String transname;
+	String stepname;
+	int stepCopy;
+	BigDecimal linesRead;
+	BigDecimal linesWritten;
+	BigDecimal linesUpdated;
+	BigDecimal linesInput;
+	BigDecimal linesOutput;
+	BigDecimal linesRejected;
+	BigDecimal errors;
+	BigDecimal inputBufferRows;
+	BigDecimal outputBufferRows;
+}
+class OdsLogTransStep {
+	int idBatch;
+	String channelId;
+	Date logDate;
+	String transname;
+	String stepname;
+	int stepCopy;
+	BigDecimal linesRead;
+	BigDecimal linesWritten;
+	BigDecimal linesUpdated;
+	BigDecimal linesInput;
+	BigDecimal linesOutput;
+	BigDecimal linesRejected;
+	BigDecimal errors;
+}
+class RCluster {
+	BigDecimal idCluster;
+	String name;
+	String basePort;
+	String socketsBufferSize;
+	String socketsFlushInterval;
+	boolean socketsCompressed;
+	boolean dynamicCluster;
+}
+class RClusterSlave {
+	BigDecimal idClusterSlave;
+	int idCluster;
+	int idSlave;
+}
+class RCondition {
+	BigDecimal idCondition;
+	int idConditionParent;
+	boolean negated;
+	String operator;
+	String leftName;
+	String conditionFunction;
+	String rightName;
+	int idValueRight;
+}
+class RDatabase {
+	BigDecimal idDatabase;
+	String name;
+	int idDatabaseType;
+	int idDatabaseContype;
+	String hostName;
+	String databaseName;
+	int port;
+	String username;
+	String password;
+	String servername;
+	String dataTbs;
+	String indexTbs;
+}
+class RDatabaseAttribute {
+	BigDecimal idDatabaseAttribute;
+	int idDatabase;
+	String code;
+	String valueStr;
+}
+class RDatabaseContype {
+	BigDecimal idDatabaseContype;
+	String code;
+	String description;
+}
+class RDatabaseType {
+	BigDecimal idDatabaseType;
+	String code;
+	String description;
+}
+class RDependency {
+	BigDecimal idDependency;
+	int idTransformation;
+	int idDatabase;
+	String tableName;
+	String fieldName;
+}
+class RDirectory {
+	BigDecimal idDirectory;
+	int idDirectoryParent;
+	String directoryName;
+}
+class RElement {
+	BigDecimal idElement;
+	int idElementType;
+	String name;
+}
+class RElementAttribute {
+	BigDecimal idElementAttribute;
+	int idElement;
+	int idElementAttributeParent;
+	String attrKey;
+	String attrValue;
+}
+class RElementType {
+	BigDecimal idElementType;
+	int idNamespace;
+	String name;
+	String description;
+}
+class RJob {
+	BigDecimal idJob;
+	int idDirectory;
+	String name;
+	String description;
+	String extendedDescription;
+	String jobVersion;
+	int jobStatus;
+	int idDatabaseLog;
+	String tableNameLog;
+	String createdUser;
+	Date createdDate;
+	String modifiedUser;
+	Date modifiedDate;
+	boolean useBatchId;
+	boolean passBatchId;
+	boolean useLogfield;
+	String sharedFile;
+}
+class RJobAttribute {
+	BigDecimal idJobAttribute;
+	int idJob;
+	int nr;
+	String code;
+	BigDecimal valueNum;
+	String valueStr;
+}
+class RJobHop {
+	BigDecimal idJobHop;
+	int idJob;
+	int idJobentryCopyFrom;
+	int idJobentryCopyTo;
+	boolean enabled;
+	boolean evaluation;
+	boolean unconditional;
+}
+class RJobLock {
+	BigDecimal idJobLock;
+	int idJob;
+	int idUser;
+	String lockMessage;
+	Date lockDate;
+}
+class RJobNote {
+	int idJob;
+	int idNote;
+}
+class RJobentry {
+	BigDecimal idJobentry;
+	int idJob;
+	int idJobentryType;
+	String name;
+	String description;
+}
+class RJobentryAttribute {
+	BigDecimal idJobentryAttribute;
+	int idJob;
+	int idJobentry;
+	int nr;
+	String code;
+	double valueNum;
+	String valueStr;
+}
+class RJobentryCopy {
+	BigDecimal idJobentryCopy;
+	int idJobentry;
+	int idJob;
+	int idJobentryType;
+	int nr;
+	int guiLocationX;
+	int guiLocationY;
+	boolean guiDraw;
+	boolean parallel;
+}
+class RJobentryDatabase {
+	int idJob;
+	int idJobentry;
+	int idDatabase;
+}
+class RJobentryType {
+	BigDecimal idJobentryType;
+	String code;
+	String description;
+}
+class RLog {
+	BigDecimal idLog;
+	String name;
+	int idLoglevel;
+	String logtype;
+	String filename;
+	String fileextention;
+	boolean addDate;
+	boolean addTime;
+	int idDatabaseLog;
+	String tableNameLog;
+}
+class RLoglevel {
+	BigDecimal idLoglevel;
+	String code;
+	String description;
+}
+class RNamespace {
+	BigDecimal idNamespace;
+	String name;
+}
+class RNote {
+	BigDecimal idNote;
+	String valueStr;
+	int guiLocationX;
+	int guiLocationY;
+	int guiLocationWidth;
+	int guiLocationHeight;
+	String fontName;
+	int fontSize;
+	boolean fontBold;
+	boolean fontItalic;
+	int fontColorRed;
+	int fontColorGreen;
+	int fontColorBlue;
+	int fontBackGroundColorRed;
+	int fontBackGroundColorGreen;
+	int fontBackGroundColorBlue;
+	int fontBorderColorRed;
+	int fontBorderColorGreen;
+	int fontBorderColorBlue;
+	boolean drawShadow;
+}
+class RPartition {
+	BigDecimal idPartition;
+	int idPartitionSchema;
+	String partitionId;
+}
+class RPartitionSchema {
+	BigDecimal idPartitionSchema;
+	String name;
+	boolean dynamicDefinition;
+	String partitionsPerSlave;
+}
+class RRepositoryLog {
+	BigDecimal idRepositoryLog;
+	String repVersion;
+	Date logDate;
+	String logUser;
+	String operationDesc;
+}
+class RSlave {
+	BigDecimal idSlave;
+	String name;
+	String hostName;
+	String port;
+	String webAppName;
+	String username;
+	String password;
+	String proxyHostName;
+	String proxyPort;
+	String nonProxyHosts;
+	boolean master;
+}
+class RStep {
+	BigDecimal idStep;
+	int idTransformation;
+	String name;
+	String description;
+	int idStepType;
+	boolean distribute;
+	int copies;
+	int guiLocationX;
+	int guiLocationY;
+	boolean guiDraw;
+	String copiesString;
+}
+class RStepAttribute {
+	BigDecimal idStepAttribute;
+	int idTransformation;
+	int idStep;
+	int nr;
+	String code;
+	BigDecimal valueNum;
+	String valueStr;
+}
+class RStepDatabase {
+	int idTransformation;
+	int idStep;
+	int idDatabase;
+}
+class RStepType {
+	BigDecimal idStepType;
+	String code;
+	String description;
+	String helptext;
+}
+class RTransAttribute {
+	BigDecimal idTransAttribute;
+	int idTransformation;
+	int nr;
+	String code;
+	BigDecimal valueNum;
+	String valueStr;
+}
+class RTransCluster {
+	BigDecimal idTransCluster;
+	int idTransformation;
+	int idCluster;
+}
+class RTransHop {
+	BigDecimal idTransHop;
+	int idTransformation;
+	int idStepFrom;
+	int idStepTo;
+	boolean enabled;
+}
+class RTransLock {
+	BigDecimal idTransLock;
+	int idTransformation;
+	int idUser;
+	String lockMessage;
+	Date lockDate;
+}
+class RTransNote {
+	int idTransformation;
+	int idNote;
+}
+class RTransPartitionSchema {
+	BigDecimal idTransPartitionSchema;
+	int idTransformation;
+	int idPartitionSchema;
+}
+class RTransSlave {
+	BigDecimal idTransSlave;
+	int idTransformation;
+	int idSlave;
+}
+class RTransStepCondition {
+	int idTransformation;
+	int idStep;
+	int idCondition;
+}
+class RTransformation {
+	BigDecimal idTransformation;
+	int idDirectory;
+	String name;
+	String description;
+	String extendedDescription;
+	String transVersion;
+	int transStatus;
+	int idStepRead;
+	int idStepWrite;
+	int idStepInput;
+	int idStepOutput;
+	int idStepUpdate;
+	int idDatabaseLog;
+	String tableNameLog;
+	boolean useBatchid;
+	boolean useLogfield;
+	int idDatabaseMaxdate;
+	String tableNameMaxdate;
+	String fieldNameMaxdate;
+	double offsetMaxdate;
+	double diffMaxdate;
+	String createdUser;
+	Date createdDate;
+	String modifiedUser;
+	Date modifiedDate;
+	int sizeRowset;
+}
+class RUser {
+	BigDecimal idUser;
+	String login;
+	String password;
+	String name;
+	String description;
+	boolean enabled;
+}
+class RValue {
+	BigDecimal idValue;
+	String name;
+	String valueType;
+	String valueStr;
+	boolean isNull;
+}
+class RVersion {
+	BigDecimal idVersion;
+	int majorVersion;
+	int minorVersion;
+	Date upgradeDate;
+	boolean isUpgrade;
+}
+
+
+
+'abstract class AbstractList
+'abstract AbstractCollection
+'interface List
+'interface Collection
+'
+'List <|-- AbstractList
+'Collection <|-- AbstractCollection
+'
+'Collection <|- List
+'AbstractCollection <|- AbstractList
+'AbstractList <|-- ArrayList
+'
+'class ArrayList {
+'Object[] elementData
+'size()
+'}
+'
+'enum TimeUnit {
+'DAYS
+'HOURS
+'MINUTES
+'}
+
+@enduml

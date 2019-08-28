@@ -20,7 +20,7 @@ ext.versions = [
         batik: '1.9.1',
         bean_matchers: '0.9',
         bcel: '5.1',
-        bouncycastle: '138',
+        bouncycastle: '1.38',
         browserlauncher2: '1.3',
         bsf: '2.4.0',
         bsh: '1.3.0',
@@ -92,7 +92,7 @@ ext.versions = [
         icu4j: '54.1.1',
         infobright:'3.4',
         ini4j:'0.5.1',
-        itext: '2.1.7',
+        itext: '2.1.4',//包含的三个类库版本1.38和138混杂
         jackess: '1.2.6',
         jackrabbit: '2.14.2',
         jackson: '2.7.9',
@@ -500,7 +500,7 @@ ext.libraries = [
         "jtds": "net.sourceforge.jtds:jtds:${versions.jtds}",
         "jxl": "jexcelapi:jxl:${versions.jxl}",
         "jzlib": "com.jcraft:jzlib:${versions.jzlib}",
-        "jug-lgpl": "jug:jug-lgpl:${versions.jug}",//aliyun仓库不包含此类，需要手动下载安装到maven仓库
+        "jug-lgpl": "org.safehaus.jug:jug-lgpl:${versions.jug}",//aliyun仓库不包含此类，需要手动下载安装到maven仓库
         "kfs": "net.sf.kosmosfs:kfs:${versions.kfs}",
         "knowledge-api": "org.drools:knowledge-api:${versions.drools}",
         "ldapjdk": "ldapjdk:ldapjdk:${versions.ldapjdk}",
@@ -608,6 +608,7 @@ ext.libraries = [
         "js": "rhino:js:${versions.js}",
 
         "pentaho-concurrent": "pentaho:pentaho-concurrent:1.0.0",
+        "pentaho-blueprint-collection-utils": "pentaho:pentaho-blueprint-collection-utils:${versions.pentaho}",
         "pentaho-commons-database-model": "org.pentaho:commons-database-model:${versions.pentaho}",
         "pentaho-platform-extensions":"pentaho:pentaho-platform-extensions:${versions.pentaho}",
         "pentaho-i18n-bundle": "pentaho:pentaho-i18n-bundle:${versions.pentaho}",
