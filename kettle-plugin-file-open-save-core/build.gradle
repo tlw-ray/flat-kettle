@@ -1,0 +1,28 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-dbdialog'),
+            project(':kettle-ui-swt'),
+            project(':pentaho-platform-extensions'),
+            project(':pentaho-i18n-bundle'),
+            project(':pentaho-i18n-webservice-bundle'),
+            project(':pdi-core-plugins-impl'),
+            libraries.'swt',
+            libraries.'jackson-jaxrs-json-provider',
+            libraries.'javax.servlet-api',
+            libraries.'angular',
+            libraries.'angular-i18n',
+            libraries.'requirejs-text',
+            libraries.'require-css',
+            libraries.'requirejs',
+            libraries.'dojo',
+            libraries.'json-simple',
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//            libraries.'test-jetty-servlet',
+//    )
+}

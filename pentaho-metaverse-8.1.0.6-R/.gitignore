@@ -1,0 +1,17 @@
+/target
+/.idea
+.classpath
+.project
+.settings/
+*.iml
+*.ipr
+*.iws
+/atlassian-ide-plugin.xml
+*test*.graphml
+*.log
+*.graphml
+tinkergraph-metadata.dat
+SampleData*.db
+*test*.json
+*test*.graphjson
+testGraph.csv

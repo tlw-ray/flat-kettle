@@ -1,0 +1,33 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':pentaho-metastore'),
+            project(':platform-core'),
+            project(':platform-api'),
+            project(':metaverse-api'),
+            libraries.'commons-vfs2',
+            libraries.'commons-io',
+            libraries.'commons-lang',
+            libraries.'json-simple',
+            libraries.'jackson-databind',
+            libraries.'poi',
+            libraries.'json-path',
+            libraries.'json-smart',
+            libraries.'swt',
+            libraries.'javax.servlet-api',
+            libraries.'guava',
+            libraries.'encoder',
+            libraries.'jsch',
+            libraries.'slf4j-api',
+            libraries.'slf4j-log4j12',
+            libraries.'blueprints-core',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

@@ -1,0 +1,20 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            libraries.'knowledge-api',
+            libraries.'drools-core',
+            libraries.'drools-compiler',
+            libraries.'mvel2',
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'xstream',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

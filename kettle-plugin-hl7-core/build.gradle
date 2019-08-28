@@ -1,0 +1,24 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            libraries.'swt',
+            libraries.'hapi-base',
+            libraries.'hapi-examples',
+            libraries.'hapi-structures-v21',
+            libraries.'hapi-structures-v22',
+            libraries.'hapi-structures-v23',
+            libraries.'hapi-structures-v231',
+            libraries.'hapi-structures-v24',
+            libraries.'hapi-structures-v25',
+            libraries.'hapi-structures-v251',
+            libraries.'hapi-structures-v26',
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//            libraries.'test-jetty-servlet',
+//    )
+}

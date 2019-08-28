@@ -1,0 +1,685 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+           xsi:schemaLocation="
+             http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+             ">
+
+
+  <!-- Put properties (for user config of lineage) here -->
+  <cm:property-placeholder persistent-id="pentaho.metaverse" update-strategy="reload" >
+    <cm:default-properties>
+      <cm:property name="lineage.execution.runtime" value="off"/>
+      <cm:property name="lineage.execution.output.folder" value="./pentaho-lineage-output"/>
+      <cm:property name="lineage.execution.generation.strategy" value="latest"/>
+      <cm:property name="lineage.resolve.external.resources" value="true"/>
+      <cm:property name="lineage.deduplicate.transformation.fields" value="true"/>
+      <cm:property name="lineage.adjust.external.resource.fields" value="true"/>
+      <!-- Used for testing ONLY - write delay in seconds -->
+      <cm:property name="lineage.delay" value="0"/>
+    </cm:default-properties>
+  </cm:property-placeholder>
+
+
+  <!-- Configure our graph using the SynchronizedGraphFactory and a configuration file -->
+  <bean id="MetaverseGraphImpl" class="org.pentaho.metaverse.graph.SynchronizedGraphFactory" factory-method="open">
+    <argument>
+      <map>
+        <entry key="blueprints.graph" value="com.tinkerpop.blueprints.impls.tg.TinkerGraph"/>
+      </map>
+    </argument>
+  </bean>
+
+  <!-- A single point of access for all metaverse osgi config properties -->
+  <bean id="metaverseConfig" class="org.pentaho.metaverse.impl.MetaverseConfig" scope="singleton">
+    <property name="executionRuntime" value="${lineage.execution.runtime}"/>
+    <property name="executionOutputFolder" value="${lineage.execution.output.folder}"/>
+    <property name="executionGenerationStrategy" value="${lineage.execution.generation.strategy}"/>
+    <property name="resolveExternalResources" value="${lineage.resolve.external.resources}"/>
+    <property name="deduplicateTransformationFields" value="${lineage.deduplicate.transformation.fields}"/>
+    <property name="adjustExternalResourceFields" value="${lineage.adjust.external.resource.fields}"/>
+    <!-- Used for testing ONLY - write delay in seconds -->
+    <property name="lineageDelay" value="${lineage.delay}"/>
+  </bean>
+  <service id="metaverseConfigService" interface="org.pentaho.metaverse.api.IMetaverseConfig" ref="metaverseConfig"/>
+
+  <bean id="MetaverseGraphImplPrototype" class="org.pentaho.metaverse.graph.SynchronizedGraphFactory" factory-method="open" scope="prototype">
+    <argument>
+      <map>
+        <entry key="blueprints.graph" value="com.tinkerpop.blueprints.impls.tg.TinkerGraph"/>
+      </map>
+    </argument>
+  </bean>
+
+  <bean id="lineageCollector" class="org.pentaho.metaverse.impl.VfsLineageCollector" scope="prototype">
+    <property name="outputFolder" value="${lineage.execution.output.folder}"/>
+  </bean>
+
+  <service id="lineageCollectorService" interface="org.pentaho.metaverse.api.ILineageCollector" ref="lineageCollector"/>
+
+  <bean id="IMetaverseBuilder" class="org.pentaho.metaverse.impl.MetaverseBuilder" scope="singleton">
+    <argument ref="MetaverseGraphImpl"/>
+  </bean>
+
+  <bean id="IMetaverseBuilderPrototype" class="org.pentaho.metaverse.impl.MetaverseBuilder" scope="prototype">
+    <argument ref="MetaverseGraphImplPrototype"/>
+  </bean>
+
+  <bean id="IMetaverseObjectFactory" class="org.pentaho.metaverse.api.MetaverseObjectFactory" scope="singleton"/>
+
+  <!-- Document Analyzers -->
+  <bean id="TransformationAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.TransformationAnalyzer">
+    <property name="stepAnalyzerProvider" ref="IStepAnalyzerProvider"/>
+  </bean>
+  <service id="transformationAnalyzerService"
+           interface="org.pentaho.metaverse.api.IClonableDocumentAnalyzer"
+           ref="TransformationAnalyzer"/>
+
+  <bean id="JobAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.JobAnalyzer">
+    <property name="jobEntryAnalyzerProvider" ref="IJobEntryAnalyzerProvider"/>
+  </bean>
+  <service id="jobAnalyzerService"
+           interface="org.pentaho.metaverse.api.IClonableDocumentAnalyzer"
+           ref="JobAnalyzer"/>
+
+  <reference-list id="documentAnalyzersRefList"
+                  interface="org.pentaho.metaverse.api.IDocumentAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IDocumentController" bind-method="addAnalyzer" unbind-method="removeAnalyzer"/>
+  </reference-list>
+
+  <reference-list id="clonableDocumentAnalyzersRefList"
+                  interface="org.pentaho.metaverse.api.IClonableDocumentAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IDocumentController" bind-method="addClonableAnalyzer"
+                        unbind-method="removeClonableAnalyzer"/>
+  </reference-list>
+  <!-- END - Document Analyzers -->
+
+  <!-- Connection Analyzers -->
+  <bean id="stepDatabaseConnectionAnalyzer"
+        class="org.pentaho.metaverse.api.analyzer.kettle.step.StepDatabaseConnectionAnalyzer">
+    <property name="metaverseBuilder" ref="IMetaverseBuilder"/>
+  </bean>
+  <service id="stepDatabaseConnectionAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.IDatabaseConnectionAnalyzer"
+           ref="stepDatabaseConnectionAnalyzer"/>
+
+  <bean id="jobEntryDatabaseConnectionAnalyzer"
+        class="org.pentaho.metaverse.api.analyzer.kettle.jobentry.JobEntryDatabaseConnectionAnalyzer">
+    <property name="metaverseBuilder" ref="IMetaverseBuilder"/>
+  </bean>
+  <service id="jobEntryDatabaseConnectionAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.IDatabaseConnectionAnalyzer"
+           ref="jobEntryDatabaseConnectionAnalyzer"/>
+
+  <bean id="mongoDbConnectionAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.MongoDbConnectionAnalyzer">
+    <property name="metaverseBuilder" ref="IMetaverseBuilder"/>
+  </bean>
+  <!-- END - Connection Analyzers -->
+
+  <!-- Step Analyzers -->
+  <bean id="TableOutputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.tableoutput.TableOutputStepAnalyzer">
+    <property name="connectionAnalyzer" ref="stepDatabaseConnectionAnalyzer"/>
+    <property name="externalResourceConsumer" ref="tableOutputERC"/>
+  </bean>
+
+  <bean id="tableInputStepAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.step.tableinput.TableInputStepAnalyzer">
+    <property name="connectionAnalyzer" ref="stepDatabaseConnectionAnalyzer"/>
+    <property name="externalResourceConsumer" ref="tableInputERC"/>
+  </bean>
+
+  <bean id="OldTextFileInputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.textfileinput.TextFileInputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="oldTextFileInputERC"/>
+  </bean>
+  <bean id="TextFileInputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.fileinput.text.TextFileInputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="textFileInputERC"/>
+  </bean>
+  <bean id="SelectValuesStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.selectvalues.SelectValuesStepAnalyzer"/>
+  <bean id="NumberRangeStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.numberrange.NumberRangeStepAnalyzer"/>
+  <bean id="ValueMapperStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.valuemapper.ValueMapperStepAnalyzer"/>
+
+  <bean id="TextFileOutputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.textfileoutput.TextFileOutputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="textFileOutputERC"/>
+  </bean>
+
+  <bean id="MergeJoinStepAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.step.mergejoin.MergeJoinStepAnalyzer"/>
+  <bean id="StreamLookupStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.streamlookup.StreamLookupStepAnalyzer"/>
+  <bean id="CalculatorStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.calculator.CalculatorStepAnalyzer"/>
+  <bean id="ExcelInputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.excelinput.ExcelInputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="excelInputERC"/>
+  </bean>
+  <bean id="GroupByStepAnalyzer" class="org.pentaho.metaverse.analyzer.kettle.step.groupby.GroupByStepAnalyzer"/>
+  <bean id="MongoDbInputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.mongodbinput.MongoDbInputStepAnalyzer">
+    <property name="connectionAnalyzer" ref="mongoDbConnectionAnalyzer"/>
+    <property name="externalResourceConsumer" ref="mongoDbInputERC"/>
+  </bean>
+  <bean id="ExcelOutputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.exceloutput.ExcelOutputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="excelOutputERC"/>
+  </bean>
+  <bean id="SplitFieldsStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.splitfields.SplitFieldsStepAnalyzer"/>
+  <bean id="TransExecutorStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.transexecutor.TransExecutorStepAnalyzer"/>
+  <bean id="JobExecutorStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.jobexecutor.JobExecutorStepAnalyzer"/>
+  <bean id="RowsToResultStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.rowstoresult.RowsToResultStepAnalyzer"/>
+  <bean id="RowsFromResultStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.rowsfromresult.RowsFromResultStepAnalyzer"/>
+
+  <bean id="StringOperationsStepAnalyzer" 
+  		  class="org.pentaho.metaverse.analyzer.kettle.step.stringoperations.StringOperationsStepAnalyzer"/>
+  
+  <bean id="StringsCutStepAnalyzer" 
+  		  class="org.pentaho.metaverse.analyzer.kettle.step.stringscut.StringsCutStepAnalyzer"/>
+
+  <bean id="CsvFileInputStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.csvfileinput.CsvFileInputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="csvInputERC"/>
+  </bean>
+
+  <bean id="StringsReplaceStepAnalyzer" 
+  		  class="org.pentaho.metaverse.analyzer.kettle.step.stringsreplace.StringsReplaceStepAnalyzer"/>
+
+  <bean id="FixedFileInputStepAnalyzer"
+  		  class="org.pentaho.metaverse.analyzer.kettle.step.fixedfileinput.FixedFileInputStepAnalyzer">
+    <property name="externalResourceConsumer" ref="fixedFileInputERC"/>
+  </bean>
+
+  <bean id="FilterRowsStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.filterrows.FilterRowsStepAnalyzer"/>
+
+  <bean id="HTTPClientStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.httpclient.HTTPClientStepAnalyzer">
+    <property name="externalResourceConsumer" ref="httpClientERC"/>
+  </bean>
+
+  <bean id="RestClientStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.rest.RestClientStepAnalyzer">
+    <property name="externalResourceConsumer" ref="restClientERC"/>
+  </bean>
+
+  <bean id="HTTPPostStepAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.step.httppost.HTTPPostStepAnalyzer">
+    <property name="externalResourceConsumer" ref="httpPostERC"/>
+  </bean>
+
+  <service id="tableOutputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="TableOutputStepAnalyzer"/>
+
+  <service id="oldTextFileInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="OldTextFileInputStepAnalyzer"/>
+  <service id="textFileInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="TextFileInputStepAnalyzer"/>
+
+  <service id="selectValuesStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="SelectValuesStepAnalyzer"/>
+
+  <service id="numberRangeStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="NumberRangeStepAnalyzer"/>
+
+  <service id="valueMapperStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="ValueMapperStepAnalyzer"/>
+
+  <service id="textFileOutputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="TextFileOutputStepAnalyzer"/>
+
+  <service id="mergeJoinStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="MergeJoinStepAnalyzer"/>
+
+  <service id="streamLookupStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="StreamLookupStepAnalyzer"/>
+
+  <service id="calculatorStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IClonableStepAnalyzer"
+           ref="CalculatorStepAnalyzer"/>
+
+  <service id="excelInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="ExcelInputStepAnalyzer"/>
+
+  <service id="groupByStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="GroupByStepAnalyzer"/>
+
+  <service id="mongoDbInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="MongoDbInputStepAnalyzer"/>
+
+  <service id="excelOutputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="ExcelOutputStepAnalyzer"/>
+           
+  <service id="stringOperationsStepAnalyzer"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="StringOperationsStepAnalyzer"/>
+  
+  <service id="stringsCutStepAnalyzer"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="StringsCutStepAnalyzer"/>
+
+  <service id="stringsReplaceStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="StringsReplaceStepAnalyzer"/>
+           
+  <service id="splitFieldsStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="SplitFieldsStepAnalyzer"/>
+
+  <service id="transExecutorStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="TransExecutorStepAnalyzer"/>
+
+  <service id="jobExecutorStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="JobExecutorStepAnalyzer"/>
+
+  <service id="rowsToResultStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="RowsToResultStepAnalyzer"/>
+
+  <service id="rowsFromResultStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="RowsFromResultStepAnalyzer"/>
+
+  <service id="csvFileInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IClonableStepAnalyzer"
+           ref="CsvFileInputStepAnalyzer"/>
+
+  <service id="fixedFileInputStepAnalyzerService"
+  		   interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+  		   ref="FixedFileInputStepAnalyzer"/>
+  		   
+  <service id="filterRowsStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="FilterRowsStepAnalyzer"/>
+
+  <service id="httpClientStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="HTTPClientStepAnalyzer"/>
+
+  <service id="restClientStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="RestClientStepAnalyzer"/>
+
+  <service id="httpPostStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="HTTPPostStepAnalyzer"/>
+
+  <service id="tableInputStepAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+           ref="tableInputStepAnalyzer"/>
+
+  <reference-list id="stepAnalyzerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IStepAnalyzerProvider" bind-method="addAnalyzer" unbind-method="removeAnalyzer"/>
+  </reference-list>
+
+  <reference-list id="clonableStepAnalyzerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.step.IClonableStepAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IStepAnalyzerProvider" bind-method="addClonableAnalyzer" unbind-method="removeClonableAnalyzer"/>
+  </reference-list>
+  <!-- END - Step Analyzers -->
+
+
+  <!-- Job Entry Analyzers -->
+  <bean id="TransJobEntryAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.jobentry.transjob.TransJobEntryAnalyzer"/>
+
+  <service id="transJobEntryAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IClonableJobEntryAnalyzer"
+           ref="TransJobEntryAnalyzer"/>
+
+  <bean id="JobJobEntryAnalyzer"
+        class="org.pentaho.metaverse.analyzer.kettle.jobentry.job.JobJobEntryAnalyzer"/>
+
+  <service id="jobJobEntryAnalyzerService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IJobEntryAnalyzer"
+           ref="JobJobEntryAnalyzer"/>
+
+  <reference-list id="jobEntryAnalyzerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IJobEntryAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IJobEntryAnalyzerProvider" bind-method="addAnalyzer" unbind-method="removeAnalyzer"/>
+  </reference-list>
+
+  <reference-list id="clonableJobEntryAnalyzerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IClonableJobEntryAnalyzer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IJobEntryAnalyzerProvider" bind-method="addClonableAnalyzer" unbind-method="removeClonableAnalyzer"/>
+  </reference-list>
+
+  <!-- END - Job Entry Analyzers -->
+
+  <!-- External Resource Consumers -->
+
+  <bean id="tableOutputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.tableoutput.TableOutputExternalResourceConsumer"/>
+  <bean id="oldTextFileInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.textfileinput.TextFileInputExternalResourceConsumer"/>
+  <bean id="textFileInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.fileinput.text.TextFileInputExternalResourceConsumer"/>
+  <bean id="textFileOutputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.textfileoutput.TextFileOutputExternalResourceConsumer"/>
+  <bean id="excelInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.excelinput.ExcelInputExternalResourceConsumer"/>
+  <bean id="excelOutputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.exceloutput.ExcelOutputExternalResourceConsumer"/>
+  <bean id="csvInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.csvfileinput.CsvFileInputExternalResourceConsumer"/>
+  <bean id="fixedFileInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.fixedfileinput.FixedFileInputExternalResourceConsumer"/>
+  <bean id="httpClientERC" scope="singleton"
+		class="org.pentaho.metaverse.analyzer.kettle.step.httpclient.HTTPClientExternalResourceConsumer"/>
+  <bean id="restClientERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.rest.RestClientExternalResourceConsumer"/>
+  <bean id="httpPostERC" scope="singleton"
+		class="org.pentaho.metaverse.analyzer.kettle.step.httppost.HTTPPostExternalResourceConsumer"/>
+  <bean id="mongoDbInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.mongodbinput.MongoDbInputExternalResourceConsumer"/>
+  <bean id="tableInputERC" scope="singleton"
+        class="org.pentaho.metaverse.analyzer.kettle.step.tableinput.TableInputExternalResourceConsumer"/>
+
+  <service id="tableOutputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="tableOutputERC"/>
+
+  <service id="oldTextFileInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="oldTextFileInputERC"/>
+  <service id="textFileInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="textFileInputERC"/>
+
+  <service id="textFileOutputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="textFileOutputERC"/>
+
+  <service id="excelInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="excelInputERC"/>
+
+  <service id="excelOutputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="excelOutputERC"/>
+
+  <service id="csvInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="csvInputERC"/>
+
+  <service id="fixedFileInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="fixedFileInputERC"/>
+
+  <service id="httpClientERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="httpClientERC"/>
+
+  <service id="restClientERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="restClientERC"/>
+
+  <service id="httpPostERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="httpPostERC"/>
+
+  <service id="mongoDbInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="mongoDbInputERC"/>
+
+  <service id="tableInputERCService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+           ref="tableInputERC"/>
+
+  <reference-list id="stepExternalResourceConsumerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepExternalResourceConsumer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IStepExternalResourceConsumerProvider"
+                        bind-method="addExternalResourceConsumer"
+                        unbind-method="removeExternalResourceConsumer"/>
+  </reference-list>
+
+  <bean id="IStepExternalResourceConsumerProvider"
+        class="org.pentaho.metaverse.analyzer.kettle.step.StepExternalResourceConsumerProvider"
+        scope="singleton">
+    <property name="externalResourceConsumers" ref="stepExternalResourceConsumerRefList"/>
+  </bean>
+
+
+  <reference-list id="jobEntryExternalResourceConsumerRefList"
+                  interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IJobEntryExternalResourceConsumer"
+                  member-type="service-object"
+                  availability="optional">
+    <reference-listener ref="IJobEntryExternalResourceConsumerProvider"
+                        bind-method="addExternalResourceConsumer"
+                        unbind-method="removeExternalResourceConsumer"/>
+  </reference-list>
+  <bean id="IJobEntryExternalResourceConsumerProvider"
+        class="org.pentaho.metaverse.analyzer.kettle.jobentry.JobEntryExternalResourceConsumerProvider"
+        scope="singleton">
+    <property name="externalResourceConsumers" ref="jobEntryExternalResourceConsumerRefList"/>
+  </bean>
+  <!-- END - External Resource Consumers -->
+
+  <!-- JSON serialization config -->
+  <bean id="lineageRepo" class="org.pentaho.metaverse.impl.model.kettle.LineageRepository" scope="singleton"/>
+  <bean id="lineageReadRepo" class="org.pentaho.metaverse.impl.model.kettle.LineageRepository" scope="singleton"/>
+
+  <bean id="baseStepMetaJsonSerializer" class="org.pentaho.metaverse.impl.model.kettle.json.BaseStepMetaJsonSerializer"
+        scope="singleton">
+    <argument value="org.pentaho.di.trans.step.BaseStepMeta" type="java.lang.Class"/>
+    <argument ref="lineageRepo"/>
+    <property name="stepAnalyzerProvider" ref="IStepAnalyzerProvider"/>
+  </bean>
+  <bean id="tableOutputStepMetaJsonSerializer"
+        class="org.pentaho.metaverse.impl.model.kettle.json.TableOutputStepMetaJsonSerializer" scope="singleton">
+    <argument value="org.pentaho.di.trans.steps.tableoutput.TableOutputMeta" type="java.lang.Class"/>
+    <argument ref="lineageRepo"/>
+    <property name="stepAnalyzerProvider" ref="IStepAnalyzerProvider"/>
+  </bean>
+  <bean id="transMetaJsonSerializer" class="org.pentaho.metaverse.impl.model.kettle.json.TransMetaJsonSerializer"
+        scope="singleton">
+    <argument value="org.pentaho.di.trans.TransMeta" type="java.lang.Class"/>
+    <property name="lineageRepository" ref="lineageRepo"/>
+  </bean>
+
+
+  <bean id="jobEntryBaseJsonSerializer" class="org.pentaho.metaverse.impl.model.kettle.json.JobEntryBaseJsonSerializer"
+        scope="singleton">
+    <argument value="org.pentaho.di.job.entry.JobEntryBase" type="java.lang.Class"/>
+    <property name="lineageRepository" ref="lineageRepo"/>
+  </bean>
+  <bean id="jobMetaJsonSerializer" class="org.pentaho.metaverse.impl.model.kettle.json.JobMetaJsonSerializer"
+        scope="singleton">
+    <argument value="org.pentaho.di.job.JobMeta" type="java.lang.Class"/>
+    <property name="lineageRepository" ref="lineageRepo"/>
+  </bean>
+
+  <bean id="transMetaJsonDeserializer" class="org.pentaho.metaverse.impl.model.kettle.json.TransMetaJsonDeserializer"
+        scope="singleton">
+    <argument value="org.pentaho.di.trans.TransMeta" type="java.lang.Class"/>
+    <argument ref="lineageReadRepo"/>
+  </bean>
+
+  <bean id="kettleObjectMapper" class="org.pentaho.metaverse.impl.model.kettle.json.KettleObjectMapper"
+        scope="singleton">
+    <argument>
+      <list>
+        <ref component-id="baseStepMetaJsonSerializer"/>
+        <ref component-id="tableOutputStepMetaJsonSerializer"/>
+        <ref component-id="transMetaJsonSerializer"/>
+        <ref component-id="jobEntryBaseJsonSerializer"/>
+        <ref component-id="jobMetaJsonSerializer"/>
+      </list>
+    </argument>
+    <argument>
+      <list>
+        <ref component-id="transMetaJsonDeserializer"/>
+      </list>
+    </argument>
+  </bean>
+
+  <service id="kettleObjectMapperService" interface="org.pentaho.metaverse.impl.model.kettle.json.KettleObjectMapper"
+           ref="kettleObjectMapper"/>
+
+
+  <bean id="IDocumentController" class="org.pentaho.metaverse.impl.DocumentController" scope="singleton">
+    <property name="metaverseBuilder" ref="IMetaverseBuilder"/>
+    <property name="metaverseObjectFactory" ref="IMetaverseObjectFactory"/>
+    <property name="documentAnalyzers" ref="documentAnalyzersRefList"/>
+    <property name="clonableDocumentAnalyzers" ref="clonableDocumentAnalyzersRefList"/>
+  </bean>
+
+  <!-- Make the doc controller available to the system -->
+  <service id="documentControllerService" interface="org.pentaho.metaverse.api.IDocumentController"
+           ref="IDocumentController"/>
+
+  <bean id="IStepAnalyzerProvider" class="org.pentaho.metaverse.analyzer.kettle.step.StepAnalyzerProvider"
+        scope="singleton">
+    <property name="stepAnalyzers" ref="stepAnalyzerRefList"/>
+    <property name="clonableStepAnalyzers" ref="clonableStepAnalyzerRefList"/>
+  </bean>
+
+  <service id="IStepAnalyzerProviderService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.step.IStepAnalyzerProvider"
+           ref="IStepAnalyzerProvider"/>
+
+  <bean id="IJobEntryAnalyzerProvider" class="org.pentaho.metaverse.analyzer.kettle.jobentry.JobEntryAnalyzerProvider"
+        scope="singleton">
+    <property name="jobEntryAnalyzers" ref="jobEntryAnalyzerRefList"/>
+    <property name="clonableJobEntryAnalyzers" ref="clonableJobEntryAnalyzerRefList"/>
+  </bean>
+
+  <service id="IJobEntryAnalyzerProviderService"
+           interface="org.pentaho.metaverse.api.analyzer.kettle.jobentry.IJobEntryAnalyzerProvider"
+           ref="IJobEntryAnalyzerProvider"/>
+
+  <bean id="IMetaverseReader" class="org.pentaho.metaverse.graph.BlueprintsGraphMetaverseReader" scope="singleton">
+    <argument ref="MetaverseGraphImpl"/>
+  </bean>
+
+  <service id="IMetaverseReaderService" interface="org.pentaho.metaverse.api.IMetaverseReader" ref="IMetaverseReader"/>
+
+  <!-- Lineage writers -->
+  <bean id="graphCsvWriter" class="org.pentaho.metaverse.graph.GraphCsvWriter"/>
+  <bean id="graphSONWriter" class="org.pentaho.metaverse.graph.GraphSONWriter"/>
+  <bean id="graphMLWriter" class="org.pentaho.metaverse.graph.GraphMLWriter"/>
+
+  <bean id="lineageWriter" class="org.pentaho.metaverse.impl.VfsLineageWriter" scope="prototype">
+    <property name="graphWriter" ref="graphMLWriter"/>
+    <property name="outputFolder" value="${lineage.execution.output.folder}"/>
+    <property name="outputStrategy" value="${lineage.execution.generation.strategy}"/>
+  </bean>
+
+  <bean id="IDocumentLocatorProvider" class="org.pentaho.metaverse.impl.MetaverseDocumentLocatorProvider"
+        scope="singleton">
+    <argument>
+      <set>
+        <ref component-id="DIRepositoryLocator"/>
+        <!--<ref component-id="FileSystemLocator"/>-->
+      </set>
+    </argument>
+  </bean>
+
+  <service id="IDocumentLocatorProviderService" interface="org.pentaho.metaverse.api.IDocumentLocatorProvider" ref="IDocumentLocatorProvider"/>
+
+  <!-- TransRuntime extension point -->
+  <bean id="transRuntime" scope="singleton" class="org.pentaho.metaverse.analyzer.kettle.extensionpoints.trans.TransformationRuntimeExtensionPoint">
+    <property name="documentAnalyzer" ref="TransformationAnalyzer"/>
+    <property name="lineageWriter" ref="lineageWriter"/>
+    <property name="runtimeEnabled" value="${lineage.execution.runtime}"/>
+  </bean>
+  <bean id="transRuntimePlugin" scope="singleton" class="org.pentaho.di.osgi.OSGIPlugin">
+    <property name="mainType" value="org.pentaho.di.core.extension.ExtensionPointInterface"/>
+    <property name="name" value="TransformationStartThreads"/>
+    <property name="ID" value="transRuntimeMetaverse"/>
+    <property name="description" value="Creates execution profiles when transformations run"/>
+    <property name="pluginTypeInterface" value="org.pentaho.di.core.extension.ExtensionPointPluginType"/>
+    <property name="category" value="Data Lineage"/>
+    <property name="classToBeanMap">
+      <map>
+        <entry key="org.pentaho.di.core.extension.ExtensionPointInterface" value="transRuntime"/>
+        <entry key="org.pentaho.di.trans.TransListener" value="transRuntime"/>
+      </map>
+    </property>
+  </bean>
+  <service id="transRuntimePluginService" interface="org.pentaho.di.core.plugins.PluginInterface" ref="transRuntimePlugin">
+    <service-properties>
+      <entry key="PluginType" value="org.pentaho.di.core.extension.ExtensionPointPluginType"/>
+    </service-properties>
+  </service>
+
+  <!-- JobRuntime extension point -->
+  <bean id="jobRuntime" scope="singleton" class="org.pentaho.metaverse.analyzer.kettle.extensionpoints.job.JobRuntimeExtensionPoint">
+    <property name="documentAnalyzer" ref="JobAnalyzer"/>
+    <property name="lineageWriter" ref="lineageWriter"/>
+    <property name="runtimeEnabled" value="${lineage.execution.runtime}"/>
+  </bean>
+  <bean id="jobRuntimePlugin" scope="singleton" class="org.pentaho.di.osgi.OSGIPlugin">
+    <property name="mainType" value="org.pentaho.di.core.extension.ExtensionPointInterface"/>
+    <property name="name" value="JobStart"/>
+    <property name="ID" value="jobRuntimeMetaverse"/>
+    <property name="description" value="Creates execution profiles when jobs run"/>
+    <property name="pluginTypeInterface" value="org.pentaho.di.core.extension.ExtensionPointPluginType"/>
+    <property name="category" value="Data Lineage"/>
+    <property name="classToBeanMap">
+      <map>
+        <entry key="org.pentaho.di.core.extension.ExtensionPointInterface" value="jobRuntime"/>
+        <entry key="org.pentaho.di.job.JobListener" value="jobRuntime"/>
+      </map>
+    </property>
+  </bean>
+  <service id="jobRuntimePluginService" interface="org.pentaho.di.core.plugins.PluginInterface" ref="jobRuntimePlugin">
+    <service-properties>
+      <entry key="PluginType" value="org.pentaho.di.core.extension.ExtensionPointPluginType"/>
+    </service-properties>
+  </service>
+
+
+  <!-- DI Repository config if ever needed/desired -->
+  <bean id="DIRepositoryLocator" class="org.pentaho.metaverse.locator.DIRepositoryLocator" scope="prototype">
+    <argument>
+      <list>
+        <ref component-id="IDocumentController"/>
+      </list>
+    </argument>
+    <property name="repositoryId" value="DI_REPO"/>
+    <property name="metaverseBuilder" ref="IMetaverseBuilder"/>
+  </bean>
+
+  <bean id="lineageClient" class="org.pentaho.metaverse.client.LineageClient" scope="singleton"/>
+  <service id="lineageClientService" interface="org.pentaho.metaverse.api.ILineageClient" ref="lineageClient"/>
+
+</blueprint>

@@ -1,0 +1,19 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'aws-java-sdk-core',
+            libraries.'aws-java-sdk-s3',
+            libraries.'java-xmlbuilder',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+    )
+}

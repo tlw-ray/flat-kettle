@@ -15,6 +15,7 @@ subprojects { subproj ->
     apply plugin: 'idea'
     apply plugin: 'maven'
 
+
     group = 'com.winning.dtc.kettle'
 
     sourceCompatibility = 1.8
@@ -36,19 +37,11 @@ subprojects { subproj ->
         from sourceSets.test.output
     }
 
-    task mymy{
-        doLast{
-            System.out.println("dependsOn.count = " + dependsOn.size())
-//            dependsOn.each(
-//                    println(it)
-//            )
-        }
-    }
-
+    //将测试部分导出为jar, 有的测试会依赖其他包的测试
     configurations {
         tests
     }
-
+    //将测试部分导出为jar, 有的测试会依赖其他包的测试
     artifacts {
         tests testJar
     }

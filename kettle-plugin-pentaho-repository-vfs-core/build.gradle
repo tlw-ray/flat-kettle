@@ -1,0 +1,15 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':platform-repository'),
+            project(':kettle-plugin-repositories-core'),
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//            libraries.'test-jetty-servlet',
+//    )
+}
