@@ -2,13 +2,15 @@ dependencies {
     compile (
             project(':kettle-core'),
             project(':kettle-engine'),
-            project(':osgi-bundles-kettle-repository-locator'),
             project(':platform-api'),
             project(':platform-core'),
             project(':pentaho-blueprint-collection-utils'),
+            project(':osgi-bundles-kettle-repository-locator'),
+            project(':osgi-bundles-metastore-locator-api'),
             libraries.'slf4j-api',
     )
     testCompile (
             libraries.'hamcrest-all',
+            libraries.'mockito-all',
     )
 }

@@ -1,0 +1,18 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'commons-vfs2',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'hamcrest-core',
+            libraries.'mockito-all',
+            libraries.'org.jacoco.agent',
+    )
+}

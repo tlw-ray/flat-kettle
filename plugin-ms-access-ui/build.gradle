@@ -1,0 +1,14 @@
+dependencies {
+    compile (
+            project(':plugin-ms-access-impl'),
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            libraries.'swt',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

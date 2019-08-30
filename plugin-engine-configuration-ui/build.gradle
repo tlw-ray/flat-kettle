@@ -1,0 +1,19 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':kettle-engine-ext-api'),
+            project(':plugin-engine-configuration-impl'),
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'elasticsearch',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'mockito-core',
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+            libraries.'powermock-module-testng',
+    )
+}

@@ -1,0 +1,20 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':plugin-mongo-utils'),
+            project(':kettle-engine'),
+            project(':kettle-engine'),
+            project(':kettle-engine'),
+            project(':kettle-engine'),
+            libraries.'mongo-java-driver',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'easymock',
+            libraries.'java-hamcrest',
+            libraries.'javax.servlet-api',
+            libraries.'xercesImpl',
+    )
+}

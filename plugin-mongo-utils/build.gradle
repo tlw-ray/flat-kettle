@@ -1,0 +1,8 @@
+dependencies {
+    compile (
+            libraries.'mongo-java-driver',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

@@ -1,0 +1,26 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':metaverse-api'),
+            project(':kettle-ui-swt'),
+            libraries.'javax.servlet-api',
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'json-simple',
+            libraries.'guava',
+            libraries.'jsr305',
+            libraries.'commons-io',
+            libraries.'batik-js',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'java-hamcrest',
+            libraries.'mockito-all',
+            libraries.'powermock-module-junit4',
+            libraries.'powermock-api-mockito',
+    )
+}
+

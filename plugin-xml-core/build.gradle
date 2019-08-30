@@ -1,0 +1,23 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':metaverse-api'),
+            project(':plugin-core-impl'),
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'saxon',
+            libraries.'dom4j',
+            libraries.'poi',
+            libraries.'javax.servlet-api',
+            libraries.'saxon-dom',
+            libraries.'jaxen',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

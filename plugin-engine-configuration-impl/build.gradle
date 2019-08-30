@@ -1,0 +1,21 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':pentaho-metastore'),
+            project(':osgi-bundles-metastore-locator-api'),
+            project(':pentaho-capability-manager'),
+            project(':plugin-engine-configuration-api'),
+            libraries.'swt',
+            libraries.'jface',
+            libraries.'org.apache.felix.configadmin',
+            libraries.'org.apache.felix.main',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

@@ -1,0 +1,20 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':kettle-engine'),
+            project(':plugin-xml-core'),
+            project(':plugin-core-impl'),
+            libraries.'commons-codec',
+            libraries.'httpclient',
+            libraries.'commons-logging',
+            libraries.'jug-lgpl',
+    )
+//    provided (
+//
+//    )
+//    testCompile (
+//            libraries.'test-jetty-servlet',
+//    )
+}

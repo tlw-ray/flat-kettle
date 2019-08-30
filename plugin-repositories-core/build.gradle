@@ -1,0 +1,36 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-ui-swt'),
+            project(':pentaho-metastore'),
+            project(':platform-extensions'),
+            project(':pentaho-vfs-browser'),
+            project(':platform-extensions'),
+            project(':osgi-bundles-i18n-bundle'),
+            project(':osgi-bundles-i18n-webservice-bundle'),
+            libraries.'jackson-jaxrs-json-provider',
+            libraries.'jquery',
+            libraries.'angular',
+            libraries.'angular-i18n',
+            libraries.'angular-route',
+            libraries.'angular-sanitize',
+            libraries.'angular-translate',
+            libraries.'angular-animate',
+            libraries.'javax.ws.rs-api',
+            libraries.'javax.servlet-api',
+            libraries.'org.osgi.core',
+            libraries.'org.osgi.compendium',
+            libraries.'pax-web-spi',
+            libraries.'org.apache.karaf.kar.core',
+            libraries.'json-simple',
+            libraries.'commons-vfs2',
+            libraries.'org.eclipse.core.commands',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

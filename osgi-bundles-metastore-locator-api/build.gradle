@@ -5,7 +5,7 @@ dependencies {
             project(':pentaho-blueprint-collection-utils'),
             libraries.'slf4j-api',
     )
-//    testCompile (
-//            libraries.'hamcrest-all',
-//    )
+    testCompile (
+            libraries.'mockito-all',
+    )
 }

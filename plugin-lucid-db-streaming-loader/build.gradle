@@ -1,0 +1,22 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':kettle-dbdialog'),
+            project(':kettle-ui-swt'),
+            project(':kettle-engine'),
+            project(':kettle-gpload-plugin-core'),
+            project(':plugin-xml-core'),
+            project(':plugin-core-impl'),
+            libraries.'nekohtml',
+            libraries.'sshd-sftp',
+            libraries.'ftpserver-core',
+            libraries.'bcprov-jdk14',
+    )
+//    provided (
+//
+//    )
+    testCompile (
+            libraries.'test-jetty-servlet',
+    )
+}
