@@ -5,10 +5,7 @@ dependencies {
             project(':kettle-ui-swt'),
             libraries.'swt',
     )
-//    provided (
-//
-//    )
-//    testCompile (
-//            libraries.'test-jetty-servlet',
-//    )
+    testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
+    )
 }

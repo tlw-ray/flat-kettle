@@ -92,7 +92,7 @@ public class RepositoryFileTreeDtoProxyTest {
 
   @Test
   public void replacesNullWithEmptyList_WhenResponseHasNoChildren() throws Exception {
-    RepositoryFileTreeDto returned = prepareReturnedDto( null );
+    RepositoryFileTreeDto returned = prepareReturnedDto( (RepositoryFileTreeDto[])null );
 
     WebResource resource = mockWebResource( returned );
     when( client.resource( anyString() ) ).thenReturn( resource );

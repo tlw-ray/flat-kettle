@@ -28,6 +28,10 @@
 
 ## 日志
 
+- 201909
+
+    - 所有项目编译通过
+
 - 201908
 
     - test之间的依赖: kettle-engine项目的test依赖于kettle-core的test, 在gradle中已解决特标记.
@@ -40,8 +44,6 @@
 
     - 导入pdi-plugins-repositories时出现问题无法引入版本pentaho-platform-extensions的8.3.0.0-196或84和pentaho-i18n-bundle:8.3.0.0-208，虽然这两项在仓库中可以找到。
     - 考虑降级到8.1.0.6版本根据已经发布的webSpoon也是在8.1上发布的。
-
-
 
 - 20190416
 

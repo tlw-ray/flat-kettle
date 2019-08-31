@@ -6,6 +6,7 @@ dependencies {
             project(':pentaho-metastore'),
             project(':platform-core'),
             project(':platform-api'),
+            project(':metaverse-api'),
             libraries.'commons-vfs2',
             libraries.'commons-io',
             libraries.'commons-lang',
@@ -27,6 +28,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'mockito-all',
     )
 }

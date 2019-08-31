@@ -26,8 +26,11 @@ import org.pentaho.di.core.ObjectLocationSpecificationMethod;
 import org.pentaho.di.core.annotations.Step;
 import org.pentaho.di.core.database.DatabaseMeta;
 import org.pentaho.di.core.exception.KettleException;
+import org.pentaho.di.core.exception.KettleStepException;
 import org.pentaho.di.core.injection.Injection;
 import org.pentaho.di.core.injection.InjectionSupported;
+import org.pentaho.di.core.row.RowMeta;
+import org.pentaho.di.core.variables.VariableSpace;
 import org.pentaho.di.repository.ObjectId;
 import org.pentaho.di.repository.Repository;
 import org.pentaho.di.trans.Trans;
@@ -66,6 +69,12 @@ public class FileStreamMeta extends BaseStreamStepMeta implements StepMetaInterf
   }
 
   public void setDefault() {
+  }
+
+  @Override
+  public RowMeta getRowMeta(String origin, VariableSpace space) throws KettleStepException {
+    //TODO 新增但未实现
+    return null;
   }
 
   public void readRep( Repository rep, IMetaStore metaStore, ObjectId id_step, List<DatabaseMeta> databases )

@@ -11,6 +11,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'hamcrest-core',
             libraries.'mockito-all',
             libraries.'org.jacoco.agent',

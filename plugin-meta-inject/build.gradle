@@ -17,6 +17,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'java-hamcrest',
             libraries.'mockito-all',
             libraries.'powermock-module-junit4',

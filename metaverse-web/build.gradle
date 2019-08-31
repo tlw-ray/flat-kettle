@@ -2,18 +2,18 @@ dependencies {
     compile (
             project(':kettle-core'),
             project(':kettle-engine'),
+            project(':kettle-ui-swt'),
             project(':platform-core'),
+            project(':metaverse-api'),
+            project(':metaverse-core'),
             libraries.'jackson-annotations',
-            libraries.'commons-configuration',
-            libraries.'blueprints-core',
-            libraries.'flexjson',
-            libraries.'slf4j-api',
-            libraries.'commons-collections',
-            libraries.'slf4j-log4j12',
+            libraries.'enunciate-jersey-rt',
+            libraries.'jackson-jaxrs-json-provider',
+            libraries.'jackson-module-jaxb-annotations',
+            libraries.'jersey-apache-client',
+            libraries.'javax.servlet-api',
+            libraries.'gremlin-groovy',
     )
-//    provided (
-//
-//    )
     testCompile (
             libraries.'mockito-all',
     )

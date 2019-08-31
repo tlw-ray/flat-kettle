@@ -3,6 +3,7 @@ dependencies {
             project(':kettle-core'),
             project(':kettle-engine'),
             project(':kettle-ui-swt'),
+            project(':plugin-core-impl'),
             libraries.'swt',
     )
 //    provided (

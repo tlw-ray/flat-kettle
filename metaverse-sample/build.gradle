@@ -3,6 +3,7 @@ dependencies {
             project(':kettle-core'),
             project(':kettle-engine'),
             project(':platform-core'),
+            project(':metaverse-api'),
             libraries.'jackson-annotations',
             libraries.'commons-configuration',
             libraries.'blueprints-core',
@@ -15,6 +16,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'mockito-all',
     )
 }

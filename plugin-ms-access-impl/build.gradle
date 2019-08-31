@@ -8,6 +8,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'mockito-all',
     )
 }

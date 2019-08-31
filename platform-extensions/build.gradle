@@ -85,7 +85,7 @@ dependencies {
             libraries.'gwt-servlet',
             libraries.'ehcache-core',
             libraries.'cglib-nodep',
-            libraries.'bcprov-jdk14',
+            libraries.'bcprov-jdk16',
 //            libraries.'taglibs-standard-impl',
             libraries.'jaxb-impl',
 //            libraries.'jackson-mapper-asl',

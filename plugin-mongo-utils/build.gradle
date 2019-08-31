@@ -4,5 +4,6 @@ dependencies {
     )
     testCompile (
             libraries.'mockito-all',
+            libraries.'junit-dep',
     )
 }

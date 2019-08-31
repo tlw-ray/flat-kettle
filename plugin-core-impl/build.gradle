@@ -10,5 +10,6 @@ dependencies {
             project(path: ':kettle-core', configuration: 'tests'),
             project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'h2',
+            libraries.'mockito-all',
     )
 }

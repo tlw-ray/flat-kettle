@@ -12,6 +12,7 @@ dependencies {
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'javax.servlet-api',
             libraries.'mockito-all',
     )

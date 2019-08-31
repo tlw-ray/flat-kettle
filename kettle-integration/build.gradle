@@ -9,7 +9,7 @@ dependencies {
             libraries.'nekohtml',
             libraries.'sshd-sftp',
             libraries.'ftpserver-core',
-            libraries.'bcprov-jdk14',
+            libraries.'bcprov-jdk16',
     )
 //    provided (
 //

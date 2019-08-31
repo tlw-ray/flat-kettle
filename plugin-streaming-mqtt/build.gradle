@@ -8,11 +8,13 @@ dependencies {
             libraries.'javax.jms-api',
             libraries.'activemq-kahadb-store',
             libraries.'activemq-mqtt',
+            libraries.'org.eclipse.paho.client.mqttv3',
     )
 //    provided (
 //
 //    )
     testCompile (
+            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'powermock-module-junit4',
             libraries.'powermock-api-mockito',
     )

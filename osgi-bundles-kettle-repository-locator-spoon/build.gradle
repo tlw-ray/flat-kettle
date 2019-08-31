@@ -1,16 +1,13 @@
 dependencies {
     compile (
-            project(':plugin-ms-access-impl'),
             project(':kettle-core'),
             project(':kettle-engine'),
             project(':kettle-ui-swt'),
-            libraries.'swt',
+            project(':osgi-bundles-kettle-repository-locator-api'),
+            project(':pentaho-blueprint-collection-utils'),
+            libraries.'org.eclipse.core.commands',
     )
-//    provided (
-//
-//    )
     testCompile (
-            project(path: ':kettle-engine', configuration: 'tests'),
             libraries.'mockito-all',
     )
 }

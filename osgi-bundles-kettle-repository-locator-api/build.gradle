@@ -2,10 +2,10 @@ dependencies {
     compile (
             project(':kettle-core'),
             project(':kettle-engine'),
-            project(':kettle-ui-swt'),
-            libraries.'swt',
+            project(':pentaho-blueprint-collection-utils'),
+            libraries.'guava',
     )
     testCompile (
-            project(path: ':kettle-engine', configuration: 'tests'),
+            libraries.'mockito-all',
     )
 }
