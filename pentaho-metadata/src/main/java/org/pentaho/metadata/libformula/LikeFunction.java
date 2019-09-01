@@ -32,9 +32,9 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 /**
  * This function is similar to the LIKE function in SQL, and is needed for the inline ETL implementation of Hitachi Vantara
  * Metadata.
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.com)
- * 
+ *
  */
 public class LikeFunction implements Function {
   private static final long serialVersionUID = 5834421661720115093L;

@@ -4,6 +4,7 @@ dependencies {
             project(':kettle-engine'),
             project(':kettle-core'),
             project(':pentaho-cwm-master'),
+            project(':reporting-libraries-libformula'),
             libraries.'joda-time',
             libraries.'commons-lang3',
             libraries.'commons-io',

@@ -1,10 +1,12 @@
 dependencies {
     compile (
-            project(':reporting-classic-core'),
+//            project(':reporting-classic-core'),
             project(':kettle-engine-ext-api'),
             project(':platform-api'),
             project(':kettle-core'),
             project(':pentaho-registry'),
+            project(':reporting-libraries-libbase'),
+            project(':reporting-libraries-libformula'),
             libraries.'antlr-complete',
             libraries.'cglib-nodep',
             libraries.'commons-cli',

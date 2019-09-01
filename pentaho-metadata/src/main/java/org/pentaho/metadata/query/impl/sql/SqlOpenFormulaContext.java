@@ -23,9 +23,9 @@ import org.pentaho.reporting.libraries.formula.typing.Type;
 /**
  * This is a singleton class that manages SqlOpenFormula's context. the SqlOpenFormula uses this class to validate
  * operators and functions, and it also uses this class to convert Formula terms to SQL.
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.org)
- * 
+ *
  */
 public class SqlOpenFormulaContext extends DefaultFormulaContext {
 
@@ -34,7 +34,7 @@ public class SqlOpenFormulaContext extends DefaultFormulaContext {
 
   /**
    * static, thread safe singleton retrieval
-   * 
+   *
    * @return SqlOpenFormulaContext singleton object
    */
   public static SqlOpenFormulaContext getInstance() {

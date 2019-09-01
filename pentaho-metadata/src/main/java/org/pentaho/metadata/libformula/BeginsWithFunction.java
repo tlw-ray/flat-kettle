@@ -29,7 +29,7 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.LogicalType;
 /**
  * This function checks to see if a substring is within a larger string and is needed for the inline ETL implementation
  * of Pentaho Metadata.
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.com)
  */
 public class BeginsWithFunction implements Function {

@@ -55,16 +55,16 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 /**
  * This class manages the two types of formulas which appear in the metadata system. Both of these types support the
  * conversion of open document formula syntax to RDBMS specific SQL.
- * 
+ *
  * The first formula type appears as a WhereCondition. WhereConditions may access logical columns via the syntax
  * "[<LOGICAL TABLE ID>.<LOGICAL COLUMN ID>]" within the defined formula.
- * 
+ *
  * The first formula type may appear in the "formula" property of physical columns if isExact is set to true. These
  * formulas allow for aggregates, and use the syntax "[<PHYSICAL COLUMN NAME>]" to refer to their fields. They may also
  * use the
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.com)
- * 
+ *
  * @see SqlGenerator
  */
 public class SqlOpenFormula implements FormulaTraversalInterface {
@@ -116,7 +116,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * constructor, used for constraints, security, and complex joins
-   * 
+   *
    * @param model
    *          logical model for logical column lookup
    * @param formulaString
@@ -161,7 +161,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * constructor, used for formula based physical columns
-   * 
+   *
    * @param model
    *          business model for business column lookup
    * @param formulaString
@@ -262,7 +262,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
   }
   /**
    * parse and validate formula, including resolving all fields
-   * 
+   *
    * @throws PentahoMetadataException
    */
   public void parseAndValidate() throws PentahoMetadataException {
@@ -300,10 +300,10 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
   /**
    * We support unqualified logical columns if a logical table is provided. This allows physical columns to define a
    * formula which eventually gets used by logical table columns.
-   * 
+   *
    * @param fieldName
    *          name of field, either "<LOGICAL TABLE ID>.<LOGICAL COLUMN ID>" or "<PHYSICAL COLUMN>"
-   * 
+   *
    * @throws PentahoMetadataException
    *           if field cannot be resolved
    */
@@ -470,12 +470,12 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /*
    * there should be 3 passes over the formula object model:
-   * 
+   *
    * 1) a verification pass, which checks the functions for validity and resolves the business columns. see
    * validateAndResolveObjectModel()
-   * 
+   *
    * 2) a preprocessing pass, which executes the necessary preprocessing items and generates the SQL see generateSQL()
-   * 
+   *
    * Not implemented yet: 3) a post processing pass, which executes any necessary post processing items not SQL
    * compatible this is not implemented yet, it will require some rearchitecting of the metadata system currently all
    * the metadata system provides is raw SQL. eventually it will act as its own PentahoResultSet allowing post
@@ -485,9 +485,9 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
   /**
    * Recursive function that traverses the formula object model, resolves the business columns, and validates the
    * functions and operators specified.
-   * 
-   * 
-   * 
+   *
+   *
+   *
    * @param val
    *          the root of the formula object model
    */
@@ -591,7 +591,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
   /**
    * Determines whether or not child val needs to be wrapped with parens. The determining factor is if both the current
    * object and the parent are sql infix operators
-   * 
+   *
    * @param parent
    *          object
    * @param val
@@ -625,7 +625,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * Recursive function that executes any preprocessing and generates the correct SQL
-   * 
+   *
    * @param val
    *          the root of the formula object model
    * @param sb
@@ -791,10 +791,10 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * wrapper for recursive generateSQL method
-   * 
+   *
    * @param locale
    *          locale of user
-   * 
+   *
    * @return sql string
    */
   public String generateSQL( String locale ) throws PentahoMetadataException {
@@ -809,7 +809,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * retrieve the list of business columns
-   * 
+   *
    * @return list of business columns referenced in the formula
    */
   public List<Selection> getSelections() {
@@ -829,7 +829,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * returns true if pms formula contains agg functions. run parseAndValidate() before running this method
-   * 
+   *
    * @return hasAggregateFunction
    */
   public boolean hasAggregateFunction() {
@@ -838,7 +838,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * allows overriding of default behavior, which doesn't allow aggregate functions to be used.
-   * 
+   *
    * @param allowAggregateFunctions
    */
   public void setAllowAggregateFunctions( boolean allowAggregateFunctions ) {
@@ -849,7 +849,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
    * Find the business table associated with the context name.<br>
    * We look for it in the tables list by looking at the column IDs, the column display names, and by looking at the
    * physical column formula<br>
-   * 
+   *
    * @param contextName
    *          the context name
    * @param locale
@@ -897,7 +897,7 @@ public class SqlOpenFormula implements FormulaTraversalInterface {
 
   /**
    * Traverse the field list and see if any of the fields are aggregate fields. we cache hasAgg for future calls
-   * 
+   *
    * @return true if aggregate
    */
   public boolean hasAggregate() {

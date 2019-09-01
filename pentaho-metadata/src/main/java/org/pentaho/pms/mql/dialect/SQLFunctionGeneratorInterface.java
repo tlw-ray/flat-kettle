@@ -21,9 +21,9 @@ import org.pentaho.reporting.libraries.formula.lvalues.FormulaFunction;
 
 /**
  * this interface defines how a function validates and renders it's sql
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.org)
- * 
+ *
  */
 public interface SQLFunctionGeneratorInterface {
 
@@ -40,7 +40,7 @@ public interface SQLFunctionGeneratorInterface {
 
   /**
    * This method manages the generation of the SQL for a specific function.
-   * 
+   *
    * @param formula
    * @param sb
    * @param locale
@@ -52,14 +52,14 @@ public interface SQLFunctionGeneratorInterface {
 
   /**
    * return the type of this specific term
-   * 
+   *
    * @return type enumerator
    */
   public int getType();
 
   /**
    * This method indicates whether or not the function supports multi-valued parameters
-   * 
+   *
    * @return
    */
   public boolean isMultiValuedParamAware();

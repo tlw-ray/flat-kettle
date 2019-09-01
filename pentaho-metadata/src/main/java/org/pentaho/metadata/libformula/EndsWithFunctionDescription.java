@@ -25,9 +25,9 @@ import org.pentaho.reporting.libraries.formula.typing.coretypes.TextType;
 
 /**
  * Describes the ENDSWITH function
- * 
+ *
  * @author Will Gorman (wgorman@pentaho.com)
- * 
+ *
  */
 public class EndsWithFunctionDescription extends AbstractFunctionDescription {
 

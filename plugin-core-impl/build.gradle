@@ -2,10 +2,8 @@ dependencies {
     compile (
             project(':kettle-core'),
             project(':kettle-engine'),
+            project(':reporting-classic-core'),
     )
-//    provided (
-//
-//    )
     testCompile (
             project(path: ':kettle-core', configuration: 'tests'),
             project(path: ':kettle-engine', configuration: 'tests'),

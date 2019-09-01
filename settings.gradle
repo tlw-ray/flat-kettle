@@ -24,7 +24,7 @@ include 'pentaho-versionchecker'
 include 'pentaho-cwm-master'
 include 'pentaho-metadata'
 include 'pentaho-ofc4j-1.1.0'
-include 'pentaho-chartbeans'
+include 'pentaho-chartbeans' //Step-02 need report
 
 include 'kettle-core'
 include 'kettle-engine-ext-api'
@@ -37,7 +37,7 @@ include 'platform-core'
 include 'platform-repository'
 include 'platform-scheduler'
 include 'platform-build-utils'
-include 'platform-extensions'
+include 'platform-extensions' //Step-02 need report
 
 include 'osgi-bundles-service-coordinator'
 include 'osgi-bundles-angular-bundle'
@@ -59,15 +59,15 @@ include 'pentaho-blueprint-collection-utils'
 include 'osgi-bundles-kettle-repository-locator-api'
 include 'osgi-bundles-kettle-repository-locator-platform'
 include 'osgi-bundles-kettle-repository-locator-spoon'
-include 'osgi-bundles-pdi-platform'
+include 'osgi-bundles-pdi-platform' // Step-02 need report
 include 'osgi-bundles-platform-plugin-deployer'
 include 'osgi-bundles-proxy-factory'
-include 'osgi-bundles-proxy-spring4'
+include 'osgi-bundles-proxy-spring4' // need osgi-bundles-pdi-platform
 include 'osgi-bundles-requirejs-compressor'
 include 'osgi-bundles-requirejs-utils'
 include 'osgi-bundles-webjars-deployer'
 include 'osgi-bundles-requirejs-osgi-manager'
-include 'osgi-bundles-server-bundle'
+include 'osgi-bundles-server-bundle' // need osgi-bundles-pdi-platform
 include 'osgi-bundles-spring-dm-extender'
 include 'osgi-bundles-spring-security-provider'
 include 'osgi-bundles-metastore-locator-api'
@@ -79,11 +79,11 @@ include 'osgi-bundles-metastore-locator-impl-repository'
 
 include 'pdi-dataservice-client-api'
 include 'pdi-dataservice-client'
-include 'pdi-plugins-repositories-core'
-include 'pdi-osgi-bridge-core'
-include 'pdi-osgi-bridge-activator'
+include 'pdi-plugins-repositories-core'                   // Step-03 need platform-extensions
+include 'pdi-osgi-bridge-core'                            // Step-03 need platform-extensions
+include 'pdi-osgi-bridge-activator'                       // Step-04 need pdi-osgi-bridge-core
 
-//Report
+////Report //S01 remove report
 include 'reporting-libraries-libbase'
 include 'reporting-libraries-libpixie'
 include 'reporting-libraries-libloader'
@@ -130,7 +130,7 @@ include 'reporting-libraries-libpensol'
 //额外的包
 include 'modeler-core'
 include 'modeler-gwt'
-include 'configuration-editor'
+include 'configuration-editor'    //Step-02 need report
 
 //Kettle 插件
 include 'plugin-aggregate-rows'
@@ -149,7 +149,7 @@ include 'plugin-engine-configuration-api'
 include 'plugin-engine-configuration-impl'
 include 'plugin-engine-configuration-ui'
 include 'plugin-file-open-save'
-include 'plugin-file-open-save-core'
+include 'plugin-file-open-save-core'                        // Step-03 need platform-extensions
 include 'plugin-file-stream'
 include 'plugin-get-previous-row-field'
 include 'plugin-get-previous-row-field-core'
@@ -171,9 +171,9 @@ include 'plugin-meta-inject'
 include 'plugin-ms-access'
 include 'plugin-ms-access-impl'
 include 'plugin-ms-access-ui'
-include 'plugin-repositories-core'
+include 'plugin-repositories-core'                      // Step-03 need platform-extensions
 include 'plugin-pentaho-repository-vfs'
-include 'plugin-pentaho-repository-vfs-core'
+include 'plugin-pentaho-repository-vfs-core'            //Step-04 need plugin-repositories-core
 include 'plugin-shapefilereader-core'
 include 'plugin-ssh2'
 include 'plugin-star-modeler'
