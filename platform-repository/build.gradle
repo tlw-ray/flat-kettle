@@ -22,7 +22,7 @@ dependencies {
             libraries.'commons-dbcp',
             libraries.'commons-pool',
             libraries.'commons-io',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'commons-logging',
             libraries.'commons-vfs2',
             libraries.'derby',

@@ -28,7 +28,7 @@ import java.io.OutputStream;
 import java.security.cert.Certificate;
 import java.util.Map;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.vfs2.FileContent;
 import org.apache.commons.vfs2.FileContentInfo;
 import org.apache.commons.vfs2.FileObject;
@@ -48,57 +48,57 @@ public class RepositoryVfsFileContent implements FileContent {
 
   @Override
   public FileObject getFile() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long getSize() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long getLastModifiedTime() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public void setLastModifiedTime( long modTime ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean hasAttribute( String attrName ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public Map<String, Object> getAttributes() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public String[] getAttributeNames() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public Object getAttribute( String attrName ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public void setAttribute( String attrName, Object value ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public void removeAttribute( String attrName ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public Certificate[] getCertificates() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -133,36 +133,36 @@ public class RepositoryVfsFileContent implements FileContent {
 
   @Override
   public void close() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public FileContentInfo getContentInfo() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean isOpen() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long write( FileContent output ) throws IOException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long write( FileObject file ) throws IOException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long write( OutputStream output ) throws IOException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public long write( OutputStream output, int bufferSize ) throws IOException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 }

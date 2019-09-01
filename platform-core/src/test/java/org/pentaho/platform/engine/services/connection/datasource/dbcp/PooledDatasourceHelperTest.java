@@ -37,7 +37,7 @@ import java.util.HashMap;
 import java.util.Properties;
 
 import org.apache.commons.dbcp.ConnectionFactory;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -311,8 +311,8 @@ public class PooledDatasourceHelperTest {
   @Test
   public void testConnectionFactory_MySQL() {
     IDatabaseConnection connection = mock( IDatabaseConnection.class );
-    doReturn( StringEscapeUtils.escapeHtml( user ) ).when( connection ).getUsername();
-    doReturn( StringEscapeUtils.escapeHtml( password ) ).when( connection ).getPassword();
+    doReturn( StringEscapeUtils.escapeHtml4( user ) ).when( connection ).getUsername();
+    doReturn( StringEscapeUtils.escapeHtml4( password ) ).when( connection ).getPassword();
 
     ConnectionFactory factory = PooledDatasourceHelper.getConnectionFactory( connection, "jdbc:mysql://localhost" );
 
@@ -324,8 +324,8 @@ public class PooledDatasourceHelperTest {
   @Test
   public void testConnectionFactory_MariaDB() {
     IDatabaseConnection connection = mock( IDatabaseConnection.class );
-    doReturn( StringEscapeUtils.escapeHtml( user ) ).when( connection ).getUsername();
-    doReturn( StringEscapeUtils.escapeHtml( password ) ).when( connection ).getPassword();
+    doReturn( StringEscapeUtils.escapeHtml4( user ) ).when( connection ).getUsername();
+    doReturn( StringEscapeUtils.escapeHtml4( password ) ).when( connection ).getPassword();
 
     ConnectionFactory factory = PooledDatasourceHelper.getConnectionFactory( connection, "jdbc:mariadb://localhost" );
 
@@ -337,8 +337,8 @@ public class PooledDatasourceHelperTest {
   @Test
   public void testConnectionFactory_MicrosoftSQL() {
     IDatabaseConnection connection = mock( IDatabaseConnection.class );
-    doReturn( StringEscapeUtils.escapeHtml( user ) ).when( connection ).getUsername();
-    doReturn( StringEscapeUtils.escapeHtml( password ) ).when( connection ).getPassword();
+    doReturn( StringEscapeUtils.escapeHtml4( user ) ).when( connection ).getUsername();
+    doReturn( StringEscapeUtils.escapeHtml4( password ) ).when( connection ).getPassword();
 
     ConnectionFactory factory = PooledDatasourceHelper.getConnectionFactory( connection, "jdbc:microsoft:sqlserver://localhost" );
 

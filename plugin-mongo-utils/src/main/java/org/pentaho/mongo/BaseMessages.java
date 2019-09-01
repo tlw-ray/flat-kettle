@@ -34,7 +34,7 @@ public class BaseMessages {
     try {
       ResourceBundle bundle = ResourceBundle.getBundle(
         packageName + "." + BUNDLE_NAME );
-      return MessageFormat.format( bundle.getString( key ), parameters );
+      return MessageFormat.format( bundle.getString( key ), (Object[])parameters );
     } catch ( IllegalArgumentException e ) {
       String message =
         "Format problem with key=["

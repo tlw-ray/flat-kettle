@@ -22,7 +22,7 @@
 
 package org.pentaho.di.ui.trans.steps.metainject.analyzer;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.di.core.util.StringUtil;
 import org.pentaho.di.trans.TransMeta;
 import org.pentaho.di.trans.step.BaseStepMeta;

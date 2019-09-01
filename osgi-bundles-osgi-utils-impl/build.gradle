@@ -11,7 +11,7 @@ dependencies {
             libraries.'org.apache.aries.blueprint.api',
             libraries.'org.apache.aries.proxy.api',
             libraries.'mina-core',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'org.apache.karaf.features.core',
             libraries.'org.apache.karaf.bundle.core',
             libraries.'slf4j-log4j12',

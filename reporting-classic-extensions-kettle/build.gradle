@@ -8,7 +8,7 @@ dependencies {
 //            libraries.'metastore',
             libraries.'joda-time',
             libraries.'commons-collections',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'log4j',
             libraries.'commons-pool',
             libraries.'commons-codec',

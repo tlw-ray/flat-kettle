@@ -28,7 +28,7 @@ import java.io.File;
 import java.io.IOException;
 
 import org.apache.commons.cli.ParseException;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.rules.TemporaryFolder;
 import org.pentaho.platform.api.engine.IAuthorizationAction;

@@ -59,7 +59,6 @@ dependencies {
             libraries.'commons-fileupload',
             libraries.'commons-logging',
             libraries.'commons-lang3',
-            libraries.'commons-lang',
             libraries.'commons-vfs2',
             libraries.'commons-validator',
             libraries.'commons-collections4',

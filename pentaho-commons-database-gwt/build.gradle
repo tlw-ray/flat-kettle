@@ -1,0 +1,32 @@
+dependencies {
+    compile (
+            project(':kettle-core'),
+            project(':kettle-engine'),
+            project(':commons-xul-core'),
+            project(':commons-xul-swing'),
+            project(':commons-xul-swt'),
+            project(':commons-xul-gwt-impl'),
+            project(':commons-gwt-widgets'),
+            project(':pentaho-commons-database-model'),
+            libraries.'gwt-user',
+            libraries.'gwt-dev',
+            libraries.'commons-pool',
+            libraries.'commons-dbcp',
+            libraries.'commons-beanutils',
+            libraries.'commons-logging',
+            libraries.'commons-lang3',
+            libraries.'jface',
+//            libraries.'org.eclipse.core.runtime',
+            libraries.'org.eclipse.equinox.common',
+            libraries.'org.eclipse.core.commands',
+            libraries.'swt',
+            libraries.'commons-vfs2',
+            libraries.'guava',
+            libraries.'slf4j-jdk14',
+            libraries.'mysql-connector-java',
+            libraries.'hsqldb',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

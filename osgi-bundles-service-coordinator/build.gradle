@@ -3,7 +3,7 @@ dependencies {
 //            project(':reporting-libraries-libbase'),
 //            project(':reporting-libraries-libloader'),
             libraries.'javax.inject',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'slf4j-api',
             libraries.'spring-beans',
             libraries.'spring-core',

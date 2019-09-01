@@ -20,7 +20,7 @@
 
 package org.pentaho.platform.web.http.filters;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
@@ -33,11 +33,7 @@ import org.pentaho.platform.api.usersettings.IUserSettingService;
 import org.pentaho.platform.api.usersettings.pojo.IUserSetting;
 import org.pentaho.platform.engine.core.system.PentahoSystem;
 
-import javax.servlet.FilterConfig;
-import javax.servlet.ServletContext;
-import javax.servlet.ServletException;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.ServletRegistration;
+import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -106,6 +102,16 @@ public class PentahoWebContextFilterTest {
     this.mockResponse = mock( HttpServletResponse.class );
     this.mockResponseOutputStream = new java.io.ByteArrayOutputStream();
     when( this.mockResponse.getOutputStream() ).thenReturn( new ServletOutputStream() {
+      @Override
+      public boolean isReady() {
+        return false;
+      }
+
+      @Override
+      public void setWriteListener(WriteListener writeListener) {
+
+      }
+
       @Override
       public void write( int b ) throws IOException {
         PentahoWebContextFilterTest.this.mockResponseOutputStream.write( b );
@@ -415,7 +421,7 @@ public class PentahoWebContextFilterTest {
   }
 
   private String escapeEnvironmentVariable( String value ) {
-    return "\"" + StringEscapeUtils.escapeJavaScript( value ) + "\"";
+    return "\"" + StringEscapeUtils.escapeEcmaScript( value ) + "\"";
   }
   // endregion
 

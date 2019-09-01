@@ -25,7 +25,7 @@ package org.pentaho.di.trans.steps.update;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.database.Database;

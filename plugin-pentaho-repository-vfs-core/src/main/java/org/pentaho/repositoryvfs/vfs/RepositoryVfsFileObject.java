@@ -26,7 +26,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.vfs2.FileContent;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileObject;
@@ -84,12 +84,12 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public Iterator<FileObject> iterator() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean canRenameTo( FileObject newfile ) {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -98,7 +98,7 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public void copyFrom( FileObject srcFile, FileSelector selector ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -126,12 +126,12 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public int delete( FileSelector selector ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public int deleteAll() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -141,18 +141,18 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public FileObject[] findFiles( FileSelector selector ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public void findFiles( FileSelector selector, boolean depthwise, List<FileObject> selected )
     throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public FileObject getChild( String name ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -183,12 +183,12 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public FileOperations getFileOperations() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public FileSystem getFileSystem() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -230,17 +230,17 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public boolean isAttached() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean isContentOpen() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean isExecutable() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -255,12 +255,12 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public boolean isHidden() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean isReadable() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -271,12 +271,12 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public void moveTo( FileObject destFile ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public void refresh() throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
@@ -286,21 +286,21 @@ public class RepositoryVfsFileObject implements FileObject {
 
   @Override
   public FileObject resolveFile( String name, NameScope scope ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean setExecutable( boolean executable, boolean ownerOnly ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean setReadable( boolean readable, boolean ownerOnly ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public boolean setWritable( boolean writable, boolean ownerOnly ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 }

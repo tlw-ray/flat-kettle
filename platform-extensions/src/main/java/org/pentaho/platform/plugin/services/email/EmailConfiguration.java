@@ -20,8 +20,8 @@
 
 package org.pentaho.platform.plugin.services.email;
 
-import org.apache.commons.lang.ObjectUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.platform.api.email.IEmailConfiguration;
 
 import javax.xml.bind.annotation.XmlRootElement;

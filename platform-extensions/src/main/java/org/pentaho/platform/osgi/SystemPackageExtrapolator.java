@@ -20,7 +20,7 @@
 
 package org.pentaho.platform.osgi;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.jboss.modules.Module;
 import org.jboss.modules.ModuleClassLoader;
 import org.slf4j.Logger;

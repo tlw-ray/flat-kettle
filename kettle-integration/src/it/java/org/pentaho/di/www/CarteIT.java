@@ -27,7 +27,7 @@ import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.html.dom.HTMLDocumentImpl;
 import org.cyberneko.html.parsers.DOMFragmentParser;
 import org.eclipse.jetty.testing.HttpTester;

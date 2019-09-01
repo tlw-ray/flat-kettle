@@ -46,7 +46,7 @@ import org.antlr.runtime.TokenStream;
 import org.antlr.stringtemplate.StringTemplate;
 import org.antlr.stringtemplate.StringTemplateGroup;
 import org.antlr.stringtemplate.language.AngleBracketTemplateLexer;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 @SuppressWarnings( { "all", "warnings", "unchecked" } )
 public class FastSimpleGenericEdifactDirectXMLParser extends Parser {

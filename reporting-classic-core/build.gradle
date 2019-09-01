@@ -11,7 +11,7 @@ dependencies {
             project(':reporting-libraries-libxml'),
             project(':reporting-libraries-libswing'),
             project(':reporting-libraries-flute'),
-            project(':pentaho-commons-database:model'),
+            project(':pentaho-commons-database-model'),
             project(':pentaho-simple-jndi-1.0.1-R'),
             libraries.'antlr-complete',
             libraries.'asm',

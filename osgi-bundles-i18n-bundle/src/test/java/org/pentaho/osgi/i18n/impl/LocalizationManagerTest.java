@@ -76,12 +76,12 @@ public class LocalizationManagerTest {
     localizationManager.bundleChanged( makeMockBundleNull( 1L, Bundle.ACTIVE ) );
     assertBundleNullCacheNull( "messages", "de", "DE" );
     assertBundleNullCacheNull( null, "de", "DE" );
-    assertBundleNullCacheNull( "messages", null );
+    assertBundleNullCacheNull( "messages", (String[])null );
 
     localizationManager.setExecutorService( null );
     assertBundleNullCacheNull( "messages", "de", "DE" );
     assertBundleNullCacheNull( null, "de", "DE" );
-    assertBundleNullCacheNull( "messages", null );
+    assertBundleNullCacheNull( "messages", (String[])null );
     localizationManager.bundleChanged( makeMockBundle( 1L, Bundle.ACTIVE, "i18n/bundle/messages.properties",
       "i18n/bundle/messages_fr.properties", "i18n/bundle/messages_de_DE.properties" ) );
     assertBundleNullCacheNull( null, "de", "DE" );

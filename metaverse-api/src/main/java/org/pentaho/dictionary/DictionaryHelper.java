@@ -22,7 +22,7 @@
 
 package org.pentaho.dictionary;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.metaverse.api.IMetaverseNode;
 
 import java.util.Enumeration;

@@ -40,7 +40,7 @@ import javax.mail.Header;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;

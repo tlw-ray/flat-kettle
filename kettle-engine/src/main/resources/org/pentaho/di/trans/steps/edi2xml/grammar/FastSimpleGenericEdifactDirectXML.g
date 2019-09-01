@@ -6,7 +6,7 @@ options {
 
 @header {
 package org.pentaho.di.trans.steps.edi2xml.grammar;
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import java.util.LinkedList;
 }
 

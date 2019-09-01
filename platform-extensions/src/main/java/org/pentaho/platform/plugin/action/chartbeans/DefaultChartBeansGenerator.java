@@ -378,7 +378,7 @@ public class DefaultChartBeansGenerator implements IChartBeansGenerator {
     props.setProperty( "chartJson", "{}" ); //$NON-NLS-1$ //$NON-NLS-2$
 
     String flashHtml =
-        MessageFormat.format( getHtmlTemplate(), new String[] {
+        MessageFormat.format( getHtmlTemplate(), new Object[] {
           TemplateUtil.applyTemplate( getFlashScriptFragment(), props, null ), msg } );
 
     return flashHtml;
@@ -409,7 +409,7 @@ public class DefaultChartBeansGenerator implements IChartBeansGenerator {
     props.setProperty( "chartJson", openFlashChartJson ); //$NON-NLS-1$
 
     String flashHtml =
-        MessageFormat.format( getHtmlTemplate(), new String[] {
+        MessageFormat.format( getHtmlTemplate(), new Object[] {
           TemplateUtil.applyTemplate( getFlashScriptFragment(), props, null ),
           TemplateUtil.applyTemplate( getFlashObjectFragment(), props, null ) } );
 
@@ -525,7 +525,7 @@ public class DefaultChartBeansGenerator implements IChartBeansGenerator {
       String url = contextPath + "/"; //$NON-NLS-1$ //$NON-NLS-2$ 
       final String IMAGE_URL_TEMPLATE = "{0}getImage?image={1}"; //$NON-NLS-1$
       final String imageUrl =
-          MessageFormat.format( IMAGE_URL_TEMPLATE, new String[] { url, chartFileOnServer.getName() } );
+          MessageFormat.format( IMAGE_URL_TEMPLATE, new Object[] { url, chartFileOnServer.getName() } );
       html = this.mergeStaticImageHtmlTemplate( imageUrl );
 
     } else if ( OpenFlashChartPlugin.PLUGIN_ID.equals( chartModel.getChartEngineId() ) ) {
@@ -557,8 +557,8 @@ public class DefaultChartBeansGenerator implements IChartBeansGenerator {
 
   public String mergeStaticImageHtmlTemplate( String imageUrl ) {
     final String BODY_TEMPLATE = "<img src=\"{0}\" />"; //$NON-NLS-1$
-    final String body = MessageFormat.format( BODY_TEMPLATE, new String[] { imageUrl } );
-    return MessageFormat.format( getHtmlTemplate(), new String[] { "", body } ); //$NON-NLS-1$
+    final String body = MessageFormat.format( BODY_TEMPLATE, new Object[] { imageUrl } );
+    return MessageFormat.format( getHtmlTemplate(), new Object[] { "", body } ); //$NON-NLS-1$
   }
 
   public String getHtmlTemplate() {

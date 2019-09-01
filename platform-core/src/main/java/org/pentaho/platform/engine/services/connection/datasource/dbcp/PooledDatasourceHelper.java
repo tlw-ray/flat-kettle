@@ -27,9 +27,9 @@ import org.apache.commons.dbcp.ConnectionFactory;
 import org.apache.commons.dbcp.DriverManagerConnectionFactory;
 import org.apache.commons.dbcp.PoolableConnectionFactory;
 import org.apache.commons.dbcp.PoolingDataSource;
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.math.NumberUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.commons.pool.KeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericKeyedObjectPoolFactory;
 import org.apache.commons.pool.impl.GenericObjectPool;
@@ -315,8 +315,8 @@ public class PooledDatasourceHelper {
 
   protected static ConnectionFactory getConnectionFactory( IDatabaseConnection databaseConnection, String url ) {
     Properties props = new Properties();
-    props.put( "user", StringEscapeUtils.unescapeHtml( databaseConnection.getUsername() ) );
-    props.put( "password", StringEscapeUtils.unescapeHtml( databaseConnection.getPassword() ) );
+    props.put( "user", StringEscapeUtils.unescapeHtml4( databaseConnection.getUsername() ) );
+    props.put( "password", StringEscapeUtils.unescapeHtml4( databaseConnection.getPassword() ) );
 
     if ( url.startsWith( "jdbc:mysql:" ) || ( url.startsWith( "jdbc:mariadb:" ) ) ) {
       props.put( "connectTimeout", "5000" );

@@ -20,8 +20,8 @@
 
 package org.pentaho.platform.web.http.filters;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.concurrent.ConcurrentException;
 import org.apache.commons.lang3.concurrent.LazyInitializer;
 import org.owasp.encoder.Encode;
@@ -593,7 +593,7 @@ public class PentahoWebContextFilter implements Filter {
 
   private String escapeEnvironmentVar( String value ) {
     if ( value != null ) {
-      value = "\"" + StringEscapeUtils.escapeJavaScript( value ) + "\"";
+      value = "\"" + StringEscapeUtils.escapeEcmaScript( value ) + "\"";
     }
 
     return value;
@@ -660,7 +660,7 @@ public class PentahoWebContextFilter implements Filter {
     StringBuilder buf = new StringBuilder();
     buf.append( ".*[" ); //$NON-NLS-1$
     for ( Character ch : JcrRepositoryFileUtils.getReservedChars() ) {
-      buf.append( StringEscapeUtils.escapeJavaScript( ch.toString() ) );
+      buf.append( StringEscapeUtils.escapeEcmaScript( ch.toString() ) );
     }
     buf.append( "]+.*" ); //$NON-NLS-1$
     return buf.toString();

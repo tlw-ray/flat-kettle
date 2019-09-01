@@ -16,7 +16,7 @@
  */
 package org.pentaho.platform.pdi;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -25,6 +25,7 @@ import org.pentaho.platform.api.engine.IPlatformWebResource;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletOutputStream;
+import javax.servlet.WriteListener;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
@@ -70,6 +71,16 @@ public class WebContextServletTest {
 
     this.mockResponseOutputStream = new java.io.ByteArrayOutputStream();
     when( mockResponse.getOutputStream() ).thenReturn( new ServletOutputStream() {
+      @Override
+      public boolean isReady() {
+        return false;
+      }
+
+      @Override
+      public void setWriteListener(WriteListener writeListener) {
+
+      }
+
       @Override
       public void write( int b ) throws IOException {
         WebContextServletTest.this.mockResponseOutputStream.write( b );
@@ -248,7 +259,7 @@ public class WebContextServletTest {
   }
 
   private String escapeEnvironmentVariable( String value ) {
-    return "\"" + StringEscapeUtils.escapeJavaScript( value ) + "\"";
+    return "\"" + StringEscapeUtils.escapeEcmaScript( value ) + "\"";
   }
   // endregion
 }

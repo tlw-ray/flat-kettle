@@ -58,7 +58,7 @@ dependencies {
             libraries.'mail',
             libraries.'mondrian',
             libraries.'monetdb-jdbc',
-            libraries.'mysql',
+            libraries.'mysql-connector-java',
             libraries.'mstor',
             libraries.'nekohtml',
             libraries.'odfdom-java',

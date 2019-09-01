@@ -27,7 +27,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.BitSet;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.vfs2.FileObject;
 import org.apache.commons.vfs2.FileSystemException;
 import org.apache.poi.util.IOUtils;
@@ -475,7 +475,7 @@ public class JsonInput extends BaseFileInputStep<JsonInputMeta, JsonInputData> i
   @Override
   protected IBaseFileInputReader createReader( JsonInputMeta meta, JsonInputData data, FileObject file )
     throws Exception {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
 }

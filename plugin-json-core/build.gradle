@@ -9,7 +9,7 @@ dependencies {
             project(':metaverse-api'),
             libraries.'commons-vfs2',
             libraries.'commons-io',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'json-simple',
             libraries.'jackson-databind',
             libraries.'poi',

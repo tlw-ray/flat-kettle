@@ -32,7 +32,7 @@ import javax.mail.Header;
 import javax.mail.Message;
 
 import org.apache.commons.collections.iterators.ArrayIterator;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.util.Utils;
 import org.pentaho.di.core.exception.KettleException;

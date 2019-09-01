@@ -1,3 +1,6 @@
+plugins {
+    id "com.vanniktech.dependency.graph.generator" version "0.5.0"
+}
 apply from: 'dependency.gradle'
 
 allprojects{
@@ -30,6 +33,10 @@ subprojects { subproj ->
             libraries.'junit',
         )
     }
+
+    // 输出所有编译依赖项: gradle allDeps --configuration compile > dependenciesCompile.txt
+    // 输出所有测试编译依赖项: gradle allDeps --configuration testCompile > dependenciesTestCompile.txt
+    task allDeps(type: DependencyReportTask) {}
 
     //将测试部分导出为jar, 有的测试会依赖其他包的测试
     task testJar(type: Jar, dependsOn: testClasses) {

@@ -5,7 +5,7 @@ dependencies {
             project(':kettle-core'),
             project(':pentaho-cwm-master'),
             libraries.'joda-time',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'commons-io',
             libraries.'commons-logging',
             libraries.'commons-math',

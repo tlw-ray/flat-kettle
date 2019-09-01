@@ -4,7 +4,7 @@ dependencies {
             project(':platform-core'),
             project(':platform-repository'),
             project(':platform-extensions'),
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'slf4j-api',
             libraries.'org.apache.felix.framework',
             libraries.'spring-security-core',

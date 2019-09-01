@@ -20,7 +20,7 @@
 
 package org.pentaho.platform.repository2.userroledao.jackrabbit.security;
 
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.apache.jackrabbit.core.security.authentication.CryptedSimpleCredentials;
 import org.pentaho.platform.engine.security.messages.Messages;
 import org.pentaho.platform.util.StringUtil;

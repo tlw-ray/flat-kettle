@@ -1,0 +1,9 @@
+dependencies {
+    compile (
+            libraries.'commons-logging',
+    )
+    testCompile (
+            libraries.'mockito-all',
+            libraries.'java-hamcrest',
+    )
+}

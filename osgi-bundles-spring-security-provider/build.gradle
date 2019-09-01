@@ -2,7 +2,7 @@ dependencies {
     compile (
             project(':osgi-bundles-osgi-utils-api'),
 //            project(':osgi-bundles-osgi-')
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'slf4j-api',
             libraries.'spring-beans',
             libraries.'spring-security-core',

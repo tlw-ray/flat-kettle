@@ -23,7 +23,7 @@
 package org.pentaho.di.core;
 
 import junit.framework.TestCase;
-import org.apache.commons.lang.SystemUtils;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.Assert;
 import org.junit.Test;
 import org.pentaho.di.core.exception.KettleException;

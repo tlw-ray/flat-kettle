@@ -22,7 +22,7 @@ package org.pentaho.platform.plugin.services.webservices.content;
 
 import org.apache.axis2.context.ConfigurationContext;
 import org.apache.axis2.engine.AxisConfiguration;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.platform.api.engine.IPentahoSession;
 import org.pentaho.platform.api.ui.IThemeManager;
 import org.pentaho.platform.api.ui.Theme;

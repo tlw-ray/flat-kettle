@@ -22,7 +22,7 @@
 
 package org.pentaho.di.trans.steps.file;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.pentaho.di.core.injection.Injection;
 
 /**

@@ -17,7 +17,7 @@
 
 package org.pentaho.ui.xul.util;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 
 import java.io.BufferedReader;
 import java.io.IOException;

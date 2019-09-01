@@ -20,7 +20,6 @@
 
 package org.pentaho.platform.plugin.outputs;
 
-import org.apache.commons.lang.exception.NestableRuntimeException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.pentaho.platform.api.engine.IContentListener;
@@ -149,9 +148,6 @@ public abstract class JcrCmsOutputHandler extends BaseOutputHandler {
     } catch ( LockException le ) {
       Logger.error( JcrCmsOutputHandler.class.getName(), Messages.getInstance().getString(
         "JcrCmsOutputHandler.ERROR_0006_GETTING_OUTPUTHANDLER" ) + contentName, le ); //$NON-NLS-1$
-    } catch ( NestableRuntimeException nre ) {
-      Logger.error( JcrCmsOutputHandler.class.getName(), Messages.getInstance().getString(
-        "JcrCmsOutputHandler.ERROR_0006_GETTING_OUTPUTHANDLER" ) + contentName, nre ); //$NON-NLS-1$
     } catch ( RepositoryException re ) {
       Logger.error( JcrCmsOutputHandler.class.getName(), Messages.getInstance().getString(
         "JcrCmsOutputHandler.ERROR_0006_GETTING_OUTPUTHANDLER" ) + contentName, re ); //$NON-NLS-1$

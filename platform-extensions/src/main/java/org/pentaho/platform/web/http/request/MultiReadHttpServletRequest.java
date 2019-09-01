@@ -22,6 +22,7 @@ package org.pentaho.platform.web.http.request;
 
 import org.apache.commons.io.IOUtils;
 
+import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
@@ -69,6 +70,21 @@ public class MultiReadHttpServletRequest extends HttpServletRequestWrapper {
     public CachedServletInputStream() {
       /* create a new input stream from the cached request body */
       input = new ByteArrayInputStream( cachedBytes.toByteArray() );
+    }
+
+    @Override
+    public boolean isFinished() {
+      return false;
+    }
+
+    @Override
+    public boolean isReady() {
+      return false;
+    }
+
+    @Override
+    public void setReadListener(ReadListener readListener) {
+
     }
 
     @Override

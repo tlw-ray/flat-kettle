@@ -21,7 +21,7 @@ import java.util.Map;
 
 import junit.framework.TestCase;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 /**
  * Units tests for the <code>MappedQuery</code> class.

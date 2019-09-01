@@ -23,7 +23,7 @@ package org.pentaho.repositoryvfs.vfs;
 
 import java.util.Collection;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.vfs2.Capability;
 import org.apache.commons.vfs2.FileName;
 import org.apache.commons.vfs2.FileObject;
@@ -88,21 +88,21 @@ public class RepositoryVfsProvider implements FileProvider {
   @Override
   public FileObject createFileSystem( String scheme, FileObject file, FileSystemOptions fileSystemOptions )
     throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public FileSystemConfigBuilder getConfigBuilder() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public Collection<Capability> getCapabilities() {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   @Override
   public FileName parseUri( FileName root, String uri ) throws FileSystemException {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 }

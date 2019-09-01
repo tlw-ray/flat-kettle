@@ -1,6 +1,6 @@
 dependencies {
     compile (
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'slf4j-api',
     )
     testCompile (

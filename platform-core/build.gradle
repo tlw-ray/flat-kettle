@@ -18,7 +18,7 @@ dependencies {
             libraries.'commons-dbcp',
             libraries.'commons-pool',
             libraries.'commons-io',
-            libraries.'commons-lang',
+            libraries.'commons-lang3',
             libraries.'commons-logging',
             libraries.'ehcache-core',
 //            libraries.'esapi',

@@ -23,9 +23,9 @@
 
 package org.pentaho.di.core;
 
-import org.apache.commons.lang.StringEscapeUtils;
-import org.apache.commons.lang.StringUtils;
-import org.apache.commons.lang.text.StrBuilder;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.text.StrBuilder;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.core.row.ValueMetaInterface;
 import org.pentaho.di.core.util.EnvUtil;
@@ -3179,7 +3179,7 @@ public class Const {
     if ( Utils.isEmpty( content ) ) {
       return content;
     }
-    return StringEscapeUtils.escapeHtml( content );
+    return StringEscapeUtils.escapeHtml4( content );
   }
 
   /**
@@ -3193,7 +3193,7 @@ public class Const {
     if ( Utils.isEmpty( content ) ) {
       return content;
     }
-    return StringEscapeUtils.unescapeHtml( content );
+    return StringEscapeUtils.unescapeHtml4( content );
   }
 
   /**
@@ -3220,8 +3220,9 @@ public class Const {
   public static String escapeSQL( String content ) {
     if ( Utils.isEmpty( content ) ) {
       return content;
+    }else {
+      return StringUtils.replace(content, "'", "''");
     }
-    return StringEscapeUtils.escapeSql( content );
   }
 
   /**

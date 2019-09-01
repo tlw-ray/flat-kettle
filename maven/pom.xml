@@ -19,58 +19,58 @@
             <artifactId>jython</artifactId>
             <version>2.7.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.codehaus.janino</groupId>
-            <artifactId>janino</artifactId>
-            <version>2.7.8</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.security</groupId>
-            <artifactId>spring-security-acl</artifactId>
-            <version>4.2.9.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-math</groupId>
-            <artifactId>commons-math</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.w3c.css</groupId>
-            <artifactId>sac</artifactId>
-            <version>1.3</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.codehaus.janino</groupId>-->
+<!--            <artifactId>janino</artifactId>-->
+<!--            <version>2.7.8</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.springframework.security</groupId>-->
+<!--            <artifactId>spring-security-acl</artifactId>-->
+<!--            <version>4.2.9.RELEASE</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>commons-math</groupId>-->
+<!--            <artifactId>commons-math</artifactId>-->
+<!--            <version>1.1</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.w3c.css</groupId>-->
+<!--            <artifactId>sac</artifactId>-->
+<!--            <version>1.3</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.lowagie</groupId>
             <artifactId>itext</artifactId>
             <version>2.1.7</version>
         </dependency>
-        <dependency>
-            <groupId>bouncycastle</groupId>
-            <artifactId>bcmail-jdk14</artifactId>
-            <version>138</version>
-        </dependency>
-        <dependency>
-            <groupId>bouncycastle</groupId>
-            <artifactId>bctsp-jdk14</artifactId>
-            <version>138</version>
-        </dependency>
-        <dependency>
-            <groupId>bouncycastle</groupId>
-            <artifactId>bcprov-jdk14</artifactId>
-            <version>138</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hamcrest</groupId>
-            <artifactId>hamcrest-all</artifactId>
-            <version>1.3</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.databene</groupId>
-            <artifactId>contiperf</artifactId>
-            <version>2.2.0</version>
-            <scope>test</scope>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>bouncycastle</groupId>-->
+<!--            <artifactId>bcmail-jdk14</artifactId>-->
+<!--            <version>138</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>bouncycastle</groupId>-->
+<!--            <artifactId>bctsp-jdk14</artifactId>-->
+<!--            <version>138</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>bouncycastle</groupId>-->
+<!--            <artifactId>bcprov-jdk14</artifactId>-->
+<!--            <version>138</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.hamcrest</groupId>-->
+<!--            <artifactId>hamcrest-all</artifactId>-->
+<!--            <version>1.3</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.databene</groupId>-->
+<!--            <artifactId>contiperf</artifactId>-->
+<!--            <version>2.2.0</version>-->
+<!--            <scope>test</scope>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.netbeans</groupId>
             <artifactId>jmi</artifactId>
@@ -129,25 +129,35 @@
             <version>4.7.1</version>
         </dependency>
         <dependency>
+            <groupId>org.eclipse.swt</groupId>
+            <artifactId>org.eclipse.swt.gtk.linux.x86_64</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.eclipse.jface</groupId>
             <artifactId>org.eclipse.jface</artifactId>
             <version>3.13.1.v20170810-0135</version>
         </dependency>
-        <dependency>
-            <groupId>org.apache.taglibs</groupId>
-            <artifactId>taglibs-standard-impl</artifactId>
-            <version>1.2.5</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.taglibs</groupId>-->
+<!--            <artifactId>taglibs-standard-impl</artifactId>-->
+<!--            <version>1.2.5</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>org.eclipse.core.commands</groupId>
             <artifactId>org.eclipse.core.commands</artifactId>
             <version>3.9.0.v20170530-1048</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.ws.commons.schema</groupId>
-            <artifactId>XmlSchema</artifactId>
-            <version>1.4.2</version>
+            <groupId>org.eclipse.equinox.common</groupId>
+            <artifactId>org.eclipse.equinox.common</artifactId>
+            <version>3.9.0.v20170207-1454</version>
         </dependency>
+<!--        <dependency>-->
+<!--            <groupId>org.apache.ws.commons.schema</groupId>-->
+<!--            <artifactId>XmlSchema</artifactId>-->
+<!--            <version>1.4.2</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>com.sun</groupId>
             <artifactId>jai_codec</artifactId>
@@ -159,22 +169,22 @@
             <artifactId>jai_core</artifactId>
             <version>1.1.3</version>
         </dependency>
-        <dependency>
-            <groupId>javax.faces</groupId>
-            <artifactId>jsf-api</artifactId>
-            <version>1.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.jvnet.jax-ws-commons.spring</groupId>
-            <artifactId>jaxws-spring</artifactId>
-            <version>1.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.fasterxml.jackson.jaxrs</groupId>
-            <artifactId>jackson-jaxrs-json-provider</artifactId>
-            <version>2.7.9</version>
-        </dependency>
+<!--        <dependency>-->
+<!--            <groupId>javax.faces</groupId>-->
+<!--            <artifactId>jsf-api</artifactId>-->
+<!--            <version>1.1</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>org.jvnet.jax-ws-commons.spring</groupId>-->
+<!--            <artifactId>jaxws-spring</artifactId>-->
+<!--            <version>1.8</version>-->
+<!--        </dependency>-->
+<!--        <dependency>-->
+<!--            <groupId>com.fasterxml.jackson.jaxrs</groupId>-->
+<!--            <artifactId>jackson-jaxrs-json-provider</artifactId>-->
+<!--            <version>2.7.9</version>-->
+<!--        </dependency>-->
         <dependency>
             <groupId>GWT-FX</groupId>
             <artifactId>GWT-FX</artifactId>

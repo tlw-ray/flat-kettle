@@ -136,8 +136,8 @@ public abstract class JobEntryAnalyzer<T extends JobEntryInterface> extends Base
         String connName = null;
         // see if the connection object has a getName method
         try {
-          Method getNameMethod = connection.getClass().getMethod( "getName", null );
-          connName = (String) getNameMethod.invoke( connection, null );
+          Method getNameMethod = connection.getClass().getMethod( "getName", (Class<?>[])null );
+          connName = (String) getNameMethod.invoke( connection, (Object[])null );
         } catch ( Exception e ) {
           // doesn't have a getName method, will try to get it from the descriptor later
         }

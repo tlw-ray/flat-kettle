@@ -1,0 +1,18 @@
+dependencies {
+    compile (
+            project(':pentaho-commons-database-gwt'),
+            libraries.'gwt-dev',
+            libraries.'commons-vfs2',
+            libraries.'commons-io',
+            libraries.'commons-lang3',
+            libraries.'guava',
+            libraries.'slf4j-api',
+            libraries.'slf4j-jdk14',
+            libraries.'mysql-connector-java',
+            libraries.'hsqldb',
+            libraries.'swt',
+    )
+    testCompile (
+            libraries.'mockito-all',
+    )
+}

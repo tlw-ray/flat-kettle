@@ -31,7 +31,7 @@ import java.util.Map;
 import java.util.UUID;
 import java.util.WeakHashMap;
 
-import org.apache.commons.lang.NotImplementedException;
+import org.apache.commons.lang3.NotImplementedException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.eclipse.jface.action.IMenuManager;
@@ -368,7 +368,7 @@ public class SwtElement extends AbstractXulComponent {
   }
 
   public void setOnblur( String method ) {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   public void addPropertyChangeListener( PropertyChangeListener listener ) {
@@ -388,7 +388,7 @@ public class SwtElement extends AbstractXulComponent {
   }
 
   public void adoptAttributes( XulComponent component ) {
-    throw new NotImplementedException();
+    throw new NotImplementedException("");
   }
 
   public void setMenu( final IMenuManager menu ) {

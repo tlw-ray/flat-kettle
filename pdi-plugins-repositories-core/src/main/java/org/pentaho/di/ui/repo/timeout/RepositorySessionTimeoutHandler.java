@@ -28,7 +28,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Proxy;
 import java.util.List;
 
-import org.apache.commons.lang.ClassUtils;
+import org.apache.commons.lang3.ClassUtils;
 import org.pentaho.di.core.exception.KettleException;
 import org.pentaho.di.repository.IRepositoryService;
 import org.pentaho.di.repository.ReconnectableRepository;

@@ -1,7 +1,7 @@
 dependencies {
     compile (
             project(':modeler-core'),
-            project(':commons-xul-gwt'),
+            project(':commons-xul-gwt-impl'),
             project(':commons-gwt-widgets'),
     )
 //    provided (

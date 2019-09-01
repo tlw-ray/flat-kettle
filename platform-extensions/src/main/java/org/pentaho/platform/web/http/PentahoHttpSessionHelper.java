@@ -20,7 +20,7 @@
 
 package org.pentaho.platform.web.http;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.servlet.ServletContext;
 import java.io.File;

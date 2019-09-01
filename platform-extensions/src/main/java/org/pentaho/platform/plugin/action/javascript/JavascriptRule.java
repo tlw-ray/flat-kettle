@@ -20,7 +20,7 @@
 
 package org.pentaho.platform.plugin.action.javascript;
 
-import org.apache.commons.lang.StringEscapeUtils;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.mozilla.javascript.Context;
@@ -260,7 +260,7 @@ public class JavascriptRule extends ComponentBase {
       }
       inputValue = getInputValue( inputName );
       if ( inputValue instanceof String ) {
-        inputValue = StringEscapeUtils.escapeHtml( (String) inputValue );
+        inputValue = StringEscapeUtils.escapeHtml4( (String) inputValue );
       }
       Object wrapper;
       if ( inputValue instanceof IPentahoResultSet ) {

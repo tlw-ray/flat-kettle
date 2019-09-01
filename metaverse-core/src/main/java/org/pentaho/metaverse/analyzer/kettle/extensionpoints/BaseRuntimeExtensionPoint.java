@@ -22,7 +22,7 @@
 
 package org.pentaho.metaverse.analyzer.kettle.extensionpoints;
 
-import org.apache.commons.lang.ObjectUtils;
+import org.apache.commons.lang3.ObjectUtils;
 import org.pentaho.di.core.KettleClientEnvironment;
 import org.pentaho.di.core.extension.ExtensionPointInterface;
 import org.pentaho.di.version.BuildVersion;

@@ -27,7 +27,7 @@ import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_DIRECTORY
 import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_TRANSFORMATION_FILENAME_DIRECTORY;
 import static org.pentaho.di.core.Const.INTERNAL_VARIABLE_JOB_FILENAME_NAME;
 
-import org.apache.commons.lang.ArrayUtils;
+import org.apache.commons.lang3.ArrayUtils;
 import org.pentaho.di.core.Const;
 import org.pentaho.di.core.ObjectLocationSpecificationMethod;
 import org.pentaho.di.core.exception.KettleException;

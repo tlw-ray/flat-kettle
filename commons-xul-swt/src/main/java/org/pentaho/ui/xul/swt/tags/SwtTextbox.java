@@ -239,7 +239,7 @@ public class SwtTextbox extends SwtElement implements XulTextbox {
   }
 
   public void setOninput( String method ) {
-    // throw new NotImplementedException();
+    // throw new NotImplementedException("");
   }
 
   public String getMin() {

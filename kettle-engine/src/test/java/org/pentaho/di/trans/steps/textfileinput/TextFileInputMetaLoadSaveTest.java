@@ -22,7 +22,7 @@
 
 package org.pentaho.di.trans.steps.textfileinput;
 
-import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
