@@ -6,6 +6,7 @@ include 'commons-xul-swing'
 include 'commons-xul-html'
 include 'commons-xul-gwt-impl'
 include 'commons-gwt-widgets'
+include 'commons-xul-samples-barcamp'
 
 include 'pentaho-vfs-browser'
 include 'pentaho-metastore'

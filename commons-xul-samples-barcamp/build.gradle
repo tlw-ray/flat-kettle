@@ -1,0 +1,21 @@
+dependencies {
+    compile (
+            project(':commons-xul-core'),
+            project(':commons-gwt-widgets'),
+            project(':commons-xul-gwt-impl'),
+            project(':commons-xul-swing'),
+            project(':commons-xul-swt'),
+            libraries.'gwt-servlet',
+//            libraries.'gwt-datepicker',
+            libraries.'gwt-dev',
+            libraries.'gwt-user',
+            libraries.'gwt-incubator',
+            libraries.'gwt-dnd',
+            libraries.'gwtx',
+            libraries.'jaxen',
+    )
+//    testCompile (
+//            libraries.'commons-collections',
+//            libraries.'jaxen',
+//    )
+}

@@ -27,7 +27,6 @@ dependencies {
             libraries.'commons-codec',
             libraries.'commons-logging',
             libraries.'commons-collections',
-//            libraries.'commons-lang',
             libraries.'commons-lang3',
             libraries.'commons-vfs2',
             libraries.'commons-io',
