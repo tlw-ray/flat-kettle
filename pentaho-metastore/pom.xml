@@ -23,7 +23,7 @@
     <commons-io.version>2.1</commons-io.version>
     <mockito-all.version>1.8.4</mockito-all.version>
     <commons-codec.version>1.5</commons-codec.version>
-    <junit.version>4.7</junit.version>
+    <junit.version>4.13.1</junit.version>
   </properties>
   <dependencies>
     <dependency>
